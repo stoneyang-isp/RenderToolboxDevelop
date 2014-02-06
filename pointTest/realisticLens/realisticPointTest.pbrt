@@ -22,8 +22,8 @@ Camera "realisticDiffraction"
     "float chromaticAberrationEnabled" [0]
 
 Film "image"
-   "integer xresolution" [100]
-   "integer yresolution" [100]
+   "integer xresolution" [256]
+   "integer yresolution" [256]
 
 Sampler "lowdiscrepancy"
  "integer pixelsamples" [2048]

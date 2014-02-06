@@ -21,12 +21,12 @@ Camera "idealDiffraction"
 
 
 Film "image"
-   "integer xresolution" 16
-   "integer yresolution" 16
+   "integer xresolution" 256
+   "integer yresolution" 256
 
 Sampler "lowdiscrepancy"
 
-   "integer pixelsamples" 131072 #[131070]
+   "integer pixelsamples" 2048 #[131070]
 
 SurfaceIntegrator "directlighting"
    "integer maxdepth" [1]
