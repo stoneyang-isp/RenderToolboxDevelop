@@ -2,13 +2,13 @@
 %%% About Us://github.com/DavidBrainard/RenderToolbox3/wiki/About-Us
 %%% RenderToolbox3 is released under the MIT License.  See LICENSE.txt.
 %
-% Convert PBRT data to units of radiance.
+% Convert PBRT_Optics data to units of radiance.
 %   @param multispectralImage numeric rendering data from a Render function
 %   @param scene description of the scene from an ImportCollada function
 %   @param hints struct of RenderToolbox3 options
 %
 % @details
-% This the RenderToolbox3 "DataToRadiance" function for PBRT.
+% This the RenderToolbox3 "DataToRadiance" function for PBRT_Optics.
 %
 % @details
 % For more about DataToRadiance functions see
@@ -16,18 +16,18 @@
 %
 % @details
 % Usage:
-%   [radianceImage, scaleFactor] = RTB_DataToRadiance_PBRT(multispectralImage, scene, hints)
-function [radianceImage, scaleFactor] = RTB_DataToRadiance_PBRT(multispectralImage, scene, hints)
+%   [radianceImage, scaleFactor] = RTB_DataToRadiance_PBRT_Optics(multispectralImage, scene, hints)
+function [radianceImage, scaleFactor] = RTB_DataToRadiance_PBRT_Optics(multispectralImage, scene, hints)
 
 % get the PBRT radiometric scale factor
-if ispref('PBRT', 'radiometricScaleFactor')
-    scaleFactor = getpref('PBRT', 'radiometricScaleFactor');
+if ispref('PBRT_Optics', 'radiometricScaleFactor')
+    scaleFactor = getpref('PBRT_Optics', 'radiometricScaleFactor');
 else
     scaleFactor = 1;
 end
 
 %% Compare pixel reconstruction filter to default.
-defaultAdjustments = 'PBRTDefaultAdjustments.xml';
+defaultAdjustments = 'PBRT_OpticsDefaultAdjustments.xml';
 [defaultDoc, defaultIdMap] = ReadSceneDOM(defaultAdjustments);
 [pbrtDoc, pbrtIdMap] = ReadSceneDOM(scene.pbrtXMLFile);
 

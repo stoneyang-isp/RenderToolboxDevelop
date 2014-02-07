@@ -2,12 +2,12 @@
 %%% About Us://github.com/DavidBrainard/RenderToolbox3/wiki/About-Us
 %%% RenderToolbox3 is released under the MIT License.  See LICENSE.txt.
 %
-% Convert mappings objects to native adjustments for the PBRT.
+% Convert mappings objects to native adjustments for the PBRT_Optics.
 %   @param objects mappings objects as returned from MappingsToObjects()
 %   @param adjustments native adjustments to be updated, if any
 %
 % @details
-% This is the RenderToolbox3 "ApplyMappings" function for PBRT.
+% This is the RenderToolbox3 "ApplyMappings" function for PBRT_Optics.
 %
 % @details
 % For more about ApplyMappings functions, see
@@ -15,12 +15,12 @@
 %
 % @details
 % Usage:
-%   adjustments = RTB_ApplyMappings_PBRT(objects, adjustments)
-function adjustments = RTB_ApplyMappings_PBRT(objects, adjustments)
+%   adjustments = RTB_ApplyMappings_PBRT_Optics(objects, adjustments)
+function adjustments = RTB_ApplyMappings_PBRT_Optics(objects, adjustments)
 
 % Read in the default PBRT adjustments file.
 if isempty(adjustments)
-    [docNode, idMap] = ReadSceneDOM(getpref('PBRT', 'adjustments'));
+    [docNode, idMap] = ReadSceneDOM(getpref('PBRT_Optics', 'adjustments'));
     adjustments.docNode = docNode;
     adjustments.idMap = idMap;
 end
@@ -30,7 +30,7 @@ if isempty(objects)
 end
 
 % apply low level "path" mappings directly to the adjustments document
-if strcmp('PBRT-path', objects(1).blockType)
+if strcmp('PBRT_Optics-path', objects(1).blockType)
     ApplySceneDOMPaths(adjustments.idMap, objects);
     return;
 end

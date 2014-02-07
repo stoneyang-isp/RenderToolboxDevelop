@@ -7,7 +7,7 @@
     <SurfaceIntegrator id="integrator" type="directlighting"/>
 
     <Sampler id="sampler" type="lowdiscrepancy">
-        <parameter name="pixelsamples" type="integer">8</parameter>
+        <parameter name="pixelsamples" type="integer">256</parameter>
     </Sampler>
     
     <PixelFilter id="filter" type="gaussian">

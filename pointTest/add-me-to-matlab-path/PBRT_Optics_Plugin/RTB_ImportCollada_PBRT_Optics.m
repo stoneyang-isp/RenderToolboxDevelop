@@ -2,7 +2,7 @@
 %%% About Us://github.com/DavidBrainard/RenderToolbox3/wiki/About-Us
 %%% RenderToolbox3 is released under the MIT License.  See LICENSE.txt.
 %
-% Convert a Collada parent scene file the PBRT native format
+% Convert a Collada parent scene file the PBRT_Optics native format
 %   @param colladaFile input Collada parent scene file name or path
 %   @param adjustments native adjustments data, or file name or path
 %   @param outputFolder folder where to write new files
@@ -10,7 +10,7 @@
 %   @param hints struct of RenderToolbox3 options
 %
 % @details
-% This is the RenderToolbox3 "ImportCollada" function for PBRT.
+% This is the RenderToolbox3 "ImportCollada" function for PBRT_Optics.
 %
 % @details
 % For more about ImportCollada functions see
@@ -18,8 +18,8 @@
 %
 % @details
 % Usage:
-%   [scene, requiredFiles] = RTB_ImportCollada_PBRT(colladaFile, adjustments, outputFolder, imageName, hints)
-function [scene, requiredFiles] = RTB_ImportCollada_PBRT(colladaFile, adjustments, outputFolder, imageName, hints)
+%   [scene, requiredFiles] = RTB_ImportCollada_PBRT_Optics(colladaFile, adjustments, outputFolder, imageName, hints)
+function [scene, requiredFiles] = RTB_ImportCollada_PBRT_Optics(colladaFile, adjustments, outputFolder, imageName, hints)
 
 % declare new and required files
 scene.colladaFile = colladaFile;
@@ -36,7 +36,7 @@ end
 
 if hints.isReuseSceneFiles
     % locate exsiting scene files, but don't produce new ones
-    disp('Reusing scene files for PBRT scene:')
+    disp('Reusing scene files for PBRT_Optics scene:')
     disp(scene)
     drawnow();
     
