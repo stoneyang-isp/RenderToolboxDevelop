@@ -6,6 +6,7 @@
 %
 
 %% Set up.
+clear;
 PBRTOpticsConfigurationTemplate;
 
 % locate scene files relative to this file
@@ -14,14 +15,19 @@ if isempty(localPath)
     localPath = pwd();
 end
 
-% most hints ignored when calling RunPBRT_Optics directly
-hints.isPlot = true;
+% some hints ignored when calling RunPBRT_Optics directly
+hints.isPlot = false;
 hints.isCaptureCommandResults = false;
+hints.renderer = 'PBRT_Optics';
 
-%% Render the "ideal lens" test scene.
+% will isolate a few spectrum bands
+bands = [400 500 600 700];
+
+%% Render the "ideal lens" test scene and make a spectral montage.
 pbrtFile = fullfile(localPath, '..', 'idealLens', 'pointTest.pbrt');
-[status, result, output] = RunPBRT_Optics(pbrtFile, hints);
+[outFiles, montageFile] = MakeSpectralMontage(pbrtFile, bands, hints);
+
 
 %% Render the "realistic lens" test scene.
 pbrtFile = fullfile(localPath, '..', 'realisticLens', 'realisticPointTest.pbrt');
-[status, result, output] = RunPBRT_Optics(pbrtFile, hints);
+[outFiles, montageFile] = MakeSpectralMontage(pbrtFile, bands, hints);

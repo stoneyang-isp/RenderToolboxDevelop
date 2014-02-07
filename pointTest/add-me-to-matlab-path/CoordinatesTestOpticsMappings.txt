@@ -1,0 +1,44 @@
+Collada {
+    % swap camera handedness from Blender's Collada output
+    Camera:scale|sid=scale = -1 1 1
+
+    Camera:translate|sid=backup.type = Translate
+    Camera:translate|sid=backup = 0 0 7500
+}
+
+PBRT_Optics {
+    % use the direct lighting integrator
+    integrator:SurfaceIntegrator:directlighting
+    sampler:pixelsamples.integer = 128
+
+    % turn up the light intensity
+    Point-light:I.rgb = 1000000 1000000 1000000
+    Point_001-light:I.rgb = 1000000 1000000 1000000
+    Point_002-light:I.rgb = 1000000 1000000 1000000
+    Point_003-light:I.rgb = 1000000 1000000 1000000
+    Point_004-light:I.rgb = 1000000 1000000 1000000
+    Point_005-light:I.rgb = 1000000 1000000 1000000
+    Point_006-light:I.rgb = 1000000 1000000 1000000
+    Point_007-light:I.rgb = 1000000 1000000 1000000
+}
+
+PBRT_Optics-path {
+    % choose a fancy camera
+    Camera-camera.type = idealDiffraction
+    Camera-camera:parameter|name=fov = 0.23
+
+    Camera-camera:parameter|name=focal_length.type = float
+    Camera-camera:parameter|name=focal_length = 50
+
+    Camera-camera:parameter|name=filmdistance.type = float
+    Camera-camera:parameter|name=filmdistance = (filmdistance)
+
+    Camera-camera:parameter|name=aperture_diameter.type = float
+    Camera-camera:parameter|name=aperture_diameter = 2.2727
+
+    Camera-camera:parameter|name=filmdiag.type = float
+    Camera-camera:parameter|name=filmdiag = .2
+
+    Camera-camera:parameter|name=diffractionEnabled.type = float
+    Camera-camera:parameter|name=diffractionEnabled = 1
+}

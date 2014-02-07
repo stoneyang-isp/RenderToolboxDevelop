@@ -127,7 +127,7 @@ localPath = fileparts(mfilename('fullpath'));
 S = [400 10 32];
 
 % choose the default scale factor for radiance units
-radiometricScaleFactor = 0.204261;
+radiometricScaleFactor = 0.00631706035944380219;
 
 % choose the file with default adjustments
 adjustmentsFile = fullfile(localPath, ...
