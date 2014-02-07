@@ -13,8 +13,8 @@ conditionsFile = 'CoordinatesTestOpticsConditions.txt';
 %% Mess with the camera focus.
 focalLength = 50;
 nConditions = 9;
-down = -0.005;
-up = 0.005;
+down = -0.004;
+up = 0.006;
 filmDistance = focalLength + linspace(down, up, nConditions);
 WriteConditionsFile(conditionsFile, {'filmdistance'}, num2cell(filmDistance'));
 
