@@ -25,9 +25,41 @@ bands = [400 500 600 700];
 
 %% Render the "ideal lens" test scene and make a spectral montage.
 pbrtFile = fullfile(localPath, '..', 'idealLens', 'pointTest.pbrt');
-[outFiles, montageFile] = MakeSpectralMontage(pbrtFile, bands, hints);
+[idealData, idealMontage] = MakeSpectralMontage(pbrtFile, bands, hints);
 
 
 %% Render the "realistic lens" test scene.
 pbrtFile = fullfile(localPath, '..', 'realisticLens', 'realisticPointTest.pbrt');
-[outFiles, montageFile] = MakeSpectralMontage(pbrtFile, bands, hints);
+[realisticData, realisticMontage] = MakeSpectralMontage(pbrtFile, bands, hints);
+
+%% Histogram the spectral slices -- want to see chromatic spread.
+falseColors = {[0 0 1], [0 0.75, 0.75], [0.75 0.75 0], [1 0 0]};
+lineWidth = 2;
+
+figure()
+
+subplot(2,1,1);
+title('idealLens')
+for ii = numel(idealData):-1:1
+    sliceData = load(idealData{ii});
+    sliceCollapsed = sum(sum(sliceData.multispectralImage, 3));
+    sliceCollapsed = sliceCollapsed ./ max(sliceCollapsed);
+    line(1:numel(sliceCollapsed), sliceCollapsed, ...
+        'Color', falseColors{ii}, ...
+        'Marker', 'none', ...
+        'LineStyle', '-', ...
+        'LineWidth', lineWidth);
+end
+
+subplot(2,1,2);
+title('realisticLens')
+for ii = numel(realisticData):-1:1
+    sliceData = load(realisticData{ii});
+    sliceCollapsed = sum(sum(sliceData.multispectralImage, 3));
+    sliceCollapsed = sliceCollapsed ./ max(sliceCollapsed);
+    line(1:numel(sliceCollapsed), sliceCollapsed, ...
+        'Color', falseColors{ii}, ...
+        'Marker', 'none', ...
+        'LineStyle', '-', ...
+        'LineWidth', lineWidth);
+end

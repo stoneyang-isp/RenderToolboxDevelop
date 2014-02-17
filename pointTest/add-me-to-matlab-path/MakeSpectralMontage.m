@@ -23,12 +23,15 @@ for ii = 1:numel(bands);
 end
 
 % save a mat file for each spectrum band
+%   copy band data across whole spectrum to avoid sRGB conversion-confusion
 outFiles = cell(1, numel(bands));
 multispectralData = ReadDAT(output);
+dataSize = size(multispectralData);
 for ii = 1:numel(bands)
     bandIndex = bandIndices(ii);
-    multispectralImage = zeros(size(multispectralData));
-    multispectralImage(:, :, bandIndex) = multispectralData(:, :, bandIndex);
+    sliceImage = multispectralData(:, :, bandIndex);
+    sliceImage = sliceImage ./ max(sliceImage(:));
+    multispectralImage = repmat(sliceImage, [1, 1, dataSize(3)]);
     
     outFiles{ii} = fullfile(outPath, [scene '-' num2str(bands(ii)) 'nm.mat']);
     save(outFiles{ii}, 'multispectralImage', 'S', 'radiometricScaleFactor', ...
