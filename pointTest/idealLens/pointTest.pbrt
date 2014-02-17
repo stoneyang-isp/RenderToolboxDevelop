@@ -18,20 +18,21 @@ Camera "idealDiffraction"
 	"float aperture_diameter" 2.2727
 	"float filmdiag" [.2]
 	"float diffractionEnabled" [1]
+    "float chromaticAberrationEnabled" [1]
 
 
 Film "image"
-   "integer xresolution" 256
-   "integer yresolution" 256
+   "integer xresolution" 128
+   "integer yresolution" 128
 
 Sampler "lowdiscrepancy"
 
-   "integer pixelsamples" 2048 #[131070]
+   "integer pixelsamples" 4096 # Andy used [131070] # BSH: 65536 took about 30 min
 
 SurfaceIntegrator "directlighting"
    "integer maxdepth" [1]
 
-Renderer "sample"
+Renderer "sampler"
 
 WorldBegin
     AttributeBegin
