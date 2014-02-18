@@ -18,7 +18,7 @@ Camera "idealDiffraction"
 	"float aperture_diameter" 2.2727
 	"float filmdiag" [.2]
 	"float diffractionEnabled" [1]
-    "float chromaticAberrationEnabled" [1]
+	"float chromaticAberrationEnabled" [1]
 
 
 Film "image"

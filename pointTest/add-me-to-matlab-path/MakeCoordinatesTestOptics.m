@@ -10,15 +10,24 @@ parentSceneFile = 'CoordinatesTest.dae';
 mappingsFile = 'CoordinatesTestOpticsMappings.txt';
 conditionsFile = 'CoordinatesTestOpticsConditions.txt';
 
-%% Mess with the camera focus.
-focalLength = 50;
-nConditions = 9;
-down = -0.004;
-up = 0.006;
-filmDistance = focalLength + linspace(down, up, nConditions);
-WriteConditionsFile(conditionsFile, {'filmdistance'}, num2cell(filmDistance'));
+%% Make up some conditions.
 
-% I'm not sure how to bring the scene into focus...
+% mess with camera focus
+focalLength = 50;
+filmDistance = {focalLength-1, focalLength, focalLength + 20};
+nDistances = numel(filmDistance);
+
+% swap camera type
+cameraType = {'idealDiffraction', 'realisticDiffraction', 'perspective'};
+
+names = {'filmDistance', 'cameraType'};
+values = cell(numel(cameraType)*numel(filmDistance), 2);
+for ii = 1:numel(cameraType)
+    range = (1:nDistances) + (ii-1)*nDistances;
+    values(range, 1) = filmDistance;
+    values(range, 2) = cameraType(ii);
+end
+WriteConditionsFile(conditionsFile, names, values);
 
 %% Choose batch renderer options.
 hints.imageWidth = 160;

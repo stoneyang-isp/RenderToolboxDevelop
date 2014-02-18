@@ -1,11 +1,11 @@
-filmdistance	
-49.996000	
-49.997250	
-49.998500	
-49.999750	
-50.001000	
-50.002250	
-50.003500	
-50.004750	
-50.006000	
+filmDistance	cameraType	
+49	idealDiffraction	
+50	idealDiffraction	
+70	idealDiffraction	
+49	realisticDiffraction	
+50	realisticDiffraction	
+70	realisticDiffraction	
+49	perspective	
+50	perspective	
+70	perspective	
 
