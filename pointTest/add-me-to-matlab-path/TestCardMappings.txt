@@ -1,0 +1,54 @@
+Collada {
+    % swap camera handedness from Blender's Collada output
+    Camera:scale|sid=scale = -1 1 1
+
+    % move the test card and scale to conserver visual angle
+    TestCard:translate|sid=location = 0 0 (cardDistance)
+    TestCard:scale|sid=scale = (cardScale) (cardScale) 1
+}
+
+Generic {
+    % uniform sun spectrum
+    Sun-light:intensity.spectrum = 300:1, 800:1
+
+    % attach texture to test card
+    testPattern:spectrumTexture:bitmap
+    testPattern:filename.string = usairforce-test-card.tga
+    TestCard-material:material:matte
+    TestCard-material:diffuseReflectance.texture = testPattern
+}
+
+PBRT_Optics {
+    % use the direct lighting integrator
+    integrator:SurfaceIntegrator:directlighting
+    sampler:pixelsamples.integer = 256
+}
+
+PBRT_Optics-path {
+    % ideal camera with params chosen from wikipedia table at
+    % http://en.wikipedia.org/wiki/Angle_of_view#Common_lens_angles_of_view
+
+    Camera-camera.type = idealDiffraction
+
+    Camera-camera:parameter|name=focal_length.type = float
+    Camera-camera:parameter|name=focal_length = 50
+
+    Camera-camera:parameter|name=filmdistance.type = float
+    Camera-camera:parameter|name=filmdistance = (filmDistance)
+
+    Camera-camera:parameter|name=aperture_diameter.type = float
+    Camera-camera:parameter|name=aperture_diameter = (apertureDiameter)
+
+    Camera-camera:parameter|name=filmdiag.type = float
+    Camera-camera:parameter|name=filmdiag = 43.3
+
+    Camera-camera:parameter|name=diffractionEnabled.type = float
+    Camera-camera:parameter|name=diffractionEnabled = 0
+
+    Camera-camera:parameter|name=chromaticAberrationEnabled.type = float
+    Camera-camera:parameter|name=chromaticAberrationEnabled = 0
+
+    % scale camera internal millimeters to scene meters
+    Camera-camera:transformation|name=millisToMeters.type = Scale
+    Camera-camera:transformation|name=millisToMeters = 1000 1000 1000
+}
