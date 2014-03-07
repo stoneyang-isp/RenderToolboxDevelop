@@ -21,7 +21,7 @@ Generic {
 PBRT_Optics {
     % use the direct lighting integrator
     integrator:SurfaceIntegrator:directlighting
-    sampler:pixelsamples.integer = 256
+    sampler:pixelsamples.integer = 32
 }
 
 PBRT_Optics-path {
@@ -43,10 +43,10 @@ PBRT_Optics-path {
     Camera-camera:parameter|name=filmdiag = 43.3
 
     Camera-camera:parameter|name=diffractionEnabled.type = float
-    Camera-camera:parameter|name=diffractionEnabled = 0
+    Camera-camera:parameter|name=diffractionEnabled = (diffraction)
 
     Camera-camera:parameter|name=chromaticAberrationEnabled.type = float
-    Camera-camera:parameter|name=chromaticAberrationEnabled = 0
+    Camera-camera:parameter|name=chromaticAberrationEnabled = (chromaticAberration)
 
     % scale camera internal millimeters to scene meters
     Camera-camera:transformation|name=millisToMeters.type = Scale
