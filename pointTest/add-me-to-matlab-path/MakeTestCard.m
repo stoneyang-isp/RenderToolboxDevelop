@@ -3,13 +3,13 @@
 %%% RenderToolbox3 is released under the MIT License.  See LICENSE.txt.
 %
 %% Render a test card at several distances and focuses.
-clear
 
 %% Choose example files, make sure they're on the Matlab path.
+clear
 AddWorkingPath(mfilename('fullpath'));
 parentSceneFile = 'TestCard.dae';
 mappingsFile = 'TestCardMappings.txt';
-conditionsFile = 'TestCardConditions.txt';
+conditionsFile = 'TestCardConditionsRealistic.txt';
 
 %% Choose batch renderer options.
 hints.imageWidth = 200;
