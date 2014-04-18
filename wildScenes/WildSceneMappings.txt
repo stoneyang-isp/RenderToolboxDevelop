@@ -1,0 +1,67 @@
+% flip the camera handedness to match Blender-Collada output to Mitsuba and PBRT
+Collada {
+    Camera:scale|sid=scale = -1 1 1
+}
+
+% materials
+Generic {
+	Bench_Material-material:material:matte
+	Bench_Material-material:diffuseReflectance.spectrum = mccBabel-1.spd
+
+	Caps_Accent_texture-material:material:matte
+	Caps_Accent_texture-material:diffuseReflectance.spectrum = mccBabel-2.spd
+
+	Floor_Texture-material:material:matte
+	Floor_Texture-material:diffuseReflectance.spectrum = mccBabel-3.spd
+
+	Glass-material:material:matte
+	Glass-material:diffuseReflectance.spectrum = mccBabel-4.spd
+
+	Gold-material:material:matte
+	Gold-material:diffuseReflectance.spectrum = mccBabel-5.spd
+
+	Les_Paul_Picture-material:material:matte
+	Les_Paul_Picture-material:diffuseReflectance.spectrum = mccBabel-6.spd
+
+	Light_Source-material:material:matte
+	Light_Source-material:diffuseReflectance.spectrum = mccBabel-7.spd
+
+	Matting_Accent-material:material:matte
+	Matting_Accent-material:diffuseReflectance.spectrum = mccBabel-8.spd
+
+	Piano_Accent_Gold-material:material:matte
+	Piano_Accent_Gold-material:diffuseReflectance.spectrum = mccBabel-9.spd
+
+	Piano_Black_Lacker-material:material:matte
+	Piano_Black_Lacker-material:diffuseReflectance.spectrum = mccBabel-10.spd
+
+	Picture_Glass-material:material:matte
+	Picture_Glass-material:diffuseReflectance.spectrum = mccBabel-11.spd
+
+	Picture_frams_gold-material:material:matte
+	Picture_frams_gold-material:diffuseReflectance.spectrum = mccBabel-12.spd
+
+	Porcelain-material:material:matte
+	Porcelain-material:diffuseReflectance.spectrum = mccBabel-13.spd
+
+	Random_Instruments_Picture-material:material:matte
+	Random_Instruments_Picture-material:diffuseReflectance.spectrum = mccBabel-14.spd
+
+	Trim_and_Ceiling-material:material:matte
+	Trim_and_Ceiling-material:diffuseReflectance.spectrum = mccBabel-15.spd
+
+	Wall_texture-material:material:matte
+	Wall_texture-material:diffuseReflectance.spectrum = mccBabel-16.spd
+
+	Wikipedia_Picture-material:material:matte
+	Wikipedia_Picture-material:diffuseReflectance.spectrum = mccBabel-17.spd
+
+	Wood_Interior-material:material:matte
+	Wood_Interior-material:diffuseReflectance.spectrum = mccBabel-18.spd
+
+}
+
+
+% lights
+Generic {
+}
