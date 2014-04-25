@@ -1,0 +1,6 @@
+colladaFile	mappingsFile	object1	
+scenes/GrandPiano.dae	1-GrandPianoMappings.txt	objects/xylophone.dae	
+scenes/Mediumindoorplant.dae	2-MediumindoorplantMappings.txt	objects/xylophone.dae	
+scenes/GrandPiano.dae	3-GrandPianoMappings.txt	objects/Toy_v2.dae	
+scenes/Mediumindoorplant.dae	4-MediumindoorplantMappings.txt	objects/Toy_v2.dae	
+

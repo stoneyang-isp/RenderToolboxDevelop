@@ -1,81 +1,63 @@
-2014-04-18 17:25:36 INFO  main [mitsuba.cpp:255] Mitsuba version 0.4.1 (Mac OS, 64 bit), Copyright (c) 2012 Wenzel Jakob
-2014-04-18 17:25:36 INFO  main [mitsuba.cpp:359] Parsing scene description from "/Users/ben/Documents/MATLAB/render-toolbox/temp/MakeWildScene/Mitsuba/GrandPiano-001.xml" ..
-2014-04-18 17:25:36 INFO  main [PluginManager] Loading plugin "plugins/direct.dylib" ..
-2014-04-18 17:25:36 INFO  main [spectrum.cpp:548] "mccBabel-7.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:36 INFO  main [PluginManager] Loading plugin "plugins/diffuse.dylib" ..
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-13.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-10.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-9.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-5.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-18.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-1.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-3.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-16.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-15.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-2.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-4.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-12.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-17.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-8.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-11.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-6.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [spectrum.cpp:548] "mccBabel-14.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
-2014-04-18 17:25:37 INFO  main [PluginManager] Loading plugin "plugins/serialized.dylib" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 0 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 1 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 2 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [PluginManager] Loading plugin "plugins/ldsampler.dylib" ..
-2014-04-18 17:25:37 INFO  main [PluginManager] Loading plugin "plugins/gaussian.dylib" ..
-2014-04-18 17:25:37 INFO  main [PluginManager] Loading plugin "plugins/hdrfilm.dylib" ..
-2014-04-18 17:25:37 INFO  main [PluginManager] Loading plugin "plugins/perspective.dylib" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 3 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 4 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 5 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 6 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 7 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 8 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 9 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 10 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 11 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 12 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 13 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 14 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 15 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 16 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 17 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 18 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 19 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 20 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 21 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 22 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 23 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 24 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 25 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 26 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 27 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 28 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 29 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 30 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 31 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 32 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 33 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 34 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 35 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  main [SerializedMesh] Loading shape 36 from "GrandPiano-001Unadjusted.serialized" ..
-2014-04-18 17:25:37 INFO  ren0 [KDTreeBase] Constructing a SAH kd-tree (198133 primitives) ..
-2014-04-18 17:25:37 INFO  ren0 [KDTreeBase] Finished -- took 649 ms.
-2014-04-18 17:25:37 WARN  ren0 [Scene] No emitters found -- adding sun & sky.
-2014-04-18 17:25:37 INFO  ren0 [PluginManager] Loading plugin "plugins/sunsky.dylib" ..
-2014-04-18 17:25:37 INFO  ren0 [PluginManager] Loading plugin "plugins/sky.dylib" ..
-2014-04-18 17:25:38 INFO  ren0 [PluginManager] Loading plugin "plugins/envmap.dylib" ..
-2014-04-18 17:25:38 INFO  ren0 [PluginManager] Loading plugin "plugins/lanczos.dylib" ..
-2014-04-18 17:25:38 INFO  ren0 [EnvironmentMap] Precomputing data structures for environment map sampling (515.00 KiB)
-2014-04-18 17:25:38 INFO  ren0 [EnvironmentMap] Done (took 16 ms)
-2014-04-18 17:25:38 INFO  ren0 [PluginManager] Loading plugin "plugins/sphere.dylib" ..
-2014-04-18 17:25:38 INFO  ren0 [SamplingIntegrator] Starting render job (320x240, 8 samples, 4 cores, SSE2 enabled) ..
-2014-04-18 17:25:53 INFO  ren0 [HDRFilm] Writing image to "/Users/ben/Documents/MATLAB/render-toolbox/temp/MakeWildScene/Mitsuba/GrandPiano-001.exr" ..
-2014-04-18 17:25:53 INFO  ren0 [RenderQueue] Render time: 16.5690s
-2014-04-18 17:25:53 INFO  main [statistics.cpp:137] Statistics: 
+2014-04-25 17:21:21 INFO  main [mitsuba.cpp:255] Mitsuba version 0.4.1 (Mac OS, 64 bit), Copyright (c) 2012 Wenzel Jakob
+2014-04-25 17:21:21 INFO  main [mitsuba.cpp:359] Parsing scene description from "/Users/ben/Documents/MATLAB/render-toolbox/temp/MakeWildScene/Mitsuba/Mediumindoorplant-004.xml" ..
+2014-04-25 17:21:21 INFO  main [PluginManager] Loading plugin "plugins/direct.dylib" ..
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-3.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [PluginManager] Loading plugin "plugins/diffuse.dylib" ..
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-2.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-10.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-17.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-12.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-13.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-18.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-22.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-9.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-6.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-19.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-23.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-11.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [spectrum.cpp:548] "mccBabel-5.spd": loaded a spectral power distribution with 36 entries (between 380.000000 and 730.000000 nm)
+2014-04-25 17:21:21 INFO  main [PluginManager] Loading plugin "plugins/serialized.dylib" ..
+2014-04-25 17:21:21 INFO  main [SerializedMesh] Loading shape 0 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:21 INFO  main [SerializedMesh] Loading shape 1 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:21 INFO  main [SerializedMesh] Loading shape 2 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:21 INFO  main [SerializedMesh] Loading shape 3 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:21 INFO  main [SerializedMesh] Loading shape 4 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:21 INFO  main [SerializedMesh] Loading shape 5 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:21 INFO  main [SerializedMesh] Loading shape 6 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:21 INFO  main [SerializedMesh] Loading shape 7 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 8 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 9 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 10 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 11 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [PluginManager] Loading plugin "plugins/ldsampler.dylib" ..
+2014-04-25 17:21:22 INFO  main [PluginManager] Loading plugin "plugins/gaussian.dylib" ..
+2014-04-25 17:21:22 INFO  main [PluginManager] Loading plugin "plugins/hdrfilm.dylib" ..
+2014-04-25 17:21:22 INFO  main [PluginManager] Loading plugin "plugins/perspective.dylib" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 12 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 13 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 14 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 15 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 16 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 17 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 18 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 19 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 20 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 21 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  main [SerializedMesh] Loading shape 22 from "Mediumindoorplant-004Unadjusted.serialized" ..
+2014-04-25 17:21:22 INFO  ren0 [KDTreeBase] Constructing a SAH kd-tree (122918 primitives) ..
+2014-04-25 17:21:22 INFO  ren0 [KDTreeBase] Finished -- took 641 ms.
+2014-04-25 17:21:22 WARN  ren0 [Scene] No emitters found -- adding sun & sky.
+2014-04-25 17:21:22 INFO  ren0 [PluginManager] Loading plugin "plugins/sunsky.dylib" ..
+2014-04-25 17:21:22 INFO  ren0 [PluginManager] Loading plugin "plugins/sky.dylib" ..
+2014-04-25 17:21:23 INFO  ren0 [PluginManager] Loading plugin "plugins/envmap.dylib" ..
+2014-04-25 17:21:23 INFO  ren0 [PluginManager] Loading plugin "plugins/lanczos.dylib" ..
+2014-04-25 17:21:23 INFO  ren0 [EnvironmentMap] Precomputing data structures for environment map sampling (515.00 KiB)
+2014-04-25 17:21:23 INFO  ren0 [EnvironmentMap] Done (took 6 ms)
+2014-04-25 17:21:23 INFO  ren0 [PluginManager] Loading plugin "plugins/sphere.dylib" ..
+2014-04-25 17:21:23 INFO  ren0 [SamplingIntegrator] Starting render job (320x240, 8 samples, 4 cores, SSE2 enabled) ..
+2014-04-25 17:21:39 INFO  ren0 [HDRFilm] Writing image to "/Users/ben/Documents/MATLAB/render-toolbox/temp/MakeWildScene/Mitsuba/Mediumindoorplant-004.exr" ..
+2014-04-25 17:21:39 INFO  ren0 [RenderQueue] Render time: 17.4570s
+2014-04-25 17:21:39 INFO  main [statistics.cpp:137] Statistics: 
 ------------------------------------------------------------
  * Loaded plugins :
     -  plugins/diffuse.dylib [Smooth diffuse BRDF]
@@ -92,11 +74,10 @@
     -  plugins/sunsky.dylib [Sun & sky emitter]
 
   * General :
-    -  Normal rays traced : 17.768 M
-    -  Shadow rays traced : 19.524 M
+    -  Normal rays traced : 18.688 M
+    -  Shadow rays traced : 19.661 M
 
   * Texture system :
     -  Cumulative MIP map memory allocations : 10.336 MiB
-    -  Filtered texture lookups : 0.01 % (4.27 K of 35.49 M)
-    -  Lookups with clamped anisotropy : 0.00 % (0.00 of 4.27 K)
+    -  Filtered texture lookups : 0.00 % (0.00 of 28.39 M)
 ------------------------------------------------------------

@@ -2,9 +2,93 @@
 %%% About Us://github.com/DavidBrainard/RenderToolbox3/wiki/About-Us
 %%% RenderToolbox3 is released under the MIT License.  See LICENSE.txt.
 %
-%% Render a wild scene with no special processing.
-%parentSceneFile = 'TestScene3.dae';
-parentSceneFile = 'GrandPiano.dae';
+clear
+clc
+close all
+
+%% Render a wild scenes with inserted objects.
+
+% these scenes rendered pretty well straight out of the box
+parentSceneFiles = { ...
+    'scenes/GrandPiano.dae', ...
+    'scenes/Mediumindoorplant.dae', ...
+    };
+
+% these scenes might render after a bit of Blender work
+maybeFiles = { ...
+    'scenes/mario.dae', ...
+    'scenes/Newinterior.dae', ...
+    'scenes/Milkandbiscuits.dae', ...
+    'scenes/BLAMNewRoom.dae', ...
+    'scenes/colonnato.dae', ...
+    'scenes/SweetAppleAcresUpload.dae', ...
+    };
+
+% try to stick these objects into the above scenes
+objectFiles = { ...
+    'objects/Barrel.dae', ...
+    'objects/Chamgne1.dae', ...
+    'objects/Toy_v2.dae', ...
+    'objects/xylophone.dae'};
+
+% don't use dark gray reflectances
+reflectances = { ...
+    'mccBabel-1.spd', ...
+    'mccBabel-2.spd', ...
+    'mccBabel-3.spd', ...
+    'mccBabel-4.spd', ...
+    'mccBabel-5.spd', ...
+    'mccBabel-6.spd', ...
+    'mccBabel-7.spd', ...
+    'mccBabel-8.spd', ...
+    'mccBabel-9.spd', ...
+    'mccBabel-10.spd', ...
+    'mccBabel-11.spd', ...
+    'mccBabel-12.spd', ...
+    'mccBabel-13.spd', ...
+    'mccBabel-14.spd', ...
+    'mccBabel-15.spd', ...
+    'mccBabel-17.spd', ...
+    'mccBabel-18.spd', ...
+    'mccBabel-19.spd', ...
+    'mccBabel-21.spd', ...
+    'mccBabel-22.spd', ...
+    'mccBabel-23.spd'};
+
+%% For each scene, insert a number of objects.
+nObjects = 1;
+nObjectFiles = numel(objectFiles);
+nScenes = 4;
+nSceneFiles = numel(parentSceneFiles);
+varNames = cell(1, 2 + nObjects);
+varNames{1} = 'colladaFile';
+varNames{2} = 'mappingsFile';
+varValues = cell(nScenes, 2 + nObjects);
+for ii = 1:nScenes
+    % choose a collada file
+    sceneIndex = 1 + mod(ii-1, nSceneFiles);
+    colladaFile = parentSceneFiles{sceneIndex};
+    [colladaPath, colladaBase, colladaExt] = fileparts(colladaFile);
+    varValues{ii, 1} = colladaFile;
+    
+    % cook up a silly mappings file
+    mappingsFile = sprintf('%d-%sMappings.txt', ii, colladaBase);
+    silly = reflectances(randperm(numel(reflectances)));
+    WriteDefaultMappingsFile(colladaFile, mappingsFile, '', silly);
+    varValues{ii, 2} = mappingsFile;
+    
+    % choose some objects to stick in the scenes
+    for jj = 1:nObjects
+        varNames{2+jj} = sprintf('object%d', jj);
+        objectIndex = randi(nObjectFiles);
+        objectFile = objectFiles{objectIndex};
+        varValues{ii, 2+jj} = objectFile;
+    end
+end
+
+% write out a new conditions file
+conditionsFile = 'WildSceneConditions.txt';
+conditionsFile = WriteConditionsFile(conditionsFile, varNames, varValues);
 
 %% Choose batch renderer options.
 hints.imageWidth = 320;
@@ -12,19 +96,16 @@ hints.imageHeight = 240;
 hints.workingFolder = fileparts(mfilename('fullpath'));
 hints.outputSubfolder = mfilename();
 
-%% Cook up a silly mappings file.
-mappingsFile = 'WildSceneMappings.txt';
-WriteDefaultMappingsFile(parentSceneFile, mappingsFile);
-
-%% Render with Mitsuba and PBRT.
 toneMapFactor = 100;
 isScale = true;
 hints.renderer = 'Mitsuba';
-nativeSceneFiles = MakeSceneFiles(parentSceneFile, '', mappingsFile, hints);
+hints.remodeler = 'InsertObjectRemodeler';
+
+% render them all!
+nativeSceneFiles = MakeSceneFiles('', conditionsFile, '', hints);
 radianceDataFiles = BatchRender(nativeSceneFiles, hints);
-montageName = sprintf('WildScene (%s)', hints.renderer);
+montageName = sprintf('WildScenes (%s)', hints.renderer);
 montageFile = [montageName '.png'];
 [SRGBMontage, XYZMontage] = ...
     MakeMontage(radianceDataFiles, montageFile, toneMapFactor, isScale, hints);
 ShowXYZAndSRGB([], SRGBMontage, montageName);
-
