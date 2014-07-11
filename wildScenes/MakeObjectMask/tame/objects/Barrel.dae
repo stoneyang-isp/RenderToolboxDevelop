@@ -5,14 +5,14 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.69.0 r60991</authoring_tool>
     </contributor>
-    <created>2014-06-27T13:02:37</created>
-    <modified>2014-06-27T13:02:37</modified>
+    <created>2014-07-11T16:03:46</created>
+    <modified>2014-07-11T16:03:46</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
   <library_images/>
   <library_effects>
-    <effect id="Barrel-effect">
+    <effect id="Material01-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -46,8 +46,8 @@
     </effect>
   </library_effects>
   <library_materials>
-    <material id="Barrel-material" name="Barrel">
-      <instance_effect url="#Barrel-effect"/>
+    <material id="Material01-material" name="Material01">
+      <instance_effect url="#Material01-effect"/>
     </material>
   </library_materials>
   <library_geometries>
@@ -85,7 +85,7 @@
         <vertices id="Barrel-mesh-vertices">
           <input semantic="POSITION" source="#Barrel-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel-material" count="1216">
+        <polylist material="Material01-material" count="1216">
           <input semantic="VERTEX" source="#Barrel-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel-mesh-map-0" offset="2" set="0"/>
@@ -100,15 +100,11 @@
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
       <node id="Barrel" name="Barrel" type="NODE">
-        <translate sid="location">0 0 -1</translate>
-        <rotate sid="rotationZ">0 0 1 0</rotate>
-        <rotate sid="rotationY">0 1 0 0</rotate>
-        <rotate sid="rotationX">1 0 0 0</rotate>
-        <scale sid="scale">0.9999999 0.9999999 1</scale>
+        <matrix sid="transform">0.9999999 0 0 0 0 0.9999999 0 0 0 0 1 -1 0 0 0 1</matrix>
         <instance_geometry url="#Barrel-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel-material" target="#Barrel-material"/>
+              <instance_material symbol="Material01-material" target="#Material01-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>

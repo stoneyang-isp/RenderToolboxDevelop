@@ -5,14 +5,14 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.69.0 r60991</authoring_tool>
     </contributor>
-    <created>2014-06-27T13:34:59</created>
-    <modified>2014-06-27T13:34:59</modified>
+    <created>2014-07-11T16:04:25</created>
+    <modified>2014-07-11T16:04:25</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
   <library_images/>
   <library_effects>
-    <effect id="Bottle-effect">
+    <effect id="Material01-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -46,8 +46,8 @@
     </effect>
   </library_effects>
   <library_materials>
-    <material id="Bottle-material" name="Bottle">
-      <instance_effect url="#Bottle-effect"/>
+    <material id="Material01-material" name="Material01">
+      <instance_effect url="#Material01-effect"/>
     </material>
   </library_materials>
   <library_geometries>
@@ -85,7 +85,7 @@
         <vertices id="Bottle-mesh-vertices">
           <input semantic="POSITION" source="#Bottle-mesh-positions"/>
         </vertices>
-        <polylist material="Bottle-material" count="672">
+        <polylist material="Material01-material" count="672">
           <input semantic="VERTEX" source="#Bottle-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Bottle-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Bottle-mesh-map-0" offset="2" set="0"/>
@@ -104,7 +104,7 @@
         <instance_geometry url="#Bottle-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bottle-material" target="#Bottle-material"/>
+              <instance_material symbol="Material01-material" target="#Material01-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
