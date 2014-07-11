@@ -1,5 +1,0 @@
-object1
-tame/objects/Xylophone.dae
-tame/objects/ChampagneBottle.dae
-tame/objects/RingToy.dae
-tame/objects/Barrel.dae

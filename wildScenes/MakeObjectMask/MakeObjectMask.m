@@ -21,38 +21,20 @@ mappingsFile = 'ObjectMaskMappings.txt';
 % WriteDefaultMappingsFile( ...
 %     parentSceneFile, mappingsFile, '', white, white);
 
+% conditions file generated from objects
+varNames = {'object1'};
+varValues = objects';
 conditionsFile = 'ObjectMaskConditions.txt';
-
-% Barrel-material
-
-% Bottle-material
-
-% Stacker-material
-% Ring1-material
-% Ring2-material
-% Ring3-material
-% Ring4-material
-% Ring5-material
-
-% Fasteners-material
-% Keys-material
-% Mallet1-material
-% Mallet2-material
-
-% Trim
-% WallHanging centers
-% PianoCase
-% PianoLid
-
+WriteConditionsFile(conditionsFile, varNames, varValues);
 
 %% Choose batch renderer options.
-hints.imageWidth = 640;
-hints.imageHeight = 480;
+hints.imageWidth = 320;
+hints.imageHeight = 240;
 hints.recipeName = 'MakeWildScene';
 hints.renderer = 'Mitsuba';
-%hints.remodeler = 'InsertObjectRemodeler';
+hints.remodeler = 'InsertObjectRemodeler';
 
-hints.whichConditions = 1;
+hints.whichConditions = 1:4;
 
 toneMapFactor = 100;
 isScale = true;
@@ -65,3 +47,31 @@ montageFile = [montageName '.png'];
 [SRGBMontage, XYZMontage] = ...
     MakeMontage(radianceDataFiles, montageFile, toneMapFactor, isScale, hints);
 ShowXYZAndSRGB([], SRGBMontage, montageName);
+
+%% Try to find the objects.
+imageFolder = GetWorkingFolder('images', true, hints);
+for oo = 1:numel(hints.whichConditions)
+    
+    rendering = load(radianceDataFiles{oo});
+    imageSize = size(rendering.multispectralImage);
+    
+    objectMask = zeros(imageSize(1), imageSize(2), 'uint8');
+    for ii = 1:imageSize(1)
+        for jj = 1:imageSize(2)
+            pixelSpectrum = squeeze(rendering.multispectralImage(ii,jj,:));
+            if any(pixelSpectrum == 0)
+                objectMask(ii,jj) = 255;
+            end
+        end
+    end
+    
+    % save the mask image
+    objectFile = objects{hints.whichConditions(oo)};
+    [objectPath, objectName] = fileparts(objectFile);
+    maskFile = fullfile(imageFolder, [objectName '-mask.png']);
+    imwrite(objectMask, maskFile)
+    
+    % save the rendering by itself
+    imageFile = fullfile(imageFolder, [objectName '-srgb.png']);
+    MakeMontage(radianceDataFiles(oo), imageFile, toneMapFactor, isScale, hints);
+end

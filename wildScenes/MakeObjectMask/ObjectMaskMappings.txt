@@ -3,7 +3,7 @@ Collada {
     Camera:scale|sid=scale = -1 1 1
 }
 
-% materials
+% scene materials all matte, uniform unit reflectance
 Generic {
 	BaseBoard-material:material:matte
 	BaseBoard-material:diffuseReflectance.spectrum = 300:1 800:1
@@ -25,11 +25,10 @@ Generic {
 
 	Wall-material:material:matte
 	Wall-material:diffuseReflectance.spectrum = 300:1 800:1
-
 }
 
 
-% lights
+% scene lights all white uniform
 Generic {
     CeilingLight-mesh:light:area
     CeilingLight-mesh:intensity.spectrum = 300:1 800:1
@@ -39,4 +38,29 @@ Generic {
 
     LowRearLight-mesh:light:area
     LowRearLight-mesh:intensity.spectrum = 300:1 800:1
+}
+
+% object materials all matte, unit reflectance in one band
+Generic {
+	Material01-material:material:matte
+	Material01-material:diffuseReflectance.spectrum = 300:0 500:0 501:1 509:1 510:0 800:0
+
+	Material02-material:material:matte
+	Material02-material:diffuseReflectance.spectrum = 300:0 500:0 501:1 509:1 510:0 800:0
+
+	Material03-material:material:matte
+	Material03-material:diffuseReflectance.spectrum = 300:0 500:0 501:1 509:1 510:0 800:0
+
+	Material04-material:material:matte
+	Material04-material:diffuseReflectance.spectrum = 300:0 500:0 501:1 509:1 510:0 800:0
+
+	Material05-material:material:matte
+	Material05-material:diffuseReflectance.spectrum = 300:0 500:0 501:1 509:1 510:0 800:0
+
+	Material06-material:material:matte
+	Material06-material:diffuseReflectance.spectrum = 300:0 500:0 501:1 509:1 510:0 800:0
+
+	Material07-material:material:matte
+	Material07-material:diffuseReflectance.spectrum = 300:0 500:0 501:1 509:1 510:0 800:0
+
 }
