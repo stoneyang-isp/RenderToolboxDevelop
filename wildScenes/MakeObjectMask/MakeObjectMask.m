@@ -2,26 +2,24 @@
 %%% About Us://github.com/DavidBrainard/RenderToolbox3/wiki/About-Us
 %%% RenderToolbox3 is released under the MIT License.  See LICENSE.txt.
 %
-clear
-clc
-close all
-
 %% Insert objects into a scene and try to map pixels to objects.
+clear;
 
-parentSceneFile = 'tame/scenes/IndoorPlant.dae';
-objectFiles = { ...
-    'tame/objects/Barrel.dae', ...
-    'tame/objects/ChampagneBottle.dae', ...
-    'tame/objects/RingToy.dae', ...
-    'tame/objects/Xylophone.dae'};
+%% Locate files of interest.
+wildPath = fileparts(mfilename('fullpath'));
+parentScene = fullfile(wildPath, 'tame/scenes/IndoorPlant.dae');
+objectPath = fullfile(wildPath, 'tame/objects');
+objects = { ...
+    fullfile(objectPath, 'Barrel.dae'), ...
+    fullfile(objectPath, 'ChampagneBottle.dae'), ...
+    fullfile(objectPath, 'RingToy.dae'), ...
+    fullfile(objectPath, 'Xylophone.dae')};
 
-% base mappings file with all white reflecances and lights
-%   to be modified with area lights
+% mappings file was generated, then modified
 mappingsFile = 'ObjectMaskMappings.txt';
 % white = {'300:1 800:1'};
 % WriteDefaultMappingsFile( ...
 %     parentSceneFile, mappingsFile, '', white, white);
-
 
 conditionsFile = 'ObjectMaskConditions.txt';
 
@@ -50,20 +48,19 @@ conditionsFile = 'ObjectMaskConditions.txt';
 %% Choose batch renderer options.
 hints.imageWidth = 640;
 hints.imageHeight = 480;
-hints.workingFolder = fileparts(mfilename('fullpath'));
-hints.outputSubfolder = 'MakeWildScene';
+hints.recipeName = 'MakeWildScene';
+hints.renderer = 'Mitsuba';
+%hints.remodeler = 'InsertObjectRemodeler';
 
 hints.whichConditions = 1;
 
 toneMapFactor = 100;
 isScale = true;
-hints.renderer = 'Mitsuba';
-%hints.remodeler = 'InsertObjectRemodeler';
 
 % render them all!
-nativeSceneFiles = MakeSceneFiles(parentSceneFile, conditionsFile, mappingsFile, hints);
+nativeSceneFiles = MakeSceneFiles(parentScene, conditionsFile, mappingsFile, hints);
 radianceDataFiles = BatchRender(nativeSceneFiles, hints);
-montageName = sprintf('WildScenes (%s)', hints.renderer);
+montageName = sprintf('WildScene (%s)', hints.renderer);
 montageFile = [montageName '.png'];
 [SRGBMontage, XYZMontage] = ...
     MakeMontage(radianceDataFiles, montageFile, toneMapFactor, isScale, hints);
