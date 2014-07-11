@@ -5,62 +5,38 @@ Collada {
 
 % materials
 Generic {
-	AreaLights-material:material:matte
-	AreaLights-material:diffuseReflectance.spectrum = 300:1 800:1
+	BaseBoard-material:material:matte
+	BaseBoard-material:diffuseReflectance.spectrum = 300:1 800:1
 
-	DoorKnobs-material:material:matte
-	DoorKnobs-material:diffuseReflectance.spectrum = 300:1 800:1
+	Floor-material:material:matte
+	Floor-material:diffuseReflectance.spectrum = 300:1 800:1
 
-	Doors-material:material:matte
-	Doors-material:diffuseReflectance.spectrum = 300:1 800:1
+	Leaves-material:material:matte
+	Leaves-material:diffuseReflectance.spectrum = 300:1 800:1
 
-	FloorAndWalls-material:material:matte
-	FloorAndWalls-material:diffuseReflectance.spectrum = 300:1 800:1
+	Lights-material:material:matte
+	Lights-material:diffuseReflectance.spectrum = 300:1 800:1
 
-	PianoAccents-material:material:matte
-	PianoAccents-material:diffuseReflectance.spectrum = 300:1 800:1
+	Pot-material:material:matte
+	Pot-material:diffuseReflectance.spectrum = 300:1 800:1
 
-	PianoBench-material:material:matte
-	PianoBench-material:diffuseReflectance.spectrum = 300:1 800:1
+	Rocks-material:material:matte
+	Rocks-material:diffuseReflectance.spectrum = 300:1 800:1
 
-	PianoBlack-material:material:matte
-	PianoBlack-material:diffuseReflectance.spectrum = 300:1 800:1
-
-	PianoHarp-material:material:matte
-	PianoHarp-material:diffuseReflectance.spectrum = 300:1 800:1
-
-	PianoSoundBoard-material:material:matte
-	PianoSoundBoard-material:diffuseReflectance.spectrum = 300:1 800:1
-
-	Porcelain-material:material:matte
-	Porcelain-material:diffuseReflectance.spectrum = 300:1 800:1
-
-	Trim-material:material:matte
-	Trim-material:diffuseReflectance.spectrum = 300:1 800:1
-
-	TrimCorners-material:material:matte
-	TrimCorners-material:diffuseReflectance.spectrum = 300:1 800:1
-
-	WallHanging1-material:material:matte
-	WallHanging1-material:diffuseReflectance.spectrum = 300:1 800:1
-
-	WallHanging2-material:material:matte
-	WallHanging2-material:diffuseReflectance.spectrum = 300:1 800:1
-
-	WallHanging3-material:material:matte
-	WallHanging3-material:diffuseReflectance.spectrum = 300:1 800:1
+	Wall-material:material:matte
+	Wall-material:diffuseReflectance.spectrum = 300:1 800:1
 
 }
 
 
 % lights
 Generic {
-    AreaLight1-mesh:light:area
-    AreaLight1-mesh:intensity.spectrum = 300:1 800:1
+    CeilingLight-mesh:light:area
+    CeilingLight-mesh:intensity.spectrum = 300:1 800:1
 
-    AreaLight2-mesh:light:area
-    AreaLight2-mesh:intensity.spectrum = 300:1 800:1
+    HighRearLight-mesh:light:area
+    HighRearLight-mesh:intensity.spectrum = 300:1 800:1
 
-    AreaLight3-mesh:light:area
-    AreaLight3-mesh:intensity.spectrum = 300:1 800:1
+    LowRearLight-mesh:light:area
+    LowRearLight-mesh:intensity.spectrum = 300:1 800:1
 }

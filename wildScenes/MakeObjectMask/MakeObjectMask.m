@@ -8,14 +8,21 @@ close all
 
 %% Insert objects into a scene and try to map pixels to objects.
 
-parentSceneFile = 'tame/scenes/GrandPiano.dae';
+parentSceneFile = 'tame/scenes/IndoorPlant.dae';
 objectFiles = { ...
     'tame/objects/Barrel.dae', ...
     'tame/objects/ChampagneBottle.dae', ...
     'tame/objects/RingToy.dae', ...
     'tame/objects/Xylophone.dae'};
 
+% base mappings file with all white reflecances and lights
+%   to be modified with area lights
 mappingsFile = 'ObjectMaskMappings.txt';
+% white = {'300:1 800:1'};
+% WriteDefaultMappingsFile( ...
+%     parentSceneFile, mappingsFile, '', white, white);
+
+
 conditionsFile = 'ObjectMaskConditions.txt';
 
 % Barrel-material
@@ -41,10 +48,12 @@ conditionsFile = 'ObjectMaskConditions.txt';
 
 
 %% Choose batch renderer options.
-hints.imageWidth = 180;
-hints.imageHeight = 120;
+hints.imageWidth = 640;
+hints.imageHeight = 480;
 hints.workingFolder = fileparts(mfilename('fullpath'));
 hints.outputSubfolder = 'MakeWildScene';
+
+hints.whichConditions = 1;
 
 toneMapFactor = 100;
 isScale = true;
