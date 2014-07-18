@@ -15,21 +15,24 @@ objects = { ...
     fullfile(objectPath, 'RingToy.dae'), ...
     fullfile(objectPath, 'Xylophone.dae')};
 
-% mappings file was generated, then modified
+% mappings file was auto-generated, then modified by hand
 mappingsFile = 'ObjectMaskMappings.txt';
 % white = {'300:1 800:1'};
 % WriteDefaultMappingsFile( ...
 %     parentSceneFile, mappingsFile, '', white, white);
 
 % conditions file generated from objects
-varNames = {'object1'};
-varValues = objects';
+wls = 300:10:800;
+reflectance1 = GetSingleBandReflectance(wls, 27, 1);
+reflectances1 = repmat({reflectance1}, numel(objects), 1);
+varNames = {'object1', 'reflectance1'};
+varValues = cat(2, objects', reflectances1);
 conditionsFile = 'ObjectMaskConditions.txt';
 WriteConditionsFile(conditionsFile, varNames, varValues);
 
 %% Choose batch renderer options.
-hints.imageWidth = 320;
-hints.imageHeight = 240;
+hints.imageWidth = 640;
+hints.imageHeight = 480;
 hints.recipeName = 'MakeWildScene';
 hints.renderer = 'Mitsuba';
 hints.remodeler = 'InsertObjectRemodeler';
@@ -39,39 +42,71 @@ hints.whichConditions = 1:4;
 toneMapFactor = 100;
 isScale = true;
 
-% render them all!
+pixelShapeThreshold = 0.8;
+pixelMaskRgb = [0 255 0];
+
+%% Render all objects!
 nativeSceneFiles = MakeSceneFiles(parentScene, conditionsFile, mappingsFile, hints);
 radianceDataFiles = BatchRender(nativeSceneFiles, hints);
-montageName = sprintf('WildScene (%s)', hints.renderer);
-montageFile = [montageName '.png'];
-[SRGBMontage, XYZMontage] = ...
-    MakeMontage(radianceDataFiles, montageFile, toneMapFactor, isScale, hints);
-ShowXYZAndSRGB([], SRGBMontage, montageName);
 
 %% Try to find the objects.
+close all
+clc
+
 imageFolder = GetWorkingFolder('images', true, hints);
 for oo = 1:numel(hints.whichConditions)
-    
     rendering = load(radianceDataFiles{oo});
     imageSize = size(rendering.multispectralImage);
     
-    objectMask = zeros(imageSize(1), imageSize(2), 'uint8');
+    % save the sRgb image
+    objectFile = objects{hints.whichConditions(oo)};
+    [objectPath, objectName] = fileparts(objectFile);
+    imageFile = fullfile(imageFolder, [objectName '-srgb.png']);
+    sRgbImage = MakeMontage(radianceDataFiles(oo), imageFile, toneMapFactor, isScale, hints);
+    sRGBMasked = uint8(sRgbImage);
+    
+    % plot pixel spectra
+    %figure();
+    wls = MakeItWls(rendering.S);
+    
     for ii = 1:imageSize(1)
         for jj = 1:imageSize(2)
             pixelSpectrum = squeeze(rendering.multispectralImage(ii,jj,:));
-            if any(pixelSpectrum == 0)
-                objectMask(ii,jj) = 255;
+            pixelMin = min(pixelSpectrum);
+            pixelRange = max(pixelSpectrum) - pixelMin;
+            pixelShape = pixelSpectrum-pixelMin;
+            if pixelRange > 0
+                pixelShape = pixelShape ./ pixelRange;
+            end
+            
+            if sum(pixelShape > pixelShapeThreshold) == 1
+                sRGBMasked(ii,jj,:) = pixelMaskRgb;
+                %line(wls, pixelShape, ...
+                %    'Marker', 'none', 'LineStyle', '-');
             end
         end
     end
+    %set(gca, 'XTick', wls)
     
     % save the mask image
-    objectFile = objects{hints.whichConditions(oo)};
-    [objectPath, objectName] = fileparts(objectFile);
     maskFile = fullfile(imageFolder, [objectName '-mask.png']);
-    imwrite(objectMask, maskFile)
+    imwrite(sRGBMasked, maskFile)
     
-    % save the rendering by itself
-    imageFile = fullfile(imageFolder, [objectName '-srgb.png']);
-    MakeMontage(radianceDataFiles(oo), imageFile, toneMapFactor, isScale, hints);
+    % show sRgb
+    f = figure();
+    subplot(1,2,1);
+    imshow(uint8(sRgbImage));
+    title('sRgb');
+    
+    % show sRGB covered by mask
+    subplot(1,2,2);
+    imshow(sRGBMasked);
+    title('masked');
+    
+    % resize figure for convenience
+    pos = get(f, 'Position');
+    width = imageSize(2)*2.5;
+    height = imageSize(1)*1.25;
+    pos(3:4) = [width height];
+    set(f, 'Position', pos);
 end
