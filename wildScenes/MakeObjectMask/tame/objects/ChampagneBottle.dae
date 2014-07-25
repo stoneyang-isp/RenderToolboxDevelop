@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.69.0 r60991</authoring_tool>
     </contributor>
-    <created>2014-07-11T16:04:25</created>
-    <modified>2014-07-11T16:04:25</modified>
+    <created>2014-07-25T13:31:13</created>
+    <modified>2014-07-25T13:31:13</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -100,7 +100,11 @@
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
       <node id="Bottle" name="Bottle" type="NODE">
-        <matrix sid="transform">0.2203248 0 0 0 0 0.2203248 0 0 0 0 0.2203248 -1 0 0 0 1</matrix>
+        <translate sid="location">0 0 -1</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.2203248 0.2203248 0.2203248</scale>
         <instance_geometry url="#Bottle-mesh">
           <bind_material>
             <technique_common>

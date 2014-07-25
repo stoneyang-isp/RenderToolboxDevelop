@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.69.0 r60991</authoring_tool>
     </contributor>
-    <created>2014-07-11T16:09:33</created>
-    <modified>2014-07-11T16:09:33</modified>
+    <created>2014-07-25T13:32:05</created>
+    <modified>2014-07-25T13:32:05</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -292,7 +292,11 @@
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
       <node id="Keys" name="Keys" type="NODE">
-        <matrix sid="transform">0.2 0 0 -0.88 0 0.2 0 0 0 0 0.894726 0.17 0 0 0 1</matrix>
+        <translate sid="location">-0.88 0 0.17</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.2 0.2 0.894726</scale>
         <instance_geometry url="#Keys-mesh">
           <bind_material>
             <technique_common>
@@ -302,7 +306,11 @@
         </instance_geometry>
       </node>
       <node id="Fasteners" name="Fasteners" type="NODE">
-        <matrix sid="transform">0.2 0 0 -0.8799999 0 0.2 0 0 0 0 0.904726 0.1886082 0 0 0 1</matrix>
+        <translate sid="location">-0.8799999 0 0.1886082</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.2 0.2 0.904726</scale>
         <instance_geometry url="#Fasteners-mesh">
           <bind_material>
             <technique_common>
@@ -312,7 +320,11 @@
         </instance_geometry>
       </node>
       <node id="Mallet1" name="Mallet1" type="NODE">
-        <matrix sid="transform">0.1594365 -0.01144921 -0.006993341 0.5899997 0.01143771 0.1595898 -5.13138e-4 0.15 0.007012132 1.14071e-5 0.1598463 0.3 0 0 0 1</matrix>
+        <translate sid="location">0.5899997 0.15 0.3</translate>
+        <rotate sid="rotationZ">0 0 1 4.103274</rotate>
+        <rotate sid="rotationY">0 1 0 -2.511839</rotate>
+        <rotate sid="rotationX">1 0 0 0.004088791</rotate>
+        <scale sid="scale">0.16 0.16 0.16</scale>
         <instance_geometry url="#Mallet1-mesh">
           <bind_material>
             <technique_common>
@@ -322,7 +334,11 @@
         </instance_geometry>
       </node>
       <node id="Mallet2" name="Mallet2" type="NODE">
-        <matrix sid="transform">0.1559716 0.03501615 -0.006834639 0.7100003 -0.03498098 0.1561213 0.001569378 -0.25 0.007012415 -3.56008e-5 0.1598463 0.3 0 0 0 1</matrix>
+        <translate sid="location">0.7100003 -0.25 0.3</translate>
+        <rotate sid="rotationZ">0 0 1 -12.641</rotate>
+        <rotate sid="rotationY">0 1 0 -2.511941</rotate>
+        <rotate sid="rotationX">1 0 0 -0.01276086</rotate>
+        <scale sid="scale">0.16 0.16 0.16</scale>
         <instance_geometry url="#Mallet2-mesh">
           <bind_material>
             <technique_common>
