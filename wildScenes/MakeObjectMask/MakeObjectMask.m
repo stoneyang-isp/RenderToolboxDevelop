@@ -31,19 +31,13 @@ conditionsFile = 'ObjectMaskConditions.txt';
 WriteConditionsFile(conditionsFile, varNames, varValues);
 
 %% Choose batch renderer options.
-hints.imageWidth = 640;
-hints.imageHeight = 480;
+hints.imageWidth = 320;
+hints.imageHeight = 240;
 hints.recipeName = 'MakeWildScene';
 hints.renderer = 'Mitsuba';
 hints.remodeler = 'InsertObjectRemodeler';
 
-hints.whichConditions = 1:4;
-
-toneMapFactor = 100;
-isScale = true;
-
-pixelShapeThreshold = 0.8;
-pixelMaskRgb = [0 255 0];
+hints.whichConditions = 1;
 
 %% Render all objects!
 nativeSceneFiles = MakeSceneFiles(parentScene, conditionsFile, mappingsFile, hints);
@@ -52,6 +46,12 @@ radianceDataFiles = BatchRender(nativeSceneFiles, hints);
 %% Try to find the objects.
 close all
 clc
+
+toneMapFactor = 100;
+isScale = true;
+
+pixelThreshold = 0.1;
+pixelMaskRgb = [0 255 0];
 
 imageFolder = GetWorkingFolder('images', true, hints);
 for oo = 1:numel(hints.whichConditions)
@@ -65,28 +65,17 @@ for oo = 1:numel(hints.whichConditions)
     sRgbImage = MakeMontage(radianceDataFiles(oo), imageFile, toneMapFactor, isScale, hints);
     sRGBMasked = uint8(sRgbImage);
     
-    % plot pixel spectra
-    %figure();
     wls = MakeItWls(rendering.S);
     
     for ii = 1:imageSize(1)
         for jj = 1:imageSize(2)
             pixelSpectrum = squeeze(rendering.multispectralImage(ii,jj,:));
-            pixelMin = min(pixelSpectrum);
-            pixelRange = max(pixelSpectrum) - pixelMin;
-            pixelShape = pixelSpectrum-pixelMin;
-            if pixelRange > 0
-                pixelShape = pixelShape ./ pixelRange;
-            end
-            
-            if sum(pixelShape > pixelShapeThreshold) == 1
+            isHigh = pixelSpectrum > max(pixelSpectrum)*pixelThreshold;
+            if sum(isHigh) == 1
                 sRGBMasked(ii,jj,:) = pixelMaskRgb;
-                %line(wls, pixelShape, ...
-                %    'Marker', 'none', 'LineStyle', '-');
             end
         end
     end
-    %set(gca, 'XTick', wls)
     
     % save the mask image
     maskFile = fullfile(imageFolder, [objectName '-mask.png']);
