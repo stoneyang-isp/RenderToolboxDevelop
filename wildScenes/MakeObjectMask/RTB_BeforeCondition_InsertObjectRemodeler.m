@@ -91,9 +91,9 @@ for ii = 1:nObjects
             continue;
         end
         
-        % set the object position by translation
+        % increment the object translation by the given position
         translatePath = [nodeId ':translate|sid=location'];
-        SetSceneValue(objectIdMap, translatePath, objectPosition, true);
+        SetSceneValue(objectIdMap, translatePath, objectPosition, true, '+=');
         
         % find node materials
         materialsPath = [nodeId ':instance_geometry:bind_material:technique_common'];
