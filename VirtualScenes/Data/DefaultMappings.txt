@@ -1,0 +1,14 @@
+% flip the camera handedness to match Blender-Collada output to Mitsuba and PBRT
+Collada {
+    Camera:scale|sid=scale = -1 1 1
+}
+
+% turn on path tracing
+Mitsuba {
+    % interreflections
+    integrator:integrator:path
+    integrator:maxDepth.integer = 10
+
+    % control graininess
+    Camera-camera_sampler:sampleCount.integer = 512
+}
