@@ -22,7 +22,7 @@ mappingsFile = 'ObjectMaskMappings.txt';
 % WriteDefaultMappingsFile( ...
 %     parentSceneFile, mappingsFile, '', white, white);
 
-nConditions = 4;
+nConditions = 1;
 nObjects = 4;
 
 allNames = {};
@@ -62,8 +62,8 @@ conditionsFile = 'ObjectMaskConditions.txt';
 WriteConditionsFile(conditionsFile, allNames, allValues);
 
 %% Choose batch renderer options.
-hints.imageWidth = 640;
-hints.imageHeight = 480;
+hints.imageWidth = 320;
+hints.imageHeight = 240;
 hints.recipeName = 'MakeWildScene';
 hints.renderer = 'Mitsuba';
 hints.remodeler = 'InsertObjectRemodeler';
