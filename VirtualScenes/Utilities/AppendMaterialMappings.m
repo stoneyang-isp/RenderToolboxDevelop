@@ -2,6 +2,7 @@
 %   materialIds should be {'Material01-material', 'Floor-material', ...}
 %   materialDescriptions should should be {material1, material2, ...}
 %   idPrefix can be a string to prepend to all each materialId
+%   blockName can be a mappings block name: "Generic", "Generic foo", etc.
 % Each material1, material2, etc. must be a descriptsion returned from
 % BuildDescription()
 %
@@ -14,7 +15,7 @@
 %	BaseBoard-material:diffuseReflectance.spectrum = 300:1 800:1
 %
 %   etc.
-function mappingsFileOut = AppendMaterialMappings(mappingsFileIn, mappingsFileOut, materialIds, materialDescriptions, idPrefix)
+function mappingsFileOut = AppendMaterialMappings(mappingsFileIn, mappingsFileOut, materialIds, materialDescriptions, idPrefix, blockName)
 
 if nargin < 2 || isempty(mappingsFileOut)
     mappingsFileOut = mappingsFileIn;
@@ -39,8 +40,12 @@ if nargin < 4 || ~iscell(materialDescriptions) || isempty(materialDescriptions)
     end
 end
 
-if nargin < 5
+if nargin < 5 || isempty(idPrefix)
     idPrefix = '';
+end
+
+if nargin < 6 || isempty(blockName)
+    blockName = 'Generic';
 end
 
 % append a prefix to each id?
@@ -67,7 +72,7 @@ end
 % append mappings text to the output file
 try
     fid = fopen(mappingsFileOut, 'a');
-    WriteMappingsBlock(fid, [idPrefix 'materials'], 'Generic', elementInfo);
+    WriteMappingsBlock(fid, [idPrefix 'materials'], blockName, elementInfo);
     fclose(fid);
     
 catch err

@@ -22,8 +22,9 @@ for ii = 1:numel(elementInfo)
         elementInfo(ii).category, elementInfo(ii).type);
     for jj = 1:numel(elementInfo(ii).properties)
         prop = elementInfo(ii).properties(jj);
-        fprintf(fid, '\t%s:%s.%s = %s\n\n', elementInfo(ii).id, ...
+        fprintf(fid, '\t%s:%s.%s = %s\n', elementInfo(ii).id, ...
             prop.propertyName, prop.valueType, prop.propertyValue);
     end
+    fprintf(fid, '\n');
 end
 fprintf(fid, '}\n');

@@ -1,9 +1,10 @@
 %% Append light spectra to a mappings file.
 %   lightIds should be {'CeilingLight-mesh', 'WindowLight-mesh', ...}
 %   lightDescriptions should should be {light1, light2, ...}
+%   blockName can be a mappings block name: "Generic", "Generic foo", etc.
 % Each light1, light2, etc. must be a descriptsion returned from
 % BuildDescription()
-function mappingsFileOut = AppendLightMappings(mappingsFileIn, mappingsFileOut, lightIds, lightDescriptions)
+function mappingsFileOut = AppendLightMappings(mappingsFileIn, mappingsFileOut, lightIds, lightDescriptions, blockName)
 
 if nargin < 2 || isempty(mappingsFileOut)
     mappingsFileOut = mappingsFileIn;
@@ -28,6 +29,10 @@ if nargin < 4 || ~iscell(lightDescriptions) || isempty(lightDescriptions)
     end
 end
 
+if nargin < 5 || isempty(blockName)
+    blockName = 'Generic';
+end
+
 % pack up mappings data to write as formatted text
 elementInfo = [lightDescriptions{:}];
 for ii = 1:nLights
@@ -44,7 +49,7 @@ end
 % append mappings text to the output file
 try
     fid = fopen(mappingsFileOut, 'a');
-    WriteMappingsBlock(fid, 'lights', 'Generic', elementInfo);
+    WriteMappingsBlock(fid, 'lights', blockName, elementInfo);
     fclose(fid);
     
 catch err

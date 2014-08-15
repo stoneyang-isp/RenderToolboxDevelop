@@ -33,6 +33,17 @@ if (0 == nObjects)
     return;
 end
 
+% find object positions
+isPosition = false(1, numVars);
+for ii = 1:numel(varNames)
+    isPosition(ii) = ~isempty(strfind(varNames{ii}, 'position'));
+end
+
+nPositions = sum(isPosition);
+if (nPositions ~= nObjects)
+    return;
+end
+
 % get the parent elements to receive inserted element from object document
 idMap = GenerateSceneIDMap(docNode);
 visualScenePath = 'document:COLLADA:library_visual_scenes:visual_scene';
@@ -45,9 +56,14 @@ libraryEffectsPath = 'document:COLLADA:library_effects';
 libraryEffects = SearchScene(idMap, libraryEffectsPath);
 
 % read object files
+objectNames = varNames(isObjectFile);
 objectFileNames = varValues(isObjectFile);
+objectPositions = varValues(isPosition);
 for ii = 1:nObjects
-    [objectDocNode, objectIdMap] = ReadSceneDOM(objectFileNames{ii});
+    objectName = objectNames{ii};
+    objectFullPath = GetVirtualScenesPath(objectFileNames{ii});
+    [objectDocNode, objectIdMap] = ReadSceneDOM(objectFullPath);
+    objectPosition = objectPositions{ii};
     
     % find new geometries to copy into the document
     objectIds = objectIdMap.keys();
@@ -76,44 +92,85 @@ for ii = 1:nObjects
             continue;
         end
         
-        % copy the whole top-level node
-        nodeClone = docNode.importNode(element, true);
-        visualScene.appendChild(nodeClone);
+        % increment the object translation by the given position
+        translatePath = [nodeId ':translate|sid=location'];
+        SetSceneValue(objectIdMap, translatePath, objectPosition, true, '+=');
         
-        % copy the whole geometry
-        geometryClone = docNode.importNode(objectIdMap(geometryId), true);
-        libraryGeometries.appendChild(geometryClone);
-        
-        % copy each whole material
+        % find node materials
         materialsPath = [nodeId ':instance_geometry:bind_material:technique_common'];
         materialsElement = SearchScene(objectIdMap, materialsPath);
-        children = GetElementChildren(materialsElement, 'instance_material');
-        for kk = 1:numel(children)
-            materialAttribute = GetElementAttributes(children{kk}, 'target');
-            materialId = char(materialAttribute.getTextContent());
-            materialId = materialId(materialId ~= '#');
-            if (idMap.isKey(materialId))
-                continue;
-            end
+        materialReferences = GetElementChildren(materialsElement, 'instance_material');
+        if isempty(materialReferences)
+            continue;
+        end
+        
+        % take one material per node
+        firstMaterial = materialReferences{1};
+        materialAttribute = GetElementAttributes(firstMaterial, 'target');
+        materialId = char(materialAttribute.getTextContent());
+        materialId = materialId(materialId ~= '#');
+        
+        % shallow copy the material's effect
+        effectPath = [materialId ':instance_effect.url'];
+        effectId = GetSceneValue(objectIdMap, effectPath);
+        if (isempty(effectId))
+            continue;
+        end
+        effectId = effectId(effectId ~= '#');
+        
+        % copy node to working document and rename it
+        newNodeId = [objectName '-' nodeId];
+        if ~idMap.isKey(newNodeId)
+            nodeClone = docNode.importNode(element, true);
+            visualScene.appendChild(nodeClone);
+            idMap(newNodeId) = nodeClone;
+        end
+        idPath = [newNodeId '.id'];
+        SetSceneValue(idMap, idPath, newNodeId, true);
+        
+        % copy geometry to working document
+        newGeometryId = [objectName '-' geometryId];
+        if ~idMap.isKey(newGeometryId)
+            geometryClone = docNode.importNode(objectIdMap(geometryId), true);
+            libraryGeometries.appendChild(geometryClone);
+            idMap(newGeometryId) = geometryClone;
+        end
+        idPath = [newGeometryId '.id'];
+        SetSceneValue(idMap, idPath, newGeometryId, true);
+        refPath = [newNodeId ':instance_geometry.url'];
+        SetSceneValue(idMap, refPath, ['#' newGeometryId], true);
+        
+        % copy material to working document and rename
+        newMaterialId = [objectName '-' materialId];
+        if ~idMap.isKey(newMaterialId)
             materialClone = docNode.importNode(objectIdMap(materialId), true);
             libraryMaterials.appendChild(materialClone);
-            idMap(materialId) = materialClone;
-            
-            % shallow copy each effect
-            effectPath = [materialId ':instance_effect.url'];
-            effectId = GetSceneValue(objectIdMap, effectPath);
-            if (isempty(effectId))
-                continue;
-            end
-            effectId = effectId(effectId ~= '#');
-            if (idMap.isKey(effectId))
-                continue;
-            end
+            idMap(newMaterialId) = materialClone;
+        end
+        idPath = [newMaterialId '.id'];
+        SetSceneValue(idMap, idPath, newMaterialId, true);
+        namePath = [newMaterialId '.name'];
+        materialName = GetSceneValue(idMap, namePath);
+        newMaterialName = [objectName '-' materialName];
+        SetSceneValue(idMap, namePath, newMaterialName, true);
+        refPath = [newNodeId ':instance_geometry:bind_material:technique_common:instance_material.symbol'];
+        SetSceneValue(idMap, refPath, newMaterialId, true);
+        refPath = [newNodeId ':instance_geometry:bind_material:technique_common:instance_material.target'];
+        SetSceneValue(idMap, refPath, ['#' newMaterialId], true);
+        refPath = [newGeometryId ':mesh:polylist.material'];
+        SetSceneValue(idMap, refPath, newMaterialId, true);
+        
+        
+        % copy effect to working document
+        % fill in a basic Lambertian/matte effect
+        % rename it
+        newEffectlId = [objectName '-' effectId];
+        if ~idMap.isKey(newEffectlId)
             effectClone = docNode.importNode(objectIdMap(effectId), false);
             libraryEffects.appendChild(effectClone);
-            idMap(effectId) = effectClone;
+            idMap(newEffectlId) = effectClone;
             
-            % fill in a basic Lambertian (matte) effect
+            % fill in a basic Lambertian/matte effect
             profile = CreateElementChild(effectClone, 'profile_COMMON');
             technique = CreateElementChild(profile, 'technique');
             technique.setAttribute('sid', 'common');
@@ -123,5 +180,10 @@ for ii = 1:nObjects
             colorElement.setAttribute('sid', 'diffuse');
             colorElement.setTextContent('1 0 0');
         end
+        idPath = [newEffectlId '.id'];
+        SetSceneValue(idMap, idPath, newEffectlId, true);
+        refPath = [newMaterialId ':instance_effect.url'];
+        SetSceneValue(idMap, refPath, ['#' newEffectlId], true);
+        
     end
 end
