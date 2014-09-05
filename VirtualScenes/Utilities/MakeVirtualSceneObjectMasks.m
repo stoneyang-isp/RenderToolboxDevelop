@@ -11,14 +11,10 @@ if nargin < 2 || isempty(pixelThreshold)
 end
 
 if nargin < 3 || isempty(pixelMaskRgbs)
-    pixelMaskRgbs = 255*[ ...
-        0 0 1; ...
-        0 1 0; ...
-        0 1 1; ...
-        1 0 0; ...
-        1 0 1; ...
-        1 1 0; ...
-        1 1 1];
+    nColors = 32;
+    jetColors = jet(32);
+    %jetColors = jetColors(randperm(nColors), :);
+    pixelMaskRgbs = 255*jetColors;
 end
 
 if nargin < 4 || isempty(toneMapFactor)
@@ -66,6 +62,12 @@ objectMaskSuperimposed = uint8(sceneSrgb);
 for ii = 1:imageSize(1)
     for jj = 1:imageSize(2)
         pixelSpectrum = squeeze(maskRendering.multispectralImage(ii,jj,:));
+        %         [sortedSpectrum, sortOrder] = sort(pixelSpectrum);
+        %         isBand = sortOrder(end);
+        %         if sortedSpectrum(end) > sortedSpectrum(end-1)
+        %             objectMask(ii,jj,:) = pixelMaskRgbs(isBand,:);
+        %             objectMaskSuperimposed(ii,jj,:) = pixelMaskRgbs(isBand,:);
+        %         end
         isHigh = pixelSpectrum > max(pixelSpectrum)*pixelThreshold;
         if sum(isHigh) == 1
             objectMask(ii,jj,:) = pixelMaskRgbs(isHigh,:);

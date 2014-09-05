@@ -30,7 +30,7 @@ conditionsFile = [sceneName '-Conditions.txt'];
 sceneMetadata = ReadMetadata(baseSceneModel);
 parentSceneFile = GetVirtualScenesPath(sceneMetadata.relativePath);
 
-%% Set up the base scene.
+%% Set up the base scene lights.
 % set base scene lights to white area lights when making pixel masks
 whiteArea = BuildDesription('light', 'area', ...
     {'intensity'}, ...
@@ -39,19 +39,28 @@ whiteArea = BuildDesription('light', 'area', ...
 maskBaseSceneLightSet = cell(1, numel(sceneMetadata.lightIds));
 [maskBaseSceneLightSet{:}] = deal(whiteArea);
 
-% set base scene materials to matte white when making pixel masks
-whiteMatte = BuildDesription('material', 'matte', ...
-    {'diffuseReflectance'}, ...
-    {'300:1 800:1'}, ...
-    {'spectrum'});
-maskBaseSceneMaterialSet = cell(size(baseSceneMaterials));
-[maskBaseSceneMaterialSet{:}] = deal(whiteMatte);
-
 % write out mappings for base scene lights
 AppendLightMappings(defaultMappings, mappingsFile, ...
     sceneMetadata.lightIds, baseSceneLights, 'Generic scene');
 AppendLightMappings(mappingsFile, mappingsFile, ...
     sceneMetadata.lightIds, maskBaseSceneLightSet, 'Generic mask');
+
+%% Identify each base scene object with a single-band reflectance.
+maskBaseSceneMaterialSet = cell(size(baseSceneMaterials));
+
+% choose single-band reflectances starting at 400nm
+wls = 300:10:800;
+startIndex = 10;
+background = 0;
+inBand = 1;
+for ii = 1:numel(maskBaseSceneMaterialSet)
+    reflectance = GetSingleBandReflectance(wls, startIndex+ii, background, inBand);
+    singleBandMatte = BuildDesription('material', 'matte', ...
+        {'diffuseReflectance'}, ...
+        reflectance, ...
+        {'spectrum'});
+    maskBaseSceneMaterialSet{ii} = singleBandMatte;
+end
 
 % write out mappings for base scene materials
 AppendMaterialMappings(mappingsFile, mappingsFile, ...
@@ -60,9 +69,9 @@ AppendMaterialMappings(mappingsFile, mappingsFile, ...
     sceneMetadata.materialIds, maskBaseSceneMaterialSet, [], 'Generic mask');
 
 %% Set up inserted objects.
-% choose single-band reflectances starting at 400nm
-wls = 300:10:800;
-startIndex = 10;
+
+% single-band reflectances starting after the base scene reflectances
+startIndex = startIndex + numel(maskBaseSceneMaterialSet);
 
 % basic conditions file columns
 allNames = {'imageName', 'groupName'};
@@ -74,8 +83,8 @@ for oo = 1:nInserted
     modelName = insertedObjects{oo};
     objectMetadata = ReadMetadata(modelName);
     
-    % identify each object with a single-band reflectance
-    reflectance = GetSingleBandReflectance(wls, startIndex+oo, 1);
+    % identify each inserted object with a single-band reflectance
+    reflectance = GetSingleBandReflectance(wls, startIndex+oo, background, inBand);
     singleBandMatte = BuildDesription('material', 'matte', ...
         {'diffuseReflectance'}, ...
         reflectance, ...
