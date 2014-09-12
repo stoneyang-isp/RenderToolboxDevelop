@@ -9,15 +9,15 @@ if nargin < 2 || isempty(pixelThreshold)
     pixelThreshold = 0.1;
 end
 
-if nargin < 4 || isempty(toneMapFactor)
+if nargin < 3 || isempty(toneMapFactor)
     toneMapFactor = 100;
 end
 
-if nargin < 5 || isempty(isScale)
+if nargin < 4 || isempty(isScale)
     isScale = true;
 end
 
-if nargin < 6 || isempty(imageName)
+if nargin < 5 || isempty(imageName)
     imageName = recipe.input.hints.recipeName;
 end
 
