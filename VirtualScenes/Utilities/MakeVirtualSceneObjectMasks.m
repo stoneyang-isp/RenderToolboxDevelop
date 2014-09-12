@@ -1,20 +1,12 @@
 % Analyze Virtual Scene renderings for inserted object pixel masks.
 %   recipe should be a recipe from BuildVirtualSceneRecipe
 %   pixelThreshold can be mask "conservativeness" like 0.1
-%   pixelMaskRgbs can be array of RGB rows for inserted objects
 %   toneMapFactor and isScale are passed to MakeMontage()
 %   imageName is optional base file name for images
-function recipe = MakeVirtualSceneObjectMasks(recipe, pixelThreshold, pixelMaskRgbs, toneMapFactor, isScale, imageName)
+function recipe = MakeVirtualSceneObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale, imageName)
 
 if nargin < 2 || isempty(pixelThreshold)
     pixelThreshold = 0.1;
-end
-
-if nargin < 3 || isempty(pixelMaskRgbs)
-    nColors = 32;
-    jetColors = jet(32);
-    %jetColors = jetColors(randperm(nColors), :);
-    pixelMaskRgbs = 255*jetColors;
 end
 
 if nargin < 4 || isempty(toneMapFactor)
@@ -44,7 +36,7 @@ end
 % save the scene rendering in sRgb
 imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
 sceneSrgbFile = fullfile(imageFolder, [imageName '-srgb.png']);
-sceneSrgb = MakeMontage({sceneDataFile}, ...
+MakeMontage({sceneDataFile}, ...
     sceneSrgbFile, toneMapFactor, isScale, recipe.input.hints);
 recipe.processing.sceneSrgbFile = sceneSrgbFile;
 
@@ -57,32 +49,22 @@ recipe.processing.maskSrgbFile = maskSrgbFile;
 % make a mask image that identifies objects by color
 maskRendering = load(maskDataFile);
 imageSize = size(maskRendering.multispectralImage);
-objectMask = zeros(imageSize(1), imageSize(2), 3, 'uint8');
-objectMaskSuperimposed = uint8(sceneSrgb);
+materialIndexMask = zeros(imageSize(1), imageSize(2), 'uint8');
 for ii = 1:imageSize(1)
     for jj = 1:imageSize(2)
         pixelSpectrum = squeeze(maskRendering.multispectralImage(ii,jj,:));
-        %         [sortedSpectrum, sortOrder] = sort(pixelSpectrum);
-        %         isBand = sortOrder(end);
-        %         if sortedSpectrum(end) > sortedSpectrum(end-1)
-        %             objectMask(ii,jj,:) = pixelMaskRgbs(isBand,:);
-        %             objectMaskSuperimposed(ii,jj,:) = pixelMaskRgbs(isBand,:);
-        %         end
         isHigh = pixelSpectrum > max(pixelSpectrum)*pixelThreshold;
         if sum(isHigh) == 1
-            objectMask(ii,jj,:) = pixelMaskRgbs(isHigh,:);
-            objectMaskSuperimposed(ii,jj,:) = pixelMaskRgbs(isHigh,:);
+            whichMaterial = find(isHigh, 1, 'first');
+            materialIndexMask(ii,jj) = whichMaterial;
         end
     end
 end
+recipe.processing.materialIndexImage = materialIndexMask;
 
-% save the mask itself in rgb
-maskRgbFile = fullfile(imageFolder, [imageName '-mask.png']);
-imwrite(objectMask, maskRgbFile)
-recipe.processing.maskRgbFile = maskRgbFile;
-
-% save the mask superimposed on the scene in rgb
-maskSuperimposedFile = fullfile(imageFolder, [imageName '-superimposed.png']);
-imwrite(objectMaskSuperimposed, maskSuperimposedFile)
-recipe.processing.maskSuperimposedFile = maskSuperimposedFile;
-
+% save an image that shows coverage for the materialIndexImage
+maskCoverage = zeros(imageSize(1), imageSize(2), 'uint8');
+maskCoverage(materialIndexMask > 0) = 255;
+maskCoverageFile = fullfile(imageFolder, [imageName '-coverage.png']);
+imwrite(maskCoverage, maskCoverageFile)
+recipe.processing.maskCoverageFile = maskCoverageFile;

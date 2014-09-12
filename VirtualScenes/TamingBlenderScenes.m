@@ -42,8 +42,10 @@
 % Note: our material-pixel mask routines only work with direct
 % illumination, so add enough lights to reach all parts of the scene.
 %
-% Finally, export the Blender scene to a Collada (.dae) file.  Save the
-% Blender and Collada file in the VitualScenes repository.
+% Finally, export the Blender scene to a Collada (.dae) file.  In the lower
+% left of the export dialog, choose Collada Options: Transformation Type
+% TransRotLoc.  Save the Blender and Collada file in the VitualScenes
+% repository.
 %
 % The Metadata work includes:
 %   - Determine the list of all material ids used in the Collada scene.
