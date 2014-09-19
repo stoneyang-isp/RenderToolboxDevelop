@@ -9,7 +9,7 @@ Mitsuba mask {
     integrator:integrator:direct
 
     % control graininess
-    Camera-camera_sampler:sampleCount.integer = 8
+    Camera-camera_sampler:sampleCount.integer = 32
 }
 
 % turn on path tracing for the regular scene
@@ -18,5 +18,5 @@ Mitsuba scene {
     integrator:maxDepth.integer = 10
 
     % control graininess
-    Camera-camera_sampler:sampleCount.integer = 64
+    Camera-camera_sampler:sampleCount.integer = 128
 }
