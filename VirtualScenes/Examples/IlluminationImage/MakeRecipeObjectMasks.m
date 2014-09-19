@@ -21,26 +21,17 @@ if nargin < 5 || isempty(imageName)
     imageName = recipe.input.hints.recipeName;
 end
 
-% find the mask and scene renderings
+% find the mask rendering
 nRenderings = numel(recipe.rendering.radianceDataFiles);
 for ii = 1:nRenderings
     dataFile = recipe.rendering.radianceDataFiles{ii};
     if ~isempty(strfind(dataFile, 'mask.mat'))
         maskDataFile = dataFile;
     end
-    if ~isempty(strfind(dataFile, 'scene.mat'))
-        sceneDataFile = dataFile;
-    end
 end
 
-% save the scene rendering in sRgb
-imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
-sceneSrgbFile = fullfile(imageFolder, [imageName '-srgb.png']);
-MakeMontage({sceneDataFile}, ...
-    sceneSrgbFile, toneMapFactor, isScale, recipe.input.hints);
-recipe.processing.sceneSrgbFile = sceneSrgbFile;
-
 % save the mask rendering in sRgb
+imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
 maskSrgbFile = fullfile(imageFolder, [imageName '-mask-srgb.png']);
 MakeMontage({maskDataFile}, ...
     maskSrgbFile, toneMapFactor, isScale, recipe.input.hints);
@@ -65,10 +56,6 @@ recipe.processing.materialIndexImage = materialIndexMask;
 % save an image that shows coverage for the materialIndexImage
 maskCoverage = zeros(imageSize(1), imageSize(2), 'uint8');
 maskCoverage(materialIndexMask > 0) = 255;
-maskCoverageFile = fullfile(imageFolder, [imageName '-coverage.png']);
+maskCoverageFile = fullfile(imageFolder, [imageName '-mask-coverage.png']);
 imwrite(maskCoverage, maskCoverageFile)
 recipe.processing.maskCoverageFile = maskCoverageFile;
-
-% note spectral sampling for later analysis
-recipe.processing.imageSize = imageSize;
-recipe.processing.S = maskRendering.S;
