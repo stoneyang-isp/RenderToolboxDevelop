@@ -7,10 +7,10 @@
 %   baseSceneLights should be {light1, light2, ...}
 %   insertedObjects should be {'Barrel', 'Barrel', 'RingToy', ...}
 %   objectPositions should be {[xyz], [xyz], [xyz], ...}
-%   objectMaterials should be {{materialSet1}, {materialSet2}, {materialSet3}, ...}
+%   objectMaterials should be {material1, material2, ...}
 function recipe = BuildVirtualSceneRecipe(sceneName, hints, defaultMappings, ...
     baseSceneModel, baseSceneMaterials, baseSceneLights, ...
-    insertedObjects, objectPositions, objectMaterialSets)
+    insertedObjects, objectPositions, objectMaterials)
 
 if nargin < 2
     hints = GetDefaultHints();
@@ -33,7 +33,8 @@ flashMetadata = ReadMetadata('CameraFlash');
 
 % each scene material gets has a corresponding
 % single-band reflectance in the mask condition
-materialsByIndex = cell(1, numel(baseSceneMaterials) + numel(objectMaterialSets));
+sceneMaterialsByIndex = cell(1, numel(baseSceneMaterials) + numel(objectMaterials));
+maskMaterialsByIndex = cell(size(sceneMaterialsByIndex));
 
 %% Set up the base scene lights.
 % set base scene lights turn off base scene lights when making pixel masks
@@ -51,21 +52,22 @@ AppendLightMappings(mappingsFile, mappingsFile, ...
     sceneMetadata.lightIds, maskBaseSceneLightSet, 'Generic mask');
 
 %% Identify each base scene object with a single-band reflectance.
-maskBaseSceneMaterialSet = cell(size(baseSceneMaterials));
 
 % choose single-band reflectances starting at 400nm
 wls = 300:10:800;
 wlsOffset = 10;
 background = 0;
 inBand = 1;
-for ii = 1:numel(maskBaseSceneMaterialSet)
+maskBaseSceneMaterialSet = cell(size(baseSceneMaterials));
+for ii = 1:numel(baseSceneMaterials)
     reflectance = GetSingleBandReflectance(wls, wlsOffset+ii, background, inBand);
     singleBandMatte = BuildDesription('material', 'matte', ...
         {'diffuseReflectance'}, ...
         reflectance, ...
         {'spectrum'});
     maskBaseSceneMaterialSet{ii} = singleBandMatte;
-    materialsByIndex{ii} = singleBandMatte;
+    maskMaterialsByIndex{ii} = singleBandMatte;
+    sceneMaterialsByIndex{ii} = baseSceneMaterials{ii};
 end
 
 % write out mappings for base scene materials
@@ -117,7 +119,11 @@ for oo = 1:nInserted
         {'spectrum'});
     maskObjectMaterialSet = cell(1, numel(objectMetadata.materialIds));
     [maskObjectMaterialSet{:}] = deal(singleBandMatte);
-    materialsByIndex{sceneOffset+oo} = singleBandMatte;
+    maskMaterialsByIndex{sceneOffset+oo} = singleBandMatte;
+    
+    sceneMaterialsByIndex{sceneOffset+oo} = objectMaterials{oo};
+    sceneObjectMaterialSet = cell(1, numel(objectMetadata.materialIds));
+    [sceneObjectMaterialSet{:}] = deal(objectMaterials{oo});
     
     % add conditions columns for each object
     objectColumn = sprintf('object-%d', oo);
@@ -135,7 +141,7 @@ for oo = 1:nInserted
     % write out mappings for object materials
     idPrefix = [objectColumn '-'];
     AppendMaterialMappings(mappingsFile, mappingsFile, ...
-        objectMetadata.materialIds, objectMaterialSets{oo}, idPrefix, 'Generic scene');
+        objectMetadata.materialIds, sceneObjectMaterialSet, idPrefix, 'Generic scene');
     AppendMaterialMappings(mappingsFile, mappingsFile, ...
         objectMetadata.materialIds, maskObjectMaterialSet, idPrefix, 'Generic mask');
 end
@@ -147,13 +153,16 @@ WriteConditionsFile(conditionsFile, allNames, allValues);
 toneMapFactor = 100;
 isScale = true;
 pixelThreshold = 0.1;
+filterWidth = 5;
 executive = { ...
     @MakeRecipeSceneFiles, ...
     @MakeRecipeRenderings, ...
-    @(recipe)MakeVirtualSceneObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale, sceneName)};
+    @(recipe)MakeRecipeObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale, sceneName), ...
+    @(recipe)MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale, sceneName)};
 
 recipe = NewRecipe([], executive, parentSceneFile, ...
     conditionsFile, mappingsFile, hints);
 
 % record which single-band reflectances correspond to which scene materials
-recipe.processing.materialsByIndex = materialsByIndex;
+recipe.processing.maskMaterialsByIndex = maskMaterialsByIndex;
+recipe.processing.sceneMaterialsByIndex = sceneMaterialsByIndex;
