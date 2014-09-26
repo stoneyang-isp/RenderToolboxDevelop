@@ -21,37 +21,49 @@ if nargin < 5 || isempty(imageName)
     imageName = recipe.input.hints.recipeName;
 end
 
-% find the mask rendering
+% find the mask renderings
 nRenderings = numel(recipe.rendering.radianceDataFiles);
+isMask = false(1, nRenderings);
 for ii = 1:nRenderings
     dataFile = recipe.rendering.radianceDataFiles{ii};
-    if ~isempty(strfind(dataFile, 'mask.mat'))
-        maskDataFile = dataFile;
-    end
+    isMask(ii) = ~isempty(regexp(dataFile, 'mask-\d+\.mat$', 'once'));
+end
+maskDataFiles = recipe.rendering.radianceDataFiles(isMask);
+
+% start building an object mask from the mask renderings
+rendering = load(maskDataFiles{1});
+imageSize = size(rendering.multispectralImage);
+materialIndexMask = zeros(imageSize(1), imageSize(2), 'uint8');
+grandMultispectralImage = zeros(imageSize(1), imageSize(2), 0);
+
+imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
+nPages = numel(maskDataFiles);
+for pp = 1:nPages
+    % save mask rendering in sRgb
+    dataFile = maskDataFiles{pp};
+    maskName = sprintf('mask-%d', pp);
+    maskSrgbFile = fullfile(imageFolder, [imageName '-' maskName '-srgb.png']);
+    MakeMontage({dataFile}, ...
+        maskSrgbFile, toneMapFactor, isScale, recipe.input.hints);
+    recipe.processing.maskSrgbFile{pp} = maskSrgbFile;
+    
+    % stack up all the mask renderings
+    rendering = load(dataFile);
+    grandMultispectralImage = cat(3, grandMultispectralImage, rendering.multispectralImage);
 end
 
-% save the mask rendering in sRgb
-imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
-maskSrgbFile = fullfile(imageFolder, [imageName '-mask-srgb.png']);
-MakeMontage({maskDataFile}, ...
-    maskSrgbFile, toneMapFactor, isScale, recipe.input.hints);
-recipe.processing.maskSrgbFile = maskSrgbFile;
-
 % make a mask image that identifies objects by color
-maskRendering = load(maskDataFile);
-imageSize = size(maskRendering.multispectralImage);
-materialIndexMask = zeros(imageSize(1), imageSize(2), 'uint8');
 for ii = 1:imageSize(1)
     for jj = 1:imageSize(2)
-        pixelSpectrum = squeeze(maskRendering.multispectralImage(ii,jj,:));
+        pixelSpectrum = squeeze(grandMultispectralImage(ii,jj,:));
         isHigh = pixelSpectrum > max(pixelSpectrum)*pixelThreshold;
         if sum(isHigh) == 1
-            whichMaterial = find(isHigh, 1, 'first');
-            materialIndexMask(ii,jj) = whichMaterial;
+            whichBand = find(isHigh, 1, 'first');
+            materialIndexMask(ii,jj) = whichBand;
         end
     end
 end
-recipe.processing.materialIndexImage = materialIndexMask;
+recipe.processing.materialIndexMask = materialIndexMask;
 
 % save an image that shows coverage for the materialIndexImage
 maskCoverage = zeros(imageSize(1), imageSize(2), 'uint8');

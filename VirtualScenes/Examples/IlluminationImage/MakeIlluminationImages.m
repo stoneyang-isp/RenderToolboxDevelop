@@ -3,8 +3,8 @@ clear;
 clc;
 
 %% Choose batch renderer options.
-hints.imageWidth = 320;
-hints.imageHeight = 240;
+hints.imageWidth = 640;
+hints.imageHeight = 480;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
 hints.recipeName = 'IlluminationImages';
@@ -56,7 +56,7 @@ skyArea = BuildDesription('light', 'area', ...
 lights = {whiteArea, sunArea, skyArea};
 
 %% Choose sets of base scenes and objects to work with.
-baseSceneNames = {'Warehouse'};
+baseSceneNames = {'IndoorPlant', 'Warehouse'};
 objectNames = {'Barrel', 'ChampagneBottle', 'RingToy', 'Xylophone'};
 
 %% Make a recipe for each base scene, with some objects inserted.
@@ -99,7 +99,7 @@ for bb = 1:nBaseScenes
         baseSceneName, baseSceneMaterials, baseSceneLights, ...
         insertedObjects, objectPositions, objectMaterialSets);
     
-    recipe = ExecuteRecipe(recipe, 1:2);
+    recipe = ExecuteRecipe(recipe, 1:4);
     
     recipeArchives{oo} = fullfile(GetUserFolder(), 'render-toolbox', sceneName);
     PackUpRecipe(recipe, recipeArchives{oo}, {'temp'});

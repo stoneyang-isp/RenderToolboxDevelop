@@ -38,10 +38,10 @@ S = sceneRendering.S;
 spexelWls = MakeItWls(S);
 nSpexelWls = numel(spexelWls);
 spacing = S(2);
-nMaterials = numel(recipe.processing.sceneMaterialsByIndex);
+nMaterials = numel(recipe.processing.allSceneMaterials);
 spexels = zeros(nMaterials, nSpexelWls);
 for ii = 1:nMaterials
-    material = recipe.processing.sceneMaterialsByIndex{ii};
+    material = recipe.processing.allSceneMaterials{ii};
     propertyNames = {material.properties.propertyName};
     isDiffuse = strcmp(propertyNames, 'diffuseReflectance');
     diffuseReflectance = material.properties(isDiffuse);
@@ -51,8 +51,8 @@ for ii = 1:nMaterials
 end
 
 % raw reflectance image uses the object pixel mask to look up spexels
-materialIndexImage = recipe.processing.materialIndexImage;
-fatMask = repmat(materialIndexImage, [1, 1, nSpexelWls]);
+materialIndexMask = recipe.processing.materialIndexMask;
+fatMask = repmat(materialIndexMask, [1, 1, nSpexelWls]);
 rawReflectance = zeros(imageSize);
 for ii = 1:nMaterials
     isMaterial = fatMask == ii;
@@ -62,31 +62,12 @@ for ii = 1:nMaterials
     end
 end
 
-% smooth reflectance image fills in gaps with a sliding average
-window = 1:filterWidth - floor(filterWidth/2);
-smoothReflectance = rawReflectance;
-width = imageSize(1);
-height = imageSize(2);
-for ii = 1:width
-    for jj = 1:height
-        if materialIndexImage(ii,jj) > 0
-            % no gap here
-            continue;
-        end
-        
-        % smooth gap by averaging over a filter window
-        iiWindow = min(max(window + ii, 1), width);
-        jjWindow = min(max(window + jj, 1), height);
-        materialIndexWindow = materialIndexImage(iiWindow, jjWindow);
-        materialIndexSelection = materialIndexWindow(:) > 0;
-        spexelWindow = spexels(materialIndexWindow(materialIndexSelection), :);
-        meanSpexel = mean(spexelWindow, 1);
-        smoothReflectance(ii,jj,:) = meanSpexel;
-    end
-end
+% fill in gaps in reflectance image by sliding local average
+smoothReflectance = SmoothOutGaps(rawReflectance, materialIndexMask, filterWidth);
 
 % "divide out" the reflectance from the rendering to leave illumination
-illumination = sceneRendering.multispectralImage ./ smoothReflectance;
+rawIllumination = sceneRendering.multispectralImage ./ smoothReflectance;
+smoothIllumination = SmoothOutGaps(rawIllumination, materialIndexMask, filterWidth);
 
 % save the scene rendering in sRgb
 imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
@@ -96,20 +77,25 @@ MakeMontage({sceneDataFile}, ...
 recipe.processing.sceneSrgbFile = sceneSrgbFile;
 
 % save the raw reflectance image as sRgb
-rawReflectanceFile = fullfile(imageFolder, [imageName '-scene-raw-reflectance.png']);
+rawReflectanceFile = fullfile(imageFolder, [imageName '-scene-reflectance-raw.png']);
 rawReflectanceSrgb = MultispectralToSRGB(rawReflectance, S, toneMapFactor, isScale);
 imwrite(uint8(rawReflectanceSrgb), rawReflectanceFile);
 recipe.processing.rawReflectanceImage = rawReflectanceFile;
 
 % save the smooth reflectance image as sRgb
-smoothReflectanceFile = fullfile(imageFolder, [imageName '-scene-smooth-reflectance.png']);
+smoothReflectanceFile = fullfile(imageFolder, [imageName '-scene-reflectance-smooth.png']);
 smoothReflectanceSrgb = MultispectralToSRGB(smoothReflectance, S, toneMapFactor, isScale);
 imwrite(uint8(smoothReflectanceSrgb), smoothReflectanceFile);
 recipe.processing.rawReflectanceImage = smoothReflectanceFile;
 
-% save the illumination image as sRgb
-illuminationFile = fullfile(imageFolder, [imageName '-scene-illumination.png']);
-illuminationSrgb = MultispectralToSRGB(illumination, S, toneMapFactor, isScale);
-imwrite(uint8(illuminationSrgb), illuminationFile);
-recipe.processing.rawReflectanceImage = illuminationFile;
+% save the raw illumination image as sRgb
+rawIlluminationFile = fullfile(imageFolder, [imageName '-scene-illumination-raw.png']);
+rawIlluminationSrgb = MultispectralToSRGB(rawIllumination, S, toneMapFactor, isScale);
+imwrite(uint8(rawIlluminationSrgb), rawIlluminationFile);
+recipe.processing.rawIlluminationImage = rawIlluminationFile;
 
+% save the smooth illumination image as sRgb
+smoothIlluminationFile = fullfile(imageFolder, [imageName '-scene-illumination-smooth.png']);
+smoothIlluminationSrgb = MultispectralToSRGB(smoothIllumination, S, toneMapFactor, isScale);
+imwrite(uint8(smoothIlluminationSrgb), smoothIlluminationFile);
+recipe.processing.smoothReflectanceImage = smoothIlluminationFile;
