@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.69.0 r60991</authoring_tool>
     </contributor>
-    <created>2014-09-12T17:52:00</created>
-    <modified>2014-09-12T17:52:00</modified>
+    <created>2014-09-26T11:30:53</created>
+    <modified>2014-09-26T11:30:53</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -33,7 +33,7 @@
   </library_cameras>
   <library_images/>
   <library_effects>
-    <effect id="Wall-effect">
+    <effect id="Hut-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -85,7 +85,33 @@
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="Bars-effect">
+    <effect id="WindowBars-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Barrel01-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -137,7 +163,111 @@
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="Barrel01-effect">
+    <effect id="Barrel04-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Barrel05-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Barrel07-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Barrel08-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Barrel09-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -241,7 +371,85 @@
         </technique>
       </profile_COMMON>
     </effect>
+    <effect id="Can01-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
     <effect id="Can02-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Can03-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Can04-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -293,7 +501,7 @@
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="Can01-effect">
+    <effect id="Can05-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -319,7 +527,163 @@
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="Metal-effect">
+    <effect id="Can06-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Sheet-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Bottle03-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Bottle04-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Bottle06-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Bottle05-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="OldDoorBars-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -371,6 +735,266 @@
         </technique>
       </profile_COMMON>
     </effect>
+    <effect id="Bottle07-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Can07-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Barrel10-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Crate01-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Crate02-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Crate03-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Bottle08-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Crate04-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="BuildingRoof-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Crate05-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
     <effect id="Bottle01-effect">
       <profile_COMMON>
         <technique sid="common">
@@ -397,7 +1021,7 @@
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="Wood02-effect">
+    <effect id="Barrel03-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -423,7 +1047,7 @@
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="Wood01-effect">
+    <effect id="Barrel06-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -449,7 +1073,7 @@
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="Roof-effect">
+    <effect id="OldDoor-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -475,7 +1099,7 @@
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="AreaLight-effect">
+    <effect id="Sun-effect">
       <profile_COMMON>
         <technique sid="common">
           <phong>
@@ -507,22 +1131,95 @@
       </profile_COMMON>
       <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
     </effect>
+    <effect id="Sky-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+    <effect id="BuildingWall-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
   </library_effects>
   <library_materials>
-    <material id="Wall-material" name="Wall">
-      <instance_effect url="#Wall-effect"/>
+    <material id="Hut-material" name="Hut">
+      <instance_effect url="#Hut-effect"/>
     </material>
     <material id="Ground-material" name="Ground">
       <instance_effect url="#Ground-effect"/>
     </material>
-    <material id="Bars-material" name="Bars">
-      <instance_effect url="#Bars-effect"/>
+    <material id="WindowBars-material" name="WindowBars">
+      <instance_effect url="#WindowBars-effect"/>
+    </material>
+    <material id="Barrel01-material" name="Barrel01">
+      <instance_effect url="#Barrel01-effect"/>
     </material>
     <material id="Barrel02-material" name="Barrel02">
       <instance_effect url="#Barrel02-effect"/>
     </material>
-    <material id="Barrel01-material" name="Barrel01">
-      <instance_effect url="#Barrel01-effect"/>
+    <material id="Barrel04-material" name="Barrel04">
+      <instance_effect url="#Barrel04-effect"/>
+    </material>
+    <material id="Barrel05-material" name="Barrel05">
+      <instance_effect url="#Barrel05-effect"/>
+    </material>
+    <material id="Barrel07-material" name="Barrel07">
+      <instance_effect url="#Barrel07-effect"/>
+    </material>
+    <material id="Barrel08-material" name="Barrel08">
+      <instance_effect url="#Barrel08-effect"/>
+    </material>
+    <material id="Barrel09-material" name="Barrel09">
+      <instance_effect url="#Barrel09-effect"/>
     </material>
     <material id="Sign01-material" name="Sign01">
       <instance_effect url="#Sign01-effect"/>
@@ -533,35 +1230,98 @@
     <material id="Sign03-material" name="Sign03">
       <instance_effect url="#Sign03-effect"/>
     </material>
+    <material id="Can01-material" name="Can01">
+      <instance_effect url="#Can01-effect"/>
+    </material>
     <material id="Can02-material" name="Can02">
       <instance_effect url="#Can02-effect"/>
+    </material>
+    <material id="Can03-material" name="Can03">
+      <instance_effect url="#Can03-effect"/>
+    </material>
+    <material id="Can04-material" name="Can04">
+      <instance_effect url="#Can04-effect"/>
     </material>
     <material id="Stick-material" name="Stick">
       <instance_effect url="#Stick-effect"/>
     </material>
-    <material id="Can01-material" name="Can01">
-      <instance_effect url="#Can01-effect"/>
+    <material id="Can05-material" name="Can05">
+      <instance_effect url="#Can05-effect"/>
     </material>
-    <material id="Metal-material" name="Metal">
-      <instance_effect url="#Metal-effect"/>
+    <material id="Can06-material" name="Can06">
+      <instance_effect url="#Can06-effect"/>
+    </material>
+    <material id="Sheet-material" name="Sheet">
+      <instance_effect url="#Sheet-effect"/>
+    </material>
+    <material id="Bottle03-material" name="Bottle03">
+      <instance_effect url="#Bottle03-effect"/>
+    </material>
+    <material id="Bottle04-material" name="Bottle04">
+      <instance_effect url="#Bottle04-effect"/>
+    </material>
+    <material id="Bottle06-material" name="Bottle06">
+      <instance_effect url="#Bottle06-effect"/>
+    </material>
+    <material id="Bottle05-material" name="Bottle05">
+      <instance_effect url="#Bottle05-effect"/>
+    </material>
+    <material id="OldDoorBars-material" name="OldDoorBars">
+      <instance_effect url="#OldDoorBars-effect"/>
     </material>
     <material id="Bottle02-material" name="Bottle02">
       <instance_effect url="#Bottle02-effect"/>
     </material>
+    <material id="Bottle07-material" name="Bottle07">
+      <instance_effect url="#Bottle07-effect"/>
+    </material>
+    <material id="Can07-material" name="Can07">
+      <instance_effect url="#Can07-effect"/>
+    </material>
+    <material id="Barrel10-material" name="Barrel10">
+      <instance_effect url="#Barrel10-effect"/>
+    </material>
+    <material id="Crate01-material" name="Crate01">
+      <instance_effect url="#Crate01-effect"/>
+    </material>
+    <material id="Crate02-material" name="Crate02">
+      <instance_effect url="#Crate02-effect"/>
+    </material>
+    <material id="Crate03-material" name="Crate03">
+      <instance_effect url="#Crate03-effect"/>
+    </material>
+    <material id="Bottle08-material" name="Bottle08">
+      <instance_effect url="#Bottle08-effect"/>
+    </material>
+    <material id="Crate04-material" name="Crate04">
+      <instance_effect url="#Crate04-effect"/>
+    </material>
+    <material id="BuildingRoof-material" name="BuildingRoof">
+      <instance_effect url="#BuildingRoof-effect"/>
+    </material>
+    <material id="Crate05-material" name="Crate05">
+      <instance_effect url="#Crate05-effect"/>
+    </material>
     <material id="Bottle01-material" name="Bottle01">
       <instance_effect url="#Bottle01-effect"/>
     </material>
-    <material id="Wood02-material" name="Wood02">
-      <instance_effect url="#Wood02-effect"/>
+    <material id="Barrel03-material" name="Barrel03">
+      <instance_effect url="#Barrel03-effect"/>
     </material>
-    <material id="Wood01-material" name="Wood01">
-      <instance_effect url="#Wood01-effect"/>
+    <material id="Barrel06-material" name="Barrel06">
+      <instance_effect url="#Barrel06-effect"/>
     </material>
-    <material id="Roof-material" name="Roof">
-      <instance_effect url="#Roof-effect"/>
+    <material id="OldDoor-material" name="OldDoor">
+      <instance_effect url="#OldDoor-effect"/>
     </material>
-    <material id="AreaLight-material" name="AreaLight">
-      <instance_effect url="#AreaLight-effect"/>
+    <material id="Sun-material" name="Sun">
+      <instance_effect url="#Sun-effect"/>
+    </material>
+    <material id="Sky-material" name="Sky">
+      <instance_effect url="#Sky-effect"/>
+    </material>
+    <material id="BuildingWall-material" name="BuildingWall">
+      <instance_effect url="#BuildingWall-effect"/>
     </material>
   </library_materials>
   <library_geometries>
@@ -599,7 +1359,7 @@
         <vertices id="Hut-mesh-vertices">
           <input semantic="POSITION" source="#Hut-mesh-positions"/>
         </vertices>
-        <polylist material="Wall-material" count="146">
+        <polylist material="Hut-material" count="146">
           <input semantic="VERTEX" source="#Hut-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Hut-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Hut-mesh-map-0" offset="2" set="0"/>
@@ -678,7 +1438,7 @@
         <vertices id="WindowBars-mesh-vertices">
           <input semantic="POSITION" source="#WindowBars-mesh-positions"/>
         </vertices>
-        <polylist material="Bars-material" count="1612">
+        <polylist material="WindowBars-material" count="1612">
           <input semantic="VERTEX" source="#WindowBars-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#WindowBars-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -721,7 +1481,7 @@
         <vertices id="Barrel01-mesh-vertices">
           <input semantic="POSITION" source="#Barrel01-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel02-material" count="1020">
+        <polylist material="Barrel01-material" count="1020">
           <input semantic="VERTEX" source="#Barrel01-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel01-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel01-mesh-map-0" offset="2" set="0"/>
@@ -765,7 +1525,7 @@
         <vertices id="Barrel02-mesh-vertices">
           <input semantic="POSITION" source="#Barrel02-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel01-material" count="1020">
+        <polylist material="Barrel02-material" count="1020">
           <input semantic="VERTEX" source="#Barrel02-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel02-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel02-mesh-map-0" offset="2" set="0"/>
@@ -809,7 +1569,7 @@
         <vertices id="Barrel04-mesh-vertices">
           <input semantic="POSITION" source="#Barrel04-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel02-material" count="1020">
+        <polylist material="Barrel04-material" count="1020">
           <input semantic="VERTEX" source="#Barrel04-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel04-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel04-mesh-map-0" offset="2" set="0"/>
@@ -853,7 +1613,7 @@
         <vertices id="Barrel05-mesh-vertices">
           <input semantic="POSITION" source="#Barrel05-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel02-material" count="1020">
+        <polylist material="Barrel05-material" count="1020">
           <input semantic="VERTEX" source="#Barrel05-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel05-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel05-mesh-map-0" offset="2" set="0"/>
@@ -897,7 +1657,7 @@
         <vertices id="Barrel07-mesh-vertices">
           <input semantic="POSITION" source="#Barrel07-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel01-material" count="1020">
+        <polylist material="Barrel07-material" count="1020">
           <input semantic="VERTEX" source="#Barrel07-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel07-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel07-mesh-map-0" offset="2" set="0"/>
@@ -941,7 +1701,7 @@
         <vertices id="Barrel08-mesh-vertices">
           <input semantic="POSITION" source="#Barrel08-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel01-material" count="1020">
+        <polylist material="Barrel08-material" count="1020">
           <input semantic="VERTEX" source="#Barrel08-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel08-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel08-mesh-map-0" offset="2" set="0"/>
@@ -985,7 +1745,7 @@
         <vertices id="Barrel09-mesh-vertices">
           <input semantic="POSITION" source="#Barrel09-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel01-material" count="1020">
+        <polylist material="Barrel09-material" count="1020">
           <input semantic="VERTEX" source="#Barrel09-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel09-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel09-mesh-map-0" offset="2" set="0"/>
@@ -1161,7 +1921,7 @@
         <vertices id="Can01-mesh-vertices">
           <input semantic="POSITION" source="#Can01-mesh-positions"/>
         </vertices>
-        <polylist material="Can02-material" count="828">
+        <polylist material="Can01-material" count="828">
           <input semantic="VERTEX" source="#Can01-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Can01-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Can01-mesh-map-0" offset="2" set="0"/>
@@ -1249,7 +2009,7 @@
         <vertices id="Can03-mesh-vertices">
           <input semantic="POSITION" source="#Can03-mesh-positions"/>
         </vertices>
-        <polylist material="Can02-material" count="828">
+        <polylist material="Can03-material" count="828">
           <input semantic="VERTEX" source="#Can03-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Can03-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Can03-mesh-map-0" offset="2" set="0"/>
@@ -1293,7 +2053,7 @@
         <vertices id="Can04-mesh-vertices">
           <input semantic="POSITION" source="#Can04-mesh-positions"/>
         </vertices>
-        <polylist material="Can02-material" count="1404">
+        <polylist material="Can04-material" count="1404">
           <input semantic="VERTEX" source="#Can04-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Can04-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Can04-mesh-map-0" offset="2" set="0"/>
@@ -1371,7 +2131,7 @@
         <vertices id="Can05-mesh-vertices">
           <input semantic="POSITION" source="#Can05-mesh-positions"/>
         </vertices>
-        <polylist material="Can01-material" count="828">
+        <polylist material="Can05-material" count="828">
           <input semantic="VERTEX" source="#Can05-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Can05-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Can05-mesh-map-0" offset="2" set="0"/>
@@ -1415,7 +2175,7 @@
         <vertices id="Can06-mesh-vertices">
           <input semantic="POSITION" source="#Can06-mesh-positions"/>
         </vertices>
-        <polylist material="Can01-material" count="828">
+        <polylist material="Can06-material" count="828">
           <input semantic="VERTEX" source="#Can06-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Can06-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Can06-mesh-map-0" offset="2" set="0"/>
@@ -1459,7 +2219,7 @@
         <vertices id="Sheet-mesh-vertices">
           <input semantic="POSITION" source="#Sheet-mesh-positions"/>
         </vertices>
-        <polylist material="Metal-material" count="12">
+        <polylist material="Sheet-material" count="12">
           <input semantic="VERTEX" source="#Sheet-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Sheet-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Sheet-mesh-map-0" offset="2" set="0"/>
@@ -1494,7 +2254,7 @@
         <vertices id="Bottle03-mesh-vertices">
           <input semantic="POSITION" source="#Bottle03-mesh-positions"/>
         </vertices>
-        <polylist material="Bottle02-material" count="1310">
+        <polylist material="Bottle03-material" count="1310">
           <input semantic="VERTEX" source="#Bottle03-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Bottle03-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -1528,7 +2288,7 @@
         <vertices id="Bottle04-mesh-vertices">
           <input semantic="POSITION" source="#Bottle04-mesh-positions"/>
         </vertices>
-        <polylist material="Bottle02-material" count="1310">
+        <polylist material="Bottle04-material" count="1310">
           <input semantic="VERTEX" source="#Bottle04-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Bottle04-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -1562,7 +2322,7 @@
         <vertices id="Bottle06-mesh-vertices">
           <input semantic="POSITION" source="#Bottle06-mesh-positions"/>
         </vertices>
-        <polylist material="Bottle01-material" count="1310">
+        <polylist material="Bottle06-material" count="1310">
           <input semantic="VERTEX" source="#Bottle06-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Bottle06-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -1596,7 +2356,7 @@
         <vertices id="Bottle05-mesh-vertices">
           <input semantic="POSITION" source="#Bottle05-mesh-positions"/>
         </vertices>
-        <polylist material="Bottle01-material" count="1310">
+        <polylist material="Bottle05-material" count="1310">
           <input semantic="VERTEX" source="#Bottle05-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Bottle05-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -1630,7 +2390,7 @@
         <vertices id="OldDoorBars-mesh-vertices">
           <input semantic="POSITION" source="#OldDoorBars-mesh-positions"/>
         </vertices>
-        <polylist material="Bars-material" count="3456">
+        <polylist material="OldDoorBars-material" count="3456">
           <input semantic="VERTEX" source="#OldDoorBars-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#OldDoorBars-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -1698,7 +2458,7 @@
         <vertices id="Bottle07-mesh-vertices">
           <input semantic="POSITION" source="#Bottle07-mesh-positions"/>
         </vertices>
-        <polylist material="Bottle01-material" count="1310">
+        <polylist material="Bottle07-material" count="1310">
           <input semantic="VERTEX" source="#Bottle07-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Bottle07-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -1741,7 +2501,7 @@
         <vertices id="Can07-mesh-vertices">
           <input semantic="POSITION" source="#Can07-mesh-positions"/>
         </vertices>
-        <polylist material="Can01-material" count="828">
+        <polylist material="Can07-material" count="828">
           <input semantic="VERTEX" source="#Can07-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Can07-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Can07-mesh-map-0" offset="2" set="0"/>
@@ -1785,7 +2545,7 @@
         <vertices id="Barrel10-mesh-vertices">
           <input semantic="POSITION" source="#Barrel10-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel02-material" count="1020">
+        <polylist material="Barrel10-material" count="1020">
           <input semantic="VERTEX" source="#Barrel10-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel10-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel10-mesh-map-0" offset="2" set="0"/>
@@ -1829,7 +2589,7 @@
         <vertices id="Crate01-mesh-vertices">
           <input semantic="POSITION" source="#Crate01-mesh-positions"/>
         </vertices>
-        <polylist material="Wood02-material" count="12">
+        <polylist material="Crate01-material" count="12">
           <input semantic="VERTEX" source="#Crate01-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Crate01-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Crate01-mesh-map-0" offset="2" set="0"/>
@@ -1873,7 +2633,7 @@
         <vertices id="Crate02-mesh-vertices">
           <input semantic="POSITION" source="#Crate02-mesh-positions"/>
         </vertices>
-        <polylist material="Wood02-material" count="12">
+        <polylist material="Crate02-material" count="12">
           <input semantic="VERTEX" source="#Crate02-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Crate02-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Crate02-mesh-map-0" offset="2" set="0"/>
@@ -1917,7 +2677,7 @@
         <vertices id="Crate03-mesh-vertices">
           <input semantic="POSITION" source="#Crate03-mesh-positions"/>
         </vertices>
-        <polylist material="Wood01-material" count="12">
+        <polylist material="Crate03-material" count="12">
           <input semantic="VERTEX" source="#Crate03-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Crate03-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Crate03-mesh-map-0" offset="2" set="0"/>
@@ -1952,7 +2712,7 @@
         <vertices id="Bottle08-mesh-vertices">
           <input semantic="POSITION" source="#Bottle08-mesh-positions"/>
         </vertices>
-        <polylist material="Bottle01-material" count="1310">
+        <polylist material="Bottle08-material" count="1310">
           <input semantic="VERTEX" source="#Bottle08-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Bottle08-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -1995,7 +2755,7 @@
         <vertices id="Crate04-mesh-vertices">
           <input semantic="POSITION" source="#Crate04-mesh-positions"/>
         </vertices>
-        <polylist material="Wood01-material" count="12">
+        <polylist material="Crate04-material" count="12">
           <input semantic="VERTEX" source="#Crate04-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Crate04-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Crate04-mesh-map-0" offset="2" set="0"/>
@@ -2039,7 +2799,7 @@
         <vertices id="BuildingRoof-mesh-vertices">
           <input semantic="POSITION" source="#BuildingRoof-mesh-positions"/>
         </vertices>
-        <polylist material="Roof-material" count="12">
+        <polylist material="BuildingRoof-material" count="12">
           <input semantic="VERTEX" source="#BuildingRoof-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#BuildingRoof-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#BuildingRoof-mesh-map-0" offset="2" set="0"/>
@@ -2083,7 +2843,7 @@
         <vertices id="Crate05-mesh-vertices">
           <input semantic="POSITION" source="#Crate05-mesh-positions"/>
         </vertices>
-        <polylist material="Wood01-material" count="12">
+        <polylist material="Crate05-material" count="12">
           <input semantic="VERTEX" source="#Crate05-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Crate05-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Crate05-mesh-map-0" offset="2" set="0"/>
@@ -2161,7 +2921,7 @@
         <vertices id="Barrel03-mesh-vertices">
           <input semantic="POSITION" source="#Barrel03-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel02-material" count="1020">
+        <polylist material="Barrel03-material" count="1020">
           <input semantic="VERTEX" source="#Barrel03-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel03-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel03-mesh-map-0" offset="2" set="0"/>
@@ -2205,7 +2965,7 @@
         <vertices id="Barrel06-mesh-vertices">
           <input semantic="POSITION" source="#Barrel06-mesh-positions"/>
         </vertices>
-        <polylist material="Barrel02-material" count="1020">
+        <polylist material="Barrel06-material" count="1020">
           <input semantic="VERTEX" source="#Barrel06-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Barrel06-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Barrel06-mesh-map-0" offset="2" set="0"/>
@@ -2249,7 +3009,7 @@
         <vertices id="OldDoor-mesh-vertices">
           <input semantic="POSITION" source="#OldDoor-mesh-positions"/>
         </vertices>
-        <polylist material="Stick-material" count="292">
+        <polylist material="OldDoor-material" count="292">
           <input semantic="VERTEX" source="#OldDoor-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#OldDoor-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#OldDoor-mesh-map-0" offset="2" set="0"/>
@@ -2284,7 +3044,7 @@
         <vertices id="Sun-mesh-vertices">
           <input semantic="POSITION" source="#Sun-mesh-positions"/>
         </vertices>
-        <polylist material="AreaLight-material" count="30">
+        <polylist material="Sun-material" count="30">
           <input semantic="VERTEX" source="#Sun-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Sun-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -2318,7 +3078,7 @@
         <vertices id="Sky-mesh-vertices">
           <input semantic="POSITION" source="#Sky-mesh-positions"/>
         </vertices>
-        <polylist material="AreaLight-material" count="30">
+        <polylist material="Sky-material" count="30">
           <input semantic="VERTEX" source="#Sky-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Sky-mesh-normals" offset="1"/>
           <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
@@ -2361,7 +3121,7 @@
         <vertices id="BuildingWall-mesh-vertices">
           <input semantic="POSITION" source="#BuildingWall-mesh-positions"/>
         </vertices>
-        <polylist material="Wall-material" count="6">
+        <polylist material="BuildingWall-material" count="6">
           <input semantic="VERTEX" source="#BuildingWall-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#BuildingWall-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#BuildingWall-mesh-map-0" offset="2" set="0"/>
@@ -2384,7 +3144,7 @@
         <instance_geometry url="#Hut-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Wall-material" target="#Wall-material"/>
+              <instance_material symbol="Hut-material" target="#Hut-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2412,7 +3172,7 @@
         <instance_geometry url="#WindowBars-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bars-material" target="#Bars-material"/>
+              <instance_material symbol="WindowBars-material" target="#WindowBars-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2426,7 +3186,7 @@
         <instance_geometry url="#Barrel01-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel02-material" target="#Barrel02-material"/>
+              <instance_material symbol="Barrel01-material" target="#Barrel01-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2440,7 +3200,7 @@
         <instance_geometry url="#Barrel02-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel01-material" target="#Barrel01-material"/>
+              <instance_material symbol="Barrel02-material" target="#Barrel02-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2454,7 +3214,7 @@
         <instance_geometry url="#Barrel04-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel02-material" target="#Barrel02-material"/>
+              <instance_material symbol="Barrel04-material" target="#Barrel04-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2468,7 +3228,7 @@
         <instance_geometry url="#Barrel05-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel02-material" target="#Barrel02-material"/>
+              <instance_material symbol="Barrel05-material" target="#Barrel05-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2482,7 +3242,7 @@
         <instance_geometry url="#Barrel07-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel01-material" target="#Barrel01-material"/>
+              <instance_material symbol="Barrel07-material" target="#Barrel07-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2496,7 +3256,7 @@
         <instance_geometry url="#Barrel08-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel01-material" target="#Barrel01-material"/>
+              <instance_material symbol="Barrel08-material" target="#Barrel08-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2510,7 +3270,7 @@
         <instance_geometry url="#Barrel09-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel01-material" target="#Barrel01-material"/>
+              <instance_material symbol="Barrel09-material" target="#Barrel09-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2566,7 +3326,7 @@
         <instance_geometry url="#Can01-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Can02-material" target="#Can02-material"/>
+              <instance_material symbol="Can01-material" target="#Can01-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2594,7 +3354,7 @@
         <instance_geometry url="#Can03-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Can02-material" target="#Can02-material"/>
+              <instance_material symbol="Can03-material" target="#Can03-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2608,7 +3368,7 @@
         <instance_geometry url="#Can04-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Can02-material" target="#Can02-material"/>
+              <instance_material symbol="Can04-material" target="#Can04-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2636,7 +3396,7 @@
         <instance_geometry url="#Can05-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Can01-material" target="#Can01-material"/>
+              <instance_material symbol="Can05-material" target="#Can05-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2650,7 +3410,7 @@
         <instance_geometry url="#Can06-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Can01-material" target="#Can01-material"/>
+              <instance_material symbol="Can06-material" target="#Can06-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2664,7 +3424,7 @@
         <instance_geometry url="#Sheet-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Metal-material" target="#Metal-material"/>
+              <instance_material symbol="Sheet-material" target="#Sheet-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2678,7 +3438,7 @@
         <instance_geometry url="#Bottle03-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bottle02-material" target="#Bottle02-material"/>
+              <instance_material symbol="Bottle03-material" target="#Bottle03-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2692,7 +3452,7 @@
         <instance_geometry url="#Bottle04-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bottle02-material" target="#Bottle02-material"/>
+              <instance_material symbol="Bottle04-material" target="#Bottle04-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2706,7 +3466,7 @@
         <instance_geometry url="#Bottle06-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bottle01-material" target="#Bottle01-material"/>
+              <instance_material symbol="Bottle06-material" target="#Bottle06-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2720,7 +3480,7 @@
         <instance_geometry url="#Bottle05-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bottle01-material" target="#Bottle01-material"/>
+              <instance_material symbol="Bottle05-material" target="#Bottle05-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2734,7 +3494,7 @@
         <instance_geometry url="#OldDoorBars-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bars-material" target="#Bars-material"/>
+              <instance_material symbol="OldDoorBars-material" target="#OldDoorBars-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2762,7 +3522,7 @@
         <instance_geometry url="#Bottle07-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bottle01-material" target="#Bottle01-material"/>
+              <instance_material symbol="Bottle07-material" target="#Bottle07-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2776,7 +3536,7 @@
         <instance_geometry url="#Can07-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Can01-material" target="#Can01-material"/>
+              <instance_material symbol="Can07-material" target="#Can07-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2790,7 +3550,7 @@
         <instance_geometry url="#Barrel10-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel02-material" target="#Barrel02-material"/>
+              <instance_material symbol="Barrel10-material" target="#Barrel10-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2804,7 +3564,7 @@
         <instance_geometry url="#Crate01-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Wood02-material" target="#Wood02-material"/>
+              <instance_material symbol="Crate01-material" target="#Crate01-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2818,7 +3578,7 @@
         <instance_geometry url="#Crate02-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Wood02-material" target="#Wood02-material"/>
+              <instance_material symbol="Crate02-material" target="#Crate02-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2832,7 +3592,7 @@
         <instance_geometry url="#Crate03-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Wood01-material" target="#Wood01-material"/>
+              <instance_material symbol="Crate03-material" target="#Crate03-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2846,7 +3606,7 @@
         <instance_geometry url="#Bottle08-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Bottle01-material" target="#Bottle01-material"/>
+              <instance_material symbol="Bottle08-material" target="#Bottle08-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2860,7 +3620,7 @@
         <instance_geometry url="#Crate04-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Wood01-material" target="#Wood01-material"/>
+              <instance_material symbol="Crate04-material" target="#Crate04-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2874,7 +3634,7 @@
         <instance_geometry url="#BuildingRoof-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Roof-material" target="#Roof-material"/>
+              <instance_material symbol="BuildingRoof-material" target="#BuildingRoof-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2888,7 +3648,7 @@
         <instance_geometry url="#Crate05-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Wood01-material" target="#Wood01-material"/>
+              <instance_material symbol="Crate05-material" target="#Crate05-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2916,7 +3676,7 @@
         <instance_geometry url="#Barrel03-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel02-material" target="#Barrel02-material"/>
+              <instance_material symbol="Barrel03-material" target="#Barrel03-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2930,7 +3690,7 @@
         <instance_geometry url="#Barrel06-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Barrel02-material" target="#Barrel02-material"/>
+              <instance_material symbol="Barrel06-material" target="#Barrel06-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2944,7 +3704,7 @@
         <instance_geometry url="#OldDoor-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Stick-material" target="#Stick-material"/>
+              <instance_material symbol="OldDoor-material" target="#OldDoor-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2958,7 +3718,7 @@
         <instance_geometry url="#Sun-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="AreaLight-material" target="#AreaLight-material"/>
+              <instance_material symbol="Sun-material" target="#Sun-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2972,7 +3732,7 @@
         <instance_geometry url="#Sky-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="AreaLight-material" target="#AreaLight-material"/>
+              <instance_material symbol="Sky-material" target="#Sky-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
@@ -2986,7 +3746,7 @@
         <instance_geometry url="#BuildingWall-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Wall-material" target="#Wall-material"/>
+              <instance_material symbol="BuildingWall-material" target="#BuildingWall-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
