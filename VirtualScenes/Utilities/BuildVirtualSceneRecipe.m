@@ -7,10 +7,10 @@
 %   baseSceneLights should be {light1, light2, ...}
 %   insertedObjects should be {'Barrel', 'Barrel', 'RingToy', ...}
 %   objectPositions should be {[xyz], [xyz], [xyz], ...}
-%   objectMaterials should be {material1, material2, ...}
+%   objectMaterialSets should be {{m1, m2, ...}, {m1, m2, ...}, ...}
 function recipe = BuildVirtualSceneRecipe(sceneName, hints, defaultMappings, ...
     baseSceneModel, baseSceneMaterials, baseSceneLights, ...
-    insertedObjects, objectPositions, objectMaterials)
+    insertedObjects, objectPositions, objectMaterialSets)
 
 if nargin < 2
     hints = GetDefaultHints();
@@ -19,22 +19,13 @@ else
 end
 
 %% Augment batch renderer options.
-hints.whichConditions = 1:2;
 hints.remodeler = 'InsertObjectRemodeler';
 ChangeToWorkingFolder(hints);
 mappingsFile = [sceneName '-Mappings.txt'];
 conditionsFile = [sceneName '-Conditions.txt'];
 
-%% Read scene and object metadata.
 sceneMetadata = ReadMetadata(baseSceneModel);
 parentSceneFile = GetVirtualScenesPath(sceneMetadata.relativePath);
-
-flashMetadata = ReadMetadata('CameraFlash');
-
-% each scene material gets has a corresponding
-% single-band reflectance in the mask condition
-sceneMaterialsByIndex = cell(1, numel(baseSceneMaterials) + numel(objectMaterials));
-maskMaterialsByIndex = cell(size(sceneMaterialsByIndex));
 
 %% Set up the base scene lights.
 % set base scene lights turn off base scene lights when making pixel masks
@@ -51,33 +42,9 @@ AppendLightMappings(defaultMappings, mappingsFile, ...
 AppendLightMappings(mappingsFile, mappingsFile, ...
     sceneMetadata.lightIds, maskBaseSceneLightSet, 'Generic mask');
 
-%% Identify each base scene object with a single-band reflectance.
-
-% choose single-band reflectances starting at 400nm
-wls = 300:10:800;
-wlsOffset = 10;
-background = 0;
-inBand = 1;
-maskBaseSceneMaterialSet = cell(size(baseSceneMaterials));
-for ii = 1:numel(baseSceneMaterials)
-    reflectance = GetSingleBandReflectance(wls, wlsOffset+ii, background, inBand);
-    singleBandMatte = BuildDesription('material', 'matte', ...
-        {'diffuseReflectance'}, ...
-        reflectance, ...
-        {'spectrum'});
-    maskBaseSceneMaterialSet{ii} = singleBandMatte;
-    maskMaterialsByIndex{ii} = singleBandMatte;
-    sceneMaterialsByIndex{ii} = baseSceneMaterials{ii};
-end
-
-% write out mappings for base scene materials
-AppendMaterialMappings(mappingsFile, mappingsFile, ...
-    sceneMetadata.materialIds, baseSceneMaterials, [], 'Generic scene');
-AppendMaterialMappings(mappingsFile, mappingsFile, ...
-    sceneMetadata.materialIds, maskBaseSceneMaterialSet, [], 'Generic mask');
-
 %% Set up the "flash" light for making object pixel masks.
 % use a uniform spectrum for the "flash"
+flashMetadata = ReadMetadata('CameraFlash');
 whiteArea = BuildDesription('light', 'area', ...
     {'intensity'}, ...
     {'300:1 800:1'}, ...
@@ -95,55 +62,98 @@ flashMaterialId = ['camera-flash-' flashMetadata.materialIds{1}];
 AppendMaterialMappings(mappingsFile, mappingsFile, ...
     {flashMaterialId}, {whiteMatte}, [], 'Generic mask');
 
-%% Set up inserted objects.
-% single-band reflectances starting after the base scene reflectances
-sceneOffset = numel(maskBaseSceneMaterialSet);
+%% Write mappings for every object's material.
 
-% basic conditions file columns
-allNames = {'imageName', 'groupName', 'camera-flash'};
-allValues = {...
-    'mask', 'mask', flashMetadata.relativePath; ...
-    'scene', 'scene', 'none'};
-
+% build a grand list of material ids and scene materials
+%   inserted object material ids get prefixed with the object name
+allMaterialIds = sceneMetadata.materialIds;
+allSceneMaterials = baseSceneMaterials;
 nInserted = numel(insertedObjects);
 for oo = 1:nInserted
-    % get each object model
-    modelName = insertedObjects{oo};
-    objectMetadata = ReadMetadata(modelName);
-    
-    % identify each inserted object with a single-band reflectance
-    reflectance = GetSingleBandReflectance(wls, wlsOffset+sceneOffset+oo, background, inBand);
+    idPrefix = sprintf('object-%d-', oo);
+    objectMetadata = ReadMetadata(insertedObjects{oo});
+    nObjectMaterials = numel(objectMetadata.materialIds);
+    objectMaterialIds = cell(1, nObjectMaterials);
+    for mm = 1:nObjectMaterials
+        objectMaterialIds{mm} = [idPrefix objectMetadata.materialIds{mm}];
+    end
+    allMaterialIds = cat(2, allMaterialIds, objectMaterialIds);
+    allSceneMaterials = cat(2, allSceneMaterials, objectMaterialSets{oo});
+end
+
+% choose a reflectance band to use for each material in the mask conditions
+nMaterials = numel(allSceneMaterials);
+nBands = 31;
+allBands = 1 + mod((1:nMaterials)-1, nBands);
+
+% choose single-band reflectances starting at 400nm
+wls = 300:10:800;
+wlsOffset = 10;
+background = 0;
+inBand = 1;
+allMaskMaterials = cell(1, nMaterials);
+for ii = 1:nMaterials
+    reflectance = GetSingleBandReflectance(wls, wlsOffset+allBands(ii), background, inBand);
     singleBandMatte = BuildDesription('material', 'matte', ...
         {'diffuseReflectance'}, ...
         reflectance, ...
         {'spectrum'});
-    maskObjectMaterialSet = cell(1, numel(objectMetadata.materialIds));
-    [maskObjectMaterialSet{:}] = deal(singleBandMatte);
-    maskMaterialsByIndex{sceneOffset+oo} = singleBandMatte;
-    
-    sceneMaterialsByIndex{sceneOffset+oo} = objectMaterials{oo};
-    sceneObjectMaterialSet = cell(1, numel(objectMetadata.materialIds));
-    [sceneObjectMaterialSet{:}] = deal(objectMaterials{oo});
-    
-    % add conditions columns for each object
+    allMaskMaterials{ii} = singleBandMatte;
+end
+
+% split up materials to render them in spectrum-sized batches
+%   use all-black placeholder to prevent double-listing materials
+nPages = ceil(nMaterials / nBands);
+allBandPages = zeros(nPages, nMaterials);
+allMaskMaterialPages = cell(nPages, nMaterials);
+blackMatte = BuildDesription('material', 'matte', ...
+    {'diffuseReflectance'}, ...
+    '300:0 800:0', ...
+    {'spectrum'});
+[allMaskMaterialPages{:}] = deal(blackMatte);
+for ii = 1:nPages
+    low = 1 + nBands*(ii-1);
+    high = min(nBands + nBands*(ii-1), nMaterials);
+    allBandPages(ii, low:high) = allBands(low:high);
+    allMaskMaterialPages(ii, low:high) = allMaskMaterials(low:high);
+end
+
+% write out mappings with actual scene materials
+AppendMaterialMappings(mappingsFile, mappingsFile, ...
+    allMaterialIds, allSceneMaterials, [], 'Generic scene');
+
+% write out pages of mappings with mask condition materials
+maskNames = cell(1, nPages);
+for ii = 1:nPages
+    maskNames{ii} = sprintf('mask-%d', ii);
+    blockName = ['Generic ' maskNames{ii}];
+    AppendMaterialMappings(mappingsFile, mappingsFile, ...
+        allMaterialIds, allMaskMaterialPages(ii,:), [], blockName);
+end
+
+%% Write conditions for inserted objects.
+
+% basic conditions file columns
+allNames = {'imageName', 'groupName', 'camera-flash'};
+sceneValues = {'scene', 'scene', 'none'};
+flashValues = repmat({flashMetadata.relativePath}, nPages, 1);
+maskValues = cat(2, maskNames', maskNames', flashValues);
+allValues = cat(1, sceneValues, maskValues);
+
+% append columns for each inserted object
+nInserted = numel(insertedObjects);
+for oo = 1:nInserted
+    objectMetadata = ReadMetadata(insertedObjects{oo});
     objectColumn = sprintf('object-%d', oo);
     positionColumn = sprintf('position-%d', oo);
     objectModelPath = objectMetadata.relativePath;
     objectPosition = objectPositions{oo};
     
     varNames = {objectColumn, positionColumn};
-    varValues = {objectModelPath, objectPosition; ...
-        objectModelPath, objectPosition;};
-    
     allNames = cat(2, allNames, varNames);
-    allValues = cat(2, allValues, varValues);
     
-    % write out mappings for object materials
-    idPrefix = [objectColumn '-'];
-    AppendMaterialMappings(mappingsFile, mappingsFile, ...
-        objectMetadata.materialIds, sceneObjectMaterialSet, idPrefix, 'Generic scene');
-    AppendMaterialMappings(mappingsFile, mappingsFile, ...
-        objectMetadata.materialIds, maskObjectMaterialSet, idPrefix, 'Generic mask');
+    varValues = {objectModelPath, objectPosition};
+    allValues = cat(2, allValues, repmat(varValues, nPages+1, 1));
 end
 
 % write out the conditions file
@@ -163,6 +173,8 @@ executive = { ...
 recipe = NewRecipe([], executive, parentSceneFile, ...
     conditionsFile, mappingsFile, hints);
 
-% record which single-band reflectances correspond to which scene materials
-recipe.processing.maskMaterialsByIndex = maskMaterialsByIndex;
-recipe.processing.sceneMaterialsByIndex = sceneMaterialsByIndex;
+% remember how materials were assigned
+recipe.processing.allMaterialIds = allMaterialIds;
+recipe.processing.allSceneMaterials = allSceneMaterials;
+recipe.processing.allMaskMaterials = allMaskMaterials;
+recipe.processing.allMaskMaterialPages = allMaskMaterialPages;

@@ -56,7 +56,7 @@ skyArea = BuildDesription('light', 'area', ...
 lights = {whiteArea, sunArea, skyArea};
 
 %% Choose sets of base scenes and objects to work with.
-baseSceneNames = {'IndoorPlant'};
+baseSceneNames = {'Warehouse'};
 objectNames = {'Barrel', 'ChampagneBottle', 'RingToy', 'Xylophone'};
 
 %% Make a recipe for each base scene, with some objects inserted.
@@ -80,7 +80,7 @@ for bb = 1:nBaseScenes
     % choose objects to insert in the model
     insertedObjects = objectNames(randi(numel(objectNames), [1, nInserted]));
     objectPositions = cell(1, nInserted);
-    objectMaterials = cell(1, nInserted);
+    objectMaterialSets = cell(1, nInserted);
     for oo = 1:nInserted
         objectModel = insertedObjects{oo};
         objectMetadata = ReadMetadata(objectModel);
@@ -89,16 +89,17 @@ for bb = 1:nBaseScenes
         % choose object position
         objectPositions{oo} = GetRandomPosition(baseSceneMetadata.boundingVolume);
         
-        % choose a material for this object
-        objectMaterials{oo} = materials{randi(numel(materials))};
+        % choose a set of materials for this object
+        nMaterials = numel(objectMetadata.materialIds);
+        objectMaterialSets{oo} = materials(randi(numel(materials), [1 nMaterials]));
     end
     
     sceneName = sprintf('VirtualScene-%d', bb);
     recipe = BuildVirtualSceneRecipe(sceneName, hints, defaultMappings, ...
         baseSceneName, baseSceneMaterials, baseSceneLights, ...
-        insertedObjects, objectPositions, objectMaterials);
+        insertedObjects, objectPositions, objectMaterialSets);
     
-    recipe = ExecuteRecipe(recipe);
+    recipe = ExecuteRecipe(recipe, 1:2);
     
     recipeArchives{oo} = fullfile(GetUserFolder(), 'render-toolbox', sceneName);
     PackUpRecipe(recipe, recipeArchives{oo}, {'temp'});
