@@ -20,31 +20,35 @@
 %   - All objects, meshes, and materials should use CamelCase names without
 %   punctuation.  Names can have numbers at the end like MyThing01,
 %   MyThing02.
-%   - Each object should contain exactly mesh.  The object and mesh should
-%   have the same name.
+%   - Each object should contain exactly one mesh.  The object and mesh
+%   should have the same name.
 %   - Each mesh should have exactly one material assigned.  The material
 %   can have a different name from the mesh, so that materials can be
 %   shared.
+%   - Each "whole object" should have its own material assigned, to
+%   facilitate analysis.  For example, two distinct objects that make up
+%   one whole table should have the same material assigned.  But two
+%   identical soda bottles located in different places should have distinct
+%   materials assigned.
 %   - All lights should be converted to meshes, which will later be
-%   "blessed" as area lights.  Make sure the normals face out, or towards
-%   the objects in the scene.
+%   "blessed" as area lights.  Make sure the mesh normals face outwards,
+%   towards the objects in the scene.
 %   - Objects should not have Blender constraints on them.
 %   - Objects should not have Blender modifiers on them.  These should be
-%   removed or "applied" so that the modifier becomes part of the mesh
-%   itself.
+%   removed, or "applied" to make the modifications part of the mesh data.
 %   - Objects can't use Blender curves or Blender text.  Only meshes will
 %   get exported properly.
 %   - The camera object should be named "Camera"
 %   - The camera object's Transform must have Scale = [1 1 1]
 %   - The Blender file should not "pack" any external data like textures.
-%   It should unpack data into files, to be ignored or deleted.
-%
-% Note: our material-pixel mask routines only work with direct
-% illumination, so add enough lights to reach all parts of the scene.
+%   External data should be unpacked into separate files, and will be
+%   ignored.
 %
 % Finally, export the Blender scene to a Collada (.dae) file.  In the lower
 % left of the export dialog, choose Collada Options: Transformation Type
-% TransRotLoc.  Save the Blender and Collada file in the VitualScenes
+% TransRotLoc.  "TransRotLoc" gives RenderToolbox3 separate translation,
+% rotation, and scale transformations to work with, instead of one combined
+% 4x4 matrix.  Save the Blender and Collada files in the VitualScenes
 % repository.
 %
 % The Metadata work includes:
@@ -53,9 +57,11 @@
 %   "-material".
 %   - Determine the list of all light ids used in the Collada scene.  These
 %   should be the same as the names used in Blender, plus the suffix
-%   "-mesh" (it's mesh because lights should all be area lights).
+%   "-mesh" (remember, all lights muse be modeled are meshes to be blessed
+%   as area lights).
 %   - Determine an approximate bounding volume where it makes sense to
-%   insert objects into the scene.  This should be a coordinate-aligned box
-%   like [minX maxX minY maxY minZ maxZ]
+%   insert objects into the scene.  This should be a
+%   coordinate-axis-aligned box like [minX maxX minY maxY minZ maxZ]
 %   - Write a metadata file for the new scene using WriteMetadata().  See
-%   TestMetadata for examples.
+%   TestMetadata.m for examples.
+%
