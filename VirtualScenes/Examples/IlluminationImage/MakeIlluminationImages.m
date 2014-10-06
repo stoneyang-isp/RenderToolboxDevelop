@@ -15,14 +15,21 @@ resources = GetWorkingFolder('resources', false, hints);
 ChangeToWorkingFolder(hints);
 
 %% Choose a set of Color Checker materials to work with.
+% with matte and ward variants
 colorCheckerSpectra = GetColorCheckerSpectra();
 nSpectra = numel(colorCheckerSpectra);
-materials = cell(1, nSpectra);
+matteMaterials = cell(1, nSpectra);
+wardMaterials = cell(1, nSpectra);
 for ii = 1:nSpectra
-    materials{ii} = BuildDesription('material', 'matte', ...
+    matteMaterials{ii} = BuildDesription('material', 'matte', ...
         {'diffuseReflectance'}, ...
         colorCheckerSpectra(ii), ...
         {'spectrum'});
+    specularSpectrum = sprintf('300:%.1f 800:%.1f', rand()*.5, rand()*.5);
+    wardMaterials{ii} = BuildDesription('material', 'anisoward', ...
+        {'diffuseReflectance', 'specularReflectance'}, ...
+        {colorCheckerSpectra{ii}, specularSpectrum}, ...
+        {'spectrum', 'spectrum'});
 end
 
 %% Choose a set of lights to work with.
@@ -71,7 +78,9 @@ for bb = 1:nBaseScenes
     
     % choose materials for the base scene
     nMaterials = numel(baseSceneMetadata.materialIds);
-    baseSceneMaterials = materials(randi(numel(materials), [1, nMaterials]));
+    whichMaterials = randi(numel(matteMaterials), [1, nMaterials]);
+    baseSceneMatteMaterials = matteMaterials(whichMaterials);
+    baseSceneWardMaterials = wardMaterials(whichMaterials);
     
     % choose lights for the base scene
     nLights = numel(baseSceneMetadata.lightIds);
@@ -80,7 +89,8 @@ for bb = 1:nBaseScenes
     % choose objects to insert in the model
     insertedObjects = objectNames(randi(numel(objectNames), [1, nInserted]));
     objectPositions = cell(1, nInserted);
-    objectMaterialSets = cell(1, nInserted);
+    objectMatteMaterialSets = cell(1, nInserted);
+    objectWardMaterialSets = cell(1, nInserted);
     for oo = 1:nInserted
         objectModel = insertedObjects{oo};
         objectMetadata = ReadMetadata(objectModel);
@@ -91,13 +101,18 @@ for bb = 1:nBaseScenes
         
         % choose a set of materials for this object
         nMaterials = numel(objectMetadata.materialIds);
-        objectMaterialSets{oo} = materials(randi(numel(materials), [1 nMaterials]));
+        whichMaterials = randi(numel(matteMaterials), [1 nMaterials]);
+        objectMatteMaterialSets{oo} = matteMaterials(whichMaterials);
+        objectWardMaterialSets{oo} = wardMaterials(whichMaterials);
     end
     
-    sceneName = sprintf('VirtualScene-%d', bb);
+    sceneName = sprintf('IlluminationImages-%d', bb);
     recipe = BuildVirtualSceneRecipe(sceneName, hints, defaultMappings, ...
-        baseSceneName, baseSceneMaterials, baseSceneLights, ...
-        insertedObjects, objectPositions, objectMaterialSets);
+        baseSceneName, ...
+        baseSceneMatteMaterials, baseSceneWardMaterials, ...
+        baseSceneLights, ...
+        insertedObjects, objectPositions, ...
+        objectMatteMaterialSets, objectWardMaterialSets);
     
     recipe = ExecuteRecipe(recipe, 1:4);
     

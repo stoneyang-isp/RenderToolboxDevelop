@@ -21,17 +21,20 @@ if nargin < 5 || isempty(imageName)
     imageName = recipe.input.hints.recipeName;
 end
 
-% find the scene rendering
+% load the scene renderings
 nRenderings = numel(recipe.rendering.radianceDataFiles);
 for ii = 1:nRenderings
     dataFile = recipe.rendering.radianceDataFiles{ii};
-    if ~isempty(strfind(dataFile, 'scene.mat'))
-        sceneDataFile = dataFile;
+    if ~isempty(strfind(dataFile, 'matte.mat'))
+        matteDataFile = dataFile;
+    elseif ~isempty(strfind(dataFile, 'ward.mat'))
+        wardDataFile = dataFile;
     end
 end
-sceneRendering = load(sceneDataFile);
-imageSize = size(sceneRendering.multispectralImage);
-S = sceneRendering.S;
+matteRendering = load(matteDataFile);
+wardRendering = load(wardDataFile);
+imageSize = size(matteRendering.multispectralImage);
+S = matteRendering.S;
 
 % convert materials in scene to indexable multi-spectral pixels
 %   mixels?  spexels?  speckles?
@@ -53,71 +56,81 @@ end
 % raw reflectance image uses the object pixel mask to look up spexels
 materialIndexMask = recipe.processing.materialIndexMask;
 fatMask = repmat(materialIndexMask, [1, 1, nSpexelWls]);
-rawReflectance = zeros(imageSize);
+reflectanceRaw = zeros(imageSize);
 for ii = 1:nMaterials
     isMaterial = fatMask == ii;
     nIsMaterial = sum(isMaterial(:));
     if nIsMaterial > 0
-        rawReflectance(isMaterial(:)) = repmat(spexels(ii,:), nIsMaterial/nSpexelWls, 1);
+        reflectanceRaw(isMaterial(:)) = repmat(spexels(ii,:), nIsMaterial/nSpexelWls, 1);
     end
 end
 
 % fill in gaps in reflectance image by sliding local average
-smoothReflectance = SmoothOutGaps(rawReflectance, materialIndexMask, filterWidth);
+reflectanceInterp = SmoothOutGaps(reflectanceRaw, materialIndexMask, filterWidth);
 
-% "divide out" the reflectance from the rendering to leave illumination
-rawIllumination = sceneRendering.multispectralImage ./ smoothReflectance;
-smoothIllumination = SmoothOutGaps(rawIllumination, materialIndexMask, filterWidth);
+% "divide out" the reflectance from the matte rendering to leave illumination
+illuminationRaw = matteRendering.multispectralImage ./ reflectanceInterp;
+illuminationInterp = SmoothOutGaps(illuminationRaw, materialIndexMask, filterWidth);
 
 % take the mean illumination within each object
-meanIlluminationRaw = zeros(imageSize);
+illuminationMeanRaw = zeros(imageSize);
 objectMask = zeros(size(materialIndexMask));
 for ii = 1:nMaterials
     objectMask(:) = 0;
     objectMask(materialIndexMask == ii) = 1;
     nIsObject = sum(objectMask(:));
     if nIsObject > 0
-        meanIllum = MeanUnderMask(smoothIllumination, objectMask);
+        meanIllum = MeanUnderMask(illuminationInterp, objectMask);
         isMaterial = fatMask == ii;
-        meanIlluminationRaw(isMaterial(:)) = repmat(meanIllum, nIsObject, 1);
+        illuminationMeanRaw(isMaterial(:)) = repmat(meanIllum, nIsObject, 1);
     end
 end
-meanIlluminationSmooth = SmoothOutGaps(meanIlluminationRaw, materialIndexMask, filterWidth);
+illuminationMeanInterp = SmoothOutGaps(illuminationMeanRaw, materialIndexMask, filterWidth);
+
+% "subtract out" matte from ward rendering to leave specular radiance only
+specularOnly = wardRendering.multispectralImage - matteRendering.multispectralImage;
 
 %% Write out analysis images to disk.
 
-% save the scene rendering in sRgb
+% save the scene renderings in sRgb
 imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
-sceneSrgbFile = fullfile(imageFolder, [imageName '-scene-srgb.png']);
-MakeMontage({sceneDataFile}, ...
-    sceneSrgbFile, toneMapFactor, isScale, recipe.input.hints);
-recipe.processing.sceneSrgbFile = sceneSrgbFile;
+recipe.processing.matteSrgb = writeImage( ...
+    fullfile(imageFolder, [imageName '-radiance-diffuse.png']), ...
+    uint8(MultispectralToSRGB(matteRendering.multispectralImage, S, toneMapFactor, isScale)));
 
-% save reflectance images as sRgb
-recipe.processing.rawReflectanceImage = writeImage( ...
-    fullfile(imageFolder, [imageName '-scene-illumination-raw.png']), ...
-    uint8(MultispectralToSRGB(rawReflectance, S, toneMapFactor, isScale)));
+recipe.processing.wardSrgb = writeImage( ...
+    fullfile(imageFolder, [imageName '-radiance-ward.png']), ...
+    uint8(MultispectralToSRGB(wardRendering.multispectralImage, S, toneMapFactor, isScale)));
 
-recipe.processing.smoothReflectanceImage = writeImage( ...
-    fullfile(imageFolder, [imageName '-scene-illumination-smooth.png']), ...
-    uint8(MultispectralToSRGB(smoothReflectance, S, toneMapFactor, isScale)));
+recipe.processing.specularSrgb = writeImage( ...
+    fullfile(imageFolder, [imageName '-radiance-specular.png']), ...
+    uint8(MultispectralToSRGB(specularOnly, S, toneMapFactor, isScale)));
 
-% save illumination image as sRgb
-recipe.processing.rawIlluminationImage = writeImage( ...
-    fullfile(imageFolder, [imageName '-scene-illumination-raw.png']), ...
-    uint8(MultispectralToSRGB(rawIllumination, S, toneMapFactor, isScale)));
+% save reflectances as sRgb
+recipe.processing.reflectanceRaw = writeImage( ...
+    fullfile(imageFolder, [imageName '-reflectance-raw.png']), ...
+    uint8(MultispectralToSRGB(reflectanceRaw, S, toneMapFactor, isScale)));
 
-recipe.processing.smoothIlluminationImage = writeImage( ...
-    fullfile(imageFolder, [imageName '-scene-illumination-smooth.png']), ...
-    uint8(MultispectralToSRGB(smoothIllumination, S, toneMapFactor, isScale)));
+recipe.processing.eflectanceSmooth = writeImage( ...
+    fullfile(imageFolder, [imageName '-reflectance-interp.png']), ...
+    uint8(MultispectralToSRGB(reflectanceInterp, S, toneMapFactor, isScale)));
 
-recipe.processing.meanIlluminationRaw = writeImage( ...
-    fullfile(imageFolder, [imageName '-scene-illumination-mean-raw.png']), ...
-    uint8(MultispectralToSRGB(meanIlluminationRaw, S, toneMapFactor, isScale)));
+% save illuminations as sRgb
+recipe.processing.illuminationRaw = writeImage( ...
+    fullfile(imageFolder, [imageName '-illumination-raw.png']), ...
+    uint8(MultispectralToSRGB(illuminationRaw, S, toneMapFactor, isScale)));
 
-recipe.processing.meanIlluminationSmooth = writeImage( ...
-    fullfile(imageFolder, [imageName '-scene-illumination-mean-smooth.png']), ...
-    uint8(MultispectralToSRGB(meanIlluminationSmooth, S, toneMapFactor, isScale)));
+recipe.processing.illuminationSmooth = writeImage( ...
+    fullfile(imageFolder, [imageName '-illumination-interp.png']), ...
+    uint8(MultispectralToSRGB(illuminationInterp, S, toneMapFactor, isScale)));
+
+recipe.processing.lluminationMeanRaw = writeImage( ...
+    fullfile(imageFolder, [imageName '-illumination-mean-raw.png']), ...
+    uint8(MultispectralToSRGB(illuminationMeanRaw, S, toneMapFactor, isScale)));
+
+recipe.processing.illuminationMeanSmooth = writeImage( ...
+    fullfile(imageFolder, [imageName '-illumination-mean-interp.png']), ...
+    uint8(MultispectralToSRGB(illuminationMeanInterp, S, toneMapFactor, isScale)));
 
 
 function fileName = writeImage(fileName, imageData)

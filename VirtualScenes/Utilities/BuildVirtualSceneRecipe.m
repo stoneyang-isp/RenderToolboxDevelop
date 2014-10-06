@@ -3,14 +3,18 @@
 %   hints should be batch renderer hints
 %   defaultMappings should be 'DefaultMappings.txt', etc.
 %   baseSceneModel should be 'IndoorPlant' etc.
-%   baseSceneMaterials should be {material1, material2, ...}
+%   baseSceneMatteMaterials should be {material1, material2, ...}
+%   baseSceneWardMaterials should be {material1, material2, ...}
 %   baseSceneLights should be {light1, light2, ...}
 %   insertedObjects should be {'Barrel', 'Barrel', 'RingToy', ...}
 %   objectPositions should be {[xyz], [xyz], [xyz], ...}
-%   objectMaterialSets should be {{m1, m2, ...}, {m1, m2, ...}, ...}
+%   objectMatteMaterialSets should be {{m1, m2, ...}, {m1, m2, ...}, ...}
+%   objectWardMaterialSets should be {{m1, m2, ...}, {m1, m2, ...}, ...}
 function recipe = BuildVirtualSceneRecipe(sceneName, hints, defaultMappings, ...
-    baseSceneModel, baseSceneMaterials, baseSceneLights, ...
-    insertedObjects, objectPositions, objectMaterialSets)
+    baseSceneModel, baseSceneMatteMaterials, baseSceneWardMaterials, ...
+    baseSceneLights, ...
+    insertedObjects, objectPositions, ...
+    objectMatteMaterialSets, objectWardMaterialSets)
 
 if nargin < 2
     hints = GetDefaultHints();
@@ -67,7 +71,8 @@ AppendMaterialMappings(mappingsFile, mappingsFile, ...
 % build a grand list of material ids and scene materials
 %   inserted object material ids get prefixed with the object name
 allMaterialIds = sceneMetadata.materialIds;
-allSceneMaterials = baseSceneMaterials;
+allSceneMatteMaterials = baseSceneMatteMaterials;
+allSceneWardMaterials = baseSceneWardMaterials;
 nInserted = numel(insertedObjects);
 for oo = 1:nInserted
     idPrefix = sprintf('object-%d-', oo);
@@ -78,11 +83,12 @@ for oo = 1:nInserted
         objectMaterialIds{mm} = [idPrefix objectMetadata.materialIds{mm}];
     end
     allMaterialIds = cat(2, allMaterialIds, objectMaterialIds);
-    allSceneMaterials = cat(2, allSceneMaterials, objectMaterialSets{oo});
+    allSceneMatteMaterials = cat(2, allSceneMatteMaterials, objectMatteMaterialSets{oo});
+    allSceneWardMaterials = cat(2, allSceneWardMaterials, objectWardMaterialSets{oo});
 end
 
 % choose a reflectance band to use for each material in the mask conditions
-nMaterials = numel(allSceneMaterials);
+nMaterials = numel(allSceneMatteMaterials);
 nBands = 31;
 allBands = 1 + mod((1:nMaterials)-1, nBands);
 
@@ -120,7 +126,9 @@ end
 
 % write out mappings with actual scene materials
 AppendMaterialMappings(mappingsFile, mappingsFile, ...
-    allMaterialIds, allSceneMaterials, [], 'Generic scene');
+    allMaterialIds, allSceneMatteMaterials, [], 'Generic matte');
+AppendMaterialMappings(mappingsFile, mappingsFile, ...
+    allMaterialIds, allSceneWardMaterials, [], 'Generic ward');
 
 % write out pages of mappings with mask condition materials
 maskNames = cell(1, nPages);
@@ -135,7 +143,9 @@ end
 
 % basic conditions file columns
 allNames = {'imageName', 'groupName', 'camera-flash'};
-sceneValues = {'scene', 'scene', 'none'};
+sceneValues = { ...
+    'matte', 'matte', 'none'; ...
+    'ward', 'ward', 'none'};
 flashValues = repmat({flashMetadata.relativePath}, nPages, 1);
 maskValues = cat(2, maskNames', maskNames', flashValues);
 allValues = cat(1, sceneValues, maskValues);
@@ -153,7 +163,7 @@ for oo = 1:nInserted
     allNames = cat(2, allNames, varNames);
     
     varValues = {objectModelPath, objectPosition};
-    allValues = cat(2, allValues, repmat(varValues, nPages+1, 1));
+    allValues = cat(2, allValues, repmat(varValues, nPages+2, 1));
 end
 
 % write out the conditions file
@@ -162,8 +172,8 @@ WriteConditionsFile(conditionsFile, allNames, allValues);
 %% Pack it all up in a recipe.
 toneMapFactor = 100;
 isScale = true;
-pixelThreshold = 0.1;
-filterWidth = 5;
+pixelThreshold = 0.01;
+filterWidth = 7;
 executive = { ...
     @MakeRecipeSceneFiles, ...
     @MakeRecipeRenderings, ...
@@ -175,6 +185,6 @@ recipe = NewRecipe([], executive, parentSceneFile, ...
 
 % remember how materials were assigned
 recipe.processing.allMaterialIds = allMaterialIds;
-recipe.processing.allSceneMaterials = allSceneMaterials;
+recipe.processing.allSceneMaterials = allSceneMatteMaterials;
 recipe.processing.allMaskMaterials = allMaskMaterials;
 recipe.processing.allMaskMaterialPages = allMaskMaterialPages;
