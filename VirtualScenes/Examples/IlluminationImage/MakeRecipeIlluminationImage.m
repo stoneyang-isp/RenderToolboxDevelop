@@ -69,6 +69,23 @@ smoothReflectance = SmoothOutGaps(rawReflectance, materialIndexMask, filterWidth
 rawIllumination = sceneRendering.multispectralImage ./ smoothReflectance;
 smoothIllumination = SmoothOutGaps(rawIllumination, materialIndexMask, filterWidth);
 
+% take the mean illumination within each object
+meanIlluminationRaw = zeros(imageSize);
+objectMask = zeros(size(materialIndexMask));
+for ii = 1:nMaterials
+    objectMask(:) = 0;
+    objectMask(materialIndexMask == ii) = 1;
+    nIsObject = sum(objectMask(:));
+    if nIsObject > 0
+        meanIllum = MeanUnderMask(smoothIllumination, objectMask);
+        isMaterial = fatMask == ii;
+        meanIlluminationRaw(isMaterial(:)) = repmat(meanIllum, nIsObject, 1);
+    end
+end
+meanIlluminationSmooth = SmoothOutGaps(meanIlluminationRaw, materialIndexMask, filterWidth);
+
+%% Write out analysis images to disk.
+
 % save the scene rendering in sRgb
 imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
 sceneSrgbFile = fullfile(imageFolder, [imageName '-scene-srgb.png']);
@@ -76,26 +93,32 @@ MakeMontage({sceneDataFile}, ...
     sceneSrgbFile, toneMapFactor, isScale, recipe.input.hints);
 recipe.processing.sceneSrgbFile = sceneSrgbFile;
 
-% save the raw reflectance image as sRgb
-rawReflectanceFile = fullfile(imageFolder, [imageName '-scene-reflectance-raw.png']);
-rawReflectanceSrgb = MultispectralToSRGB(rawReflectance, S, toneMapFactor, isScale);
-imwrite(uint8(rawReflectanceSrgb), rawReflectanceFile);
-recipe.processing.rawReflectanceImage = rawReflectanceFile;
+% save reflectance images as sRgb
+recipe.processing.rawReflectanceImage = writeImage( ...
+    fullfile(imageFolder, [imageName '-scene-illumination-raw.png']), ...
+    uint8(MultispectralToSRGB(rawReflectance, S, toneMapFactor, isScale)));
 
-% save the smooth reflectance image as sRgb
-smoothReflectanceFile = fullfile(imageFolder, [imageName '-scene-reflectance-smooth.png']);
-smoothReflectanceSrgb = MultispectralToSRGB(smoothReflectance, S, toneMapFactor, isScale);
-imwrite(uint8(smoothReflectanceSrgb), smoothReflectanceFile);
-recipe.processing.rawReflectanceImage = smoothReflectanceFile;
+recipe.processing.smoothReflectanceImage = writeImage( ...
+    fullfile(imageFolder, [imageName '-scene-illumination-smooth.png']), ...
+    uint8(MultispectralToSRGB(smoothReflectance, S, toneMapFactor, isScale)));
 
-% save the raw illumination image as sRgb
-rawIlluminationFile = fullfile(imageFolder, [imageName '-scene-illumination-raw.png']);
-rawIlluminationSrgb = MultispectralToSRGB(rawIllumination, S, toneMapFactor, isScale);
-imwrite(uint8(rawIlluminationSrgb), rawIlluminationFile);
-recipe.processing.rawIlluminationImage = rawIlluminationFile;
+% save illumination image as sRgb
+recipe.processing.rawIlluminationImage = writeImage( ...
+    fullfile(imageFolder, [imageName '-scene-illumination-raw.png']), ...
+    uint8(MultispectralToSRGB(rawIllumination, S, toneMapFactor, isScale)));
 
-% save the smooth illumination image as sRgb
-smoothIlluminationFile = fullfile(imageFolder, [imageName '-scene-illumination-smooth.png']);
-smoothIlluminationSrgb = MultispectralToSRGB(smoothIllumination, S, toneMapFactor, isScale);
-imwrite(uint8(smoothIlluminationSrgb), smoothIlluminationFile);
-recipe.processing.smoothReflectanceImage = smoothIlluminationFile;
+recipe.processing.smoothIlluminationImage = writeImage( ...
+    fullfile(imageFolder, [imageName '-scene-illumination-smooth.png']), ...
+    uint8(MultispectralToSRGB(smoothIllumination, S, toneMapFactor, isScale)));
+
+recipe.processing.meanIlluminationRaw = writeImage( ...
+    fullfile(imageFolder, [imageName '-scene-illumination-mean-raw.png']), ...
+    uint8(MultispectralToSRGB(meanIlluminationRaw, S, toneMapFactor, isScale)));
+
+recipe.processing.meanIlluminationSmooth = writeImage( ...
+    fullfile(imageFolder, [imageName '-scene-illumination-mean-smooth.png']), ...
+    uint8(MultispectralToSRGB(meanIlluminationSmooth, S, toneMapFactor, isScale)));
+
+
+function fileName = writeImage(fileName, imageData)
+imwrite(imageData, fileName);

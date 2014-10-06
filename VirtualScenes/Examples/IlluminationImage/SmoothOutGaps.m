@@ -4,37 +4,37 @@
 %   filterWidth width of sliding filter used to smooth out gaps
 function smoothImage = SmoothOutGaps(rawImage, gapMask, filterWidth)
 imageSize = size(rawImage);
-width = imageSize(1);
-height = imageSize(2);
-depth = imageSize(3);
+height = imageSize(1);
+width = imageSize(2);
 
-% make sure raw image has gaps where it's supposed to
 isGap = gapMask == 0;
-for kk = 1:depth
-    imageSlice = rawImage(:,:,kk);
-    imageSlice(isGap) = 0;
-    rawImage(:,:,kk) = imageSlice;
-end
+windowMask = zeros(height, width);
 
 % compute smooth image with sliding window
-window = (1:filterWidth) - floor(filterWidth/2);
+halfWindow = ceil(filterWidth/2);
 smoothImage = rawImage;
-for ii = 1:width
-    for jj = 1:height
+for ii = 1:height
+    for jj = 1:width
         if gapMask(ii,jj) > 0
             % no gap here
             continue;
         end
         
         % choose window area
-        iiWindow = min(max(window + ii, 1), width);
-        jjWindow = min(max(window + jj, 1), height);
+        windowYMin = max(ii - halfWindow, 1);
+        windowYMax = min(ii + halfWindow, height);
+        windowXMin = max(jj - halfWindow, 1);
+        windowXMax = min(jj + halfWindow, width);
         
-        % take average at each depth slice
-        for kk = 1:depth
-            nSamples = sum(sum(~isGap(iiWindow, jjWindow)));
-            windowSelection = rawImage(iiWindow, jjWindow, kk);
-            smoothImage(ii,jj,kk) = sum(windowSelection(:)) / nSamples;
-        end
+        % make a mask to average over
+        windowMask(:) = 0;
+        windowMask(windowYMin:windowYMax, windowXMin:windowXMax) = 1;
+        windowMask(isGap) = 0;
+
+        % get the mean under the mask
+        [maskMean, maskMedian] = MeanUnderMask(rawImage, windowMask);
+        
+        % smooth out that gap!
+        smoothImage(ii, jj, :) = maskMedian;
     end
 end
