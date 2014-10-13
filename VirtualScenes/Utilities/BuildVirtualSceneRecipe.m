@@ -25,8 +25,8 @@ end
 %% Augment batch renderer options.
 hints.remodeler = 'InsertObjectRemodeler';
 ChangeToWorkingFolder(hints);
-mappingsFile = [sceneName '-Mappings.txt'];
-conditionsFile = [sceneName '-Conditions.txt'];
+mappingsFile = [hints.recipeName '-Mappings.txt'];
+conditionsFile = [hints.recipeName '-Conditions.txt'];
 
 sceneMetadata = ReadMetadata(baseSceneModel);
 parentSceneFile = GetVirtualScenesPath(sceneMetadata.relativePath);
@@ -43,6 +43,8 @@ maskBaseSceneLightSet = cell(1, numel(sceneMetadata.lightIds));
 % write out mappings for base scene lights
 AppendLightMappings(defaultMappings, mappingsFile, ...
     sceneMetadata.lightIds, baseSceneLights, 'Generic scene');
+AppendLightMappings(defaultMappings, mappingsFile, ...
+    sceneMetadata.lightIds, baseSceneLights, 'Generic boring');
 AppendLightMappings(mappingsFile, mappingsFile, ...
     sceneMetadata.lightIds, maskBaseSceneLightSet, 'Generic mask');
 
@@ -68,7 +70,7 @@ AppendMaterialMappings(mappingsFile, mappingsFile, ...
 
 %% Write mappings for every object's material.
 
-% build a grand list of material ids and scene materials
+% build a grand list of material ids, matte, and ward materials
 %   inserted object material ids get prefixed with the object name
 allMaterialIds = sceneMetadata.materialIds;
 allSceneMatteMaterials = baseSceneMatteMaterials;
@@ -86,6 +88,14 @@ for oo = 1:nInserted
     allSceneMatteMaterials = cat(2, allSceneMatteMaterials, objectMatteMaterialSets{oo});
     allSceneWardMaterials = cat(2, allSceneWardMaterials, objectWardMaterialSets{oo});
 end
+
+% build a grand list of boring materials
+boringMatte = BuildDesription('material', 'matte', ...
+    {'diffuseReflectance'}, ...
+    {'300:0.5 800:0.5'}, ...
+    {'spectrum'});
+allSceneBoringMaterials = cell(size(allSceneWardMaterials));
+[allSceneBoringMaterials{:}] = deal(boringMatte);
 
 % choose a reflectance band to use for each material in the mask conditions
 nMaterials = numel(allSceneMatteMaterials);
@@ -129,6 +139,8 @@ AppendMaterialMappings(mappingsFile, mappingsFile, ...
     allMaterialIds, allSceneMatteMaterials, [], 'Generic matte');
 AppendMaterialMappings(mappingsFile, mappingsFile, ...
     allMaterialIds, allSceneWardMaterials, [], 'Generic ward');
+AppendMaterialMappings(mappingsFile, mappingsFile, ...
+    allMaterialIds, allSceneBoringMaterials, [], 'Generic boring');
 
 % write out pages of mappings with mask condition materials
 maskNames = cell(1, nPages);
@@ -145,7 +157,8 @@ end
 allNames = {'imageName', 'groupName', 'camera-flash'};
 sceneValues = { ...
     'matte', 'matte', 'none'; ...
-    'ward', 'ward', 'none'};
+    'ward', 'ward', 'none'; ...
+    'boring', 'boring', 'none'};
 flashValues = repmat({flashMetadata.relativePath}, nPages, 1);
 maskValues = cat(2, maskNames', maskNames', flashValues);
 allValues = cat(1, sceneValues, maskValues);
@@ -163,7 +176,7 @@ for oo = 1:nInserted
     allNames = cat(2, allNames, varNames);
     
     varValues = {objectModelPath, objectPosition};
-    allValues = cat(2, allValues, repmat(varValues, nPages+2, 1));
+    allValues = cat(2, allValues, repmat(varValues, nPages+3, 1));
 end
 
 % write out the conditions file
@@ -178,13 +191,16 @@ executive = { ...
     @MakeRecipeSceneFiles, ...
     @MakeRecipeRenderings, ...
     @(recipe)MakeRecipeObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale, sceneName), ...
-    @(recipe)MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale, sceneName)};
+    @(recipe)MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale, sceneName), ...
+    @(recipe)MakeRecipeBoringComparison(recipe, toneMapFactor, isScale)};
 
 recipe = NewRecipe([], executive, parentSceneFile, ...
     conditionsFile, mappingsFile, hints);
 
 % remember how materials were assigned
 recipe.processing.allMaterialIds = allMaterialIds;
-recipe.processing.allSceneMaterials = allSceneMatteMaterials;
+recipe.processing.allSceneMatteMaterials = allSceneMatteMaterials;
+recipe.processing.allSceneWardMaterials = allSceneWardMaterials;
+recipe.processing.allSceneBoringMaterials = allSceneBoringMaterials;
 recipe.processing.allMaskMaterials = allMaskMaterials;
 recipe.processing.allMaskMaterialPages = allMaskMaterialPages;

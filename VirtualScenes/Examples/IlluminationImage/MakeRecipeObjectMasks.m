@@ -37,12 +37,16 @@ materialIndexMask = zeros(imageSize(1), imageSize(2), 'uint8');
 grandMultispectralImage = zeros(imageSize(1), imageSize(2), 0);
 
 imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
+maskFolder = fullfile(imageFolder, 'mask');
+if ~exist(maskFolder, 'dir')
+    mkdir(maskFolder);
+end
 nPages = numel(maskDataFiles);
 for pp = 1:nPages
     % save mask rendering in sRgb
     dataFile = maskDataFiles{pp};
     maskName = sprintf('mask-%d', pp);
-    maskSrgbFile = fullfile(imageFolder, [imageName '-' maskName '-srgb.png']);
+    maskSrgbFile = fullfile(maskFolder, [maskName '-srgb.png']);
     MakeMontage({dataFile}, ...
         maskSrgbFile, toneMapFactor, isScale, recipe.input.hints);
     recipe.processing.maskSrgbFile{pp} = maskSrgbFile;
@@ -68,6 +72,6 @@ recipe.processing.materialIndexMask = materialIndexMask;
 % save an image that shows coverage for the materialIndexImage
 maskCoverage = zeros(imageSize(1), imageSize(2), 'uint8');
 maskCoverage(materialIndexMask > 0) = 255;
-maskCoverageFile = fullfile(imageFolder, [imageName '-mask-coverage.png']);
+maskCoverageFile = fullfile(maskFolder, 'mask-coverage.png');
 imwrite(maskCoverage, maskCoverageFile)
 recipe.processing.maskCoverageFile = maskCoverageFile;
