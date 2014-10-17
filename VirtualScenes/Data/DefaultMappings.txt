@@ -1,22 +1,4 @@
-
 % flip the camera handedness to match Blender-Collada output to Mitsuba and PBRT
 Collada {
     Camera:scale|sid=scale = -1 1 1
-}
-
-% turn off path tracing for making object pixel masks
-Mitsuba mask {
-    integrator:integrator:direct
-
-    % control graininess
-    Camera-camera_sampler:sampleCount.integer = 32
-}
-
-% turn on path tracing for the regular scene
-Mitsuba scene {
-    integrator:integrator:path
-    integrator:maxDepth.integer = 10
-
-    % control graininess
-    Camera-camera_sampler:sampleCount.integer = 128
 }

@@ -18,11 +18,11 @@ function WriteMappingsBlock(fid, comment, blockName, elementInfo)
 fprintf(fid, '\n\n%% %s\n', comment);
 fprintf(fid, '%s {\n', blockName);
 for ii = 1:numel(elementInfo)
-    fprintf(fid, '\t%s:%s:%s\n', elementInfo(ii).id, ...
+    fprintf(fid, '    %s:%s:%s\n', elementInfo(ii).id, ...
         elementInfo(ii).category, elementInfo(ii).type);
     for jj = 1:numel(elementInfo(ii).properties)
         prop = elementInfo(ii).properties(jj);
-        fprintf(fid, '\t%s:%s.%s = %s\n', elementInfo(ii).id, ...
+        fprintf(fid, '    %s:%s.%s = %s\n', elementInfo(ii).id, ...
             prop.propertyName, prop.valueType, prop.propertyValue);
     end
     fprintf(fid, '\n');

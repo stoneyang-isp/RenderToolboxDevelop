@@ -2,8 +2,7 @@
 %   recipe should be a recipe from BuildVirtualSceneRecipe
 %   pixelThreshold can be mask "conservativeness" like 0.1
 %   toneMapFactor and isScale are passed to MakeMontage()
-%   imageName is optional base file name for images
-function recipe = MakeRecipeObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale, imageName)
+function recipe = MakeRecipeObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale)
 
 if nargin < 2 || isempty(pixelThreshold)
     pixelThreshold = 0.1;
@@ -15,10 +14,6 @@ end
 
 if nargin < 4 || isempty(isScale)
     isScale = true;
-end
-
-if nargin < 5 || isempty(imageName)
-    imageName = recipe.input.hints.recipeName;
 end
 
 % find the mask renderings

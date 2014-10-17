@@ -2,8 +2,7 @@
 %   recipe should be a recipe from BuildVirtualSceneRecipe
 %   filterWidth width of sliding average to fill gaps in object pixel mask
 %   toneMapFactor and isScale are passed to MakeMontage()
-%   imageName is optional base file name for images
-function recipe = MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale, imageName)
+function recipe = MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale)
 
 if nargin < 2 || isempty(filterWidth)
     filterWidth = 5;
@@ -15,10 +14,6 @@ end
 
 if nargin < 4 || isempty(isScale)
     isScale = true;
-end
-
-if nargin < 5 || isempty(imageName)
-    imageName = recipe.input.hints.recipeName;
 end
 
 % load the scene renderings
