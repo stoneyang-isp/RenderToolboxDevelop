@@ -3,8 +3,8 @@ clear;
 clc;
 
 %% Choose batch renderer options.
-hints.imageWidth = 320;
-hints.imageHeight = 240;
+hints.imageWidth = 640;
+hints.imageHeight = 480;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
 hints.recipeName = 'WardLand';
@@ -63,7 +63,7 @@ skyArea = BuildDesription('light', 'area', ...
 lights = {whiteArea, sunArea, skyArea};
 
 %% Choose sets of base scenes and objects to work with.
-baseSceneNames = {'IndoorPlant'};
+baseSceneNames = {'IndoorPlant', 'Warehouse'};
 objectNames = {'Barrel', 'ChampagneBottle', 'RingToy', 'Xylophone'};
 
 %% Make a recipe for each base scene, with some objects inserted.
@@ -106,23 +106,31 @@ for bb = 1:nBaseScenes
         objectWardMaterialSets{oo} = wardMaterials(whichMaterials);
     end
     
-    sceneName = sprintf('%s-%d', hints.recipeName, bb);
-    recipe = BuildVirtualSceneRecipe(sceneName, hints, defaultMappings, ...
+    % build a new recipe
+    recipe = BuildVirtualSceneRecipe(hints, defaultMappings, ...
         baseSceneName, ...
         baseSceneMatteMaterials, baseSceneWardMaterials, ...
         baseSceneLights, ...
         insertedObjects, objectPositions, ...
         objectMatteMaterialSets, objectWardMaterialSets);
     
+    % clean up the working folder
+    rmdir(GetWorkingFolder('images', false, hints), 's');
+    rmdir(GetWorkingFolder('renderings', false, hints), 's');
+    rmdir(GetWorkingFolder('scenes', false, hints), 's');
+    rmdir(GetWorkingFolder('temp', false, hints), 's');
+    
+    % run the recipe and collect errors locally for debugging
     whichExecutives = 1:numel(recipe.input.executive);
     throwException = false;
     recipe = ExecuteRecipe(recipe, whichExecutives, throwException);
-    
     errorData = GetFirstRecipeError(recipe, throwException);
     if ~isempty(errorData)
         rethrow(errorData);
     end
     
-    recipeArchives{oo} = fullfile(GetUserFolder(), 'render-toolbox', sceneName);
+    % archive the recipe
+    archiveName = sprintf('%s-%d', hints.recipeName, bb);
+    recipeArchives{oo} = fullfile(GetUserFolder(), 'illumination-data', archiveName);
     PackUpRecipe(recipe, recipeArchives{oo}, {'temp'});
 end
