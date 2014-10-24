@@ -3,8 +3,8 @@ clear;
 clc;
 
 %% Choose batch renderer options.
-hints.imageWidth = 320;
-hints.imageHeight = 240;
+hints.imageWidth = 640;
+hints.imageHeight = 480;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
 hints.recipeName = 'WardLand';
@@ -63,7 +63,7 @@ skyArea = BuildDesription('light', 'area', ...
 lights = {whiteArea, sunArea, skyArea};
 
 %% Choose sets of base scenes and objects to work with.
-baseSceneNames = {'IndoorPlant'};
+baseSceneNames = {'IndoorPlant', 'Warehouse'};
 objectNames = {'Barrel', 'ChampagneBottle', 'RingToy', 'Xylophone'};
 
 %% Make a recipe for each base scene, with some objects inserted.
