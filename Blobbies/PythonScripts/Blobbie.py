@@ -1,4 +1,4 @@
-# Script to a blobby object with various illuminations for the 2014 NIH grant application
+# Script to generate blobby object
 # 
 # 6/24/2014  npc  Wrote it. 
 
@@ -384,7 +384,7 @@ toolboxDirectory = '/Users/Shared/Matlab/Toolboxes/RenderToolbox3/Utilities/Blen
 sceneParams = { 'sceneName'           : 'Blobbie_LargeAreaLamps',
                 'exportsDirectory'    : exportsDirectory,
                 'toolboxDirectory'    : toolboxDirectory,
-                'blobbieSubdivisions' : 5,      # higher = better the quality / longer rendering time
+                'blobbieSubdivisions' : 9,      # higher = better the quality / longer rendering time
                 'blobbieRotationDeg'  : 33,     # rotate Blobbie by 33 degrees around the vertical axis
                 'areaLampSize'        : 15      # 15 for large, 3 for small
              };
