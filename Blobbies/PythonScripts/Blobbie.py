@@ -282,6 +282,7 @@ def generateScene(sceneParams):
                };
         indentation = 0.09;
 
+    print('Generating floor ...')
     for ix in list(range(-N,N+1)):
        for iy in list(range(-N,N+1)): 
             tileParams['name']     = 'floorTileAt({0:1d},{1:2d})'.format(ix,iy);
@@ -294,6 +295,7 @@ def generateScene(sceneParams):
                 scene.boreOut(theTile, theSphere, True);
 
 
+    print('Generating enclosing room...')
     # Add the enclosing room
     roomLocation = Vector((0,0,0));
     params = {  'floorName'             : 'floor',
@@ -315,6 +317,7 @@ def generateScene(sceneParams):
               }
     roomBox = scene.addRoom(params);
 
+    print('Generating pedestal ...')
     # add pedestal (cylinder or cube)
     cylinderWidth  = 20.0;
     cylinderHeight = 2.0;
@@ -327,6 +330,7 @@ def generateScene(sceneParams):
     #theCylinder = scene.addCylinder(params);
     cylinderBase  = scene.addCube(params);
 
+    print('Generating Blobbie. This may take a while ...')
     # make blobbie
     # start with a sphere
     params = {'name'         : 'blobbieObject',
@@ -374,6 +378,7 @@ def generateScene(sceneParams):
     # Finally, export collada file
     scene.exportToColladaFile(sceneParams['exportsDirectory']);
 
+    print('All done !')
 
 # ------- main() ------
 
@@ -385,7 +390,7 @@ sceneParams = { 'sceneName'           : 'Blobbie_LargeAreaLamps',
                 'exportsDirectory'    : exportsDirectory,
                 'toolboxDirectory'    : toolboxDirectory,
                 'blobbieSubdivisions' : 9,      # higher = better the quality / longer rendering time
-                'blobbieRotationDeg'  : 33,     # rotate Blobbie by 33 degrees around the vertical axis
+                'blobbieRotationDeg'  : 45,     # rotate Blobbie by 33 degrees around the vertical axis
                 'areaLampSize'        : 15      # 15 for large, 3 for small
              };
 
