@@ -389,7 +389,7 @@ toolboxDirectory = '/Users/Shared/Matlab/Toolboxes/RenderToolbox3/Utilities/Blen
 sceneParams = { 'sceneName'           : 'Blobbie_LargeAreaLamps',
                 'exportsDirectory'    : exportsDirectory,
                 'toolboxDirectory'    : toolboxDirectory,
-                'blobbieSubdivisions' : 9,      # higher = better the quality / longer rendering time
+                'blobbieSubdivisions' : 8,      # higher = better the quality / longer rendering time
                 'blobbieRotationDeg'  : 45,     # rotate Blobbie by 33 degrees around the vertical axis
                 'areaLampSize'        : 15      # 15 for large, 3 for small
              };
