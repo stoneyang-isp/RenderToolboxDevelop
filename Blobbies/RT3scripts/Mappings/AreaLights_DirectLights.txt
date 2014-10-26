@@ -49,9 +49,9 @@ Mitsuba {
     % ======== Camera sampler settings =============
     %Camera-camera_sampler:sampler:ldsampler
     % Very High-end
-    Camera-camera_sampler:sampleCount.integer  = 2048
+    %Camera-camera_sampler:sampleCount.integer  = 8192
     % High-end
-    %Camera-camera_sampler:sampleCount.integer  = 1024
+    Camera-camera_sampler:sampleCount.integer  = 4096
     % Upper-end
     %Camera-camera_sampler:sampleCount.integer  = 512
     % Medium-end
