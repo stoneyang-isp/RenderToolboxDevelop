@@ -68,7 +68,7 @@ function MakeBlobbyObject()
                     conditionsNum = conditionsNum + 1;
                 
                     % Select scene file
-                    blobbieSceneNames{conditionsNum} = blobbieSceneNames{sceneIndex};
+                    sceneNames{conditionsNum} = blobbieSceneNames{sceneIndex};
                 
                     newCondition = { ...
                             sprintf('%s__sceneNo_%d', blobbieSceneNames{conditionsNum}, conditionsNum),  ...    
@@ -88,7 +88,7 @@ function MakeBlobbyObject()
    for condIndex = 1:conditionsNum  
   
         % Get collada file
-        sceneName = blobbieSceneNames{condIndex};
+        sceneName = sceneNames{condIndex};
         colladaFile = sprintf('%s/ColladaExports/%s.dae', rootDir, sceneName);
             
         % Get  condition values
