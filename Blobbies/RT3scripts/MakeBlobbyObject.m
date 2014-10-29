@@ -13,8 +13,8 @@ function MakeBlobbyObject()
     
     % Choose batch renderer options.
     hints.whichConditions = [];
-    hints.imageWidth  = 1024/2; %320;   % 1024; % 320*2; %1000;
-    hints.imageHeight = 876/2; % 240;  % 768;% 240*2; %750;
+    hints.imageWidth  = 1920; % 1024*2; %320;   % 1024; % 320*2; %1000;
+    hints.imageHeight = 1920; % 876*2; % 240;  % 768;% 240*2; %750;
     hints.recipeName = '';
     hints.renderer = 'Mitsuba';
     hints.resources  = resourceDir;
