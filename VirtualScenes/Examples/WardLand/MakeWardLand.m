@@ -63,7 +63,7 @@ skyArea = BuildDesription('light', 'area', ...
 lights = {whiteArea, sunArea, skyArea};
 
 %% Choose sets of base scenes and objects to work with.
-baseSceneNames = {'IndoorPlant', 'Warehouse'};
+baseSceneNames = {'CheckerBoard'};
 objectNames = {'Barrel', 'ChampagneBottle', 'RingToy', 'Xylophone'};
 
 %% Make a recipe for each base scene, with some objects inserted.

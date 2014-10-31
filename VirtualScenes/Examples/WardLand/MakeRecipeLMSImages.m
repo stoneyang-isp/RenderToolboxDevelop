@@ -39,9 +39,9 @@ function lmsData = computeLMS(name, multispectral, S, sensitivities, imageFolder
 lmsData.lmsImage = ...
     MultispectralToSensorImage(multispectral, S, sensitivities);
 
+% write out L, M, and S channels to disk
 lmsMax = max(lmsData.lmsImage(:));
 
-% write out L, M, and S channels to disk
 lmsData.l = WriteImage( ...
     fullfile(imageFolder, 'lms', [name '-l.png']), ...
     lmsData.lmsImage(:,:,1) ./ lmsMax);
@@ -54,3 +54,7 @@ lmsData.s = WriteImage( ...
     fullfile(imageFolder, 'lms', [name '-s.png']), ...
     lmsData.lmsImage(:,:,3) ./ lmsMax);
 
+% write all of the LMS data
+lmsData.all = fullfile(imageFolder, 'lms', [name '-all.mat']);
+lmsImage = lmsData.lmsImage;
+save(lmsData.all, 'name', 'multispectral', 'S', 'sensitivities', 'lmsImage');

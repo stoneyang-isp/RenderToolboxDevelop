@@ -30,6 +30,20 @@ metadata = WriteMetadata(modelName, boundingVolume, materialIds, lightIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
+%% CheckerBoard base scene
+modelName = 'CheckerBoard';
+boundingVolume = [-3 3; -3 3; 1 3];
+modelPath = fullfile(VirtualScenesRoot(), 'BaseScenes', 'Models', 'CheckerBoard.dae');
+materialIds = GetSceneMaterialIds(modelPath);
+lightIds = { ...
+    'TopLeftLight-mesh', ...
+    'RightLight-mesh', ...
+    'BottomLight-mesh', ...
+    };
+metadata = WriteMetadata(modelName, boundingVolume, materialIds, lightIds);
+readMetadata = ReadMetadata(modelName);
+assert(isequal(metadata, readMetadata))
+
 %% Barrel object
 modelName = 'Barrel';
 modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'Barrel.dae');
