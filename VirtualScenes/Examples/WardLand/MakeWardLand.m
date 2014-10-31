@@ -64,7 +64,7 @@ lights = {whiteArea, sunArea, skyArea};
 
 %% Choose sets of base scenes and objects to work with.
 baseSceneNames = {'CheckerBoard'};
-objectNames = {'Barrel', 'ChampagneBottle', 'RingToy', 'Xylophone'};
+objectNames = {'Blobbie'};
 
 %% Make a recipe for each base scene, with some objects inserted.
 nBaseScenes = numel(baseSceneNames);

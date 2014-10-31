@@ -76,6 +76,14 @@ metadata = WriteMetadata(modelName, [], materialIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
+%% Blobbie object
+modelName = 'Blobbie';
+modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'Blobbie.dae');
+materialIds = GetSceneMaterialIds(modelPath);
+metadata = WriteMetadata(modelName, [], materialIds);
+readMetadata = ReadMetadata(modelName);
+assert(isequal(metadata, readMetadata))
+
 %% Camera Flash object
 modelName = 'CameraFlash';
 modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'CameraFlash.dae');
