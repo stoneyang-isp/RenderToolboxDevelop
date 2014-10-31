@@ -3,8 +3,8 @@ clear;
 clc;
 
 %% Choose batch renderer options.
-hints.imageWidth = 640;
-hints.imageHeight = 480;
+hints.imageWidth = 320;
+hints.imageHeight = 240;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
 hints.recipeName = 'WardLand';
@@ -89,6 +89,8 @@ for bb = 1:nBaseScenes
     % choose objects to insert in the model
     insertedObjects = objectNames(randi(numel(objectNames), [1, nInserted]));
     objectPositions = cell(1, nInserted);
+    objectRotations = cell(1, nInserted);
+    objectScales = cell(1, nInserted);
     objectMatteMaterialSets = cell(1, nInserted);
     objectWardMaterialSets = cell(1, nInserted);
     for oo = 1:nInserted
@@ -96,8 +98,10 @@ for bb = 1:nBaseScenes
         objectMetadata = ReadMetadata(objectModel);
         objectModelPath = GetVirtualScenesPath(objectMetadata.relativePath);
         
-        % choose object position
+        % choose object spatial transformations
         objectPositions{oo} = GetRandomPosition(baseSceneMetadata.boundingVolume);
+        objectRotations{oo} = round(360 * rand(1,3));
+        objectScales{oo} = 0.25 + 1.75 * rand(1,3);
         
         % choose a set of materials for this object
         nMaterials = numel(objectMetadata.materialIds);
@@ -110,8 +114,8 @@ for bb = 1:nBaseScenes
     recipe = BuildVirtualSceneRecipe(hints, defaultMappings, ...
         baseSceneName, ...
         baseSceneMatteMaterials, baseSceneWardMaterials, ...
-        baseSceneLights, ...
-        insertedObjects, objectPositions, ...
+        baseSceneLights, insertedObjects, ...
+        objectPositions, objectRotations, objectScales, ...
         objectMatteMaterialSets, objectWardMaterialSets);
     
     % clean up the working folder

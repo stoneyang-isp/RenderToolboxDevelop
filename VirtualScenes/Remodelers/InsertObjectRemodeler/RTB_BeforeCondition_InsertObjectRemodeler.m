@@ -44,6 +44,28 @@ if (nPositions ~= nObjects)
     return;
 end
 
+%% Find object rotations.
+isRotation = false(1, numVars);
+for ii = 1:numel(varNames)
+    isRotation(ii) = ~isempty(strfind(varNames{ii}, 'rotation'));
+end
+
+nRotations = sum(isRotation);
+if (nRotations ~= nObjects)
+    return;
+end
+
+%% Find object scale factors.
+isScale = false(1, numVars);
+for ii = 1:numel(varNames)
+    isScale(ii) = ~isempty(strfind(varNames{ii}, 'scale'));
+end
+
+nScales = sum(isScale);
+if (nScales ~= nObjects)
+    return;
+end
+
 %% Find optional camera flash.
 isFlash = false(1, numVars);
 for ii = 1:numel(varNames)
@@ -55,6 +77,8 @@ end
 objectNames = varNames(isObject);
 objectFileNames = varValues(isObject);
 objectPositions = varValues(isPosition);
+objectRotations = varValues(isRotation);
+objectScales = varValues(isScale);
 
 % append special camera flash objects
 objectNames = cat(2, objectNames, varNames(isFlash));
@@ -62,12 +86,21 @@ objectFileNames = cat(2, objectFileNames, varValues(isFlash));
 
 % position camera flash objects at the scene camera
 [flashPositions{1:sum(isFlash)}] = deal('Camera');
+[flashRotations{1:sum(isFlash)}] = deal('Camera');
+[flashScales{1:sum(isFlash)}] = deal('Camera');
 objectPositions = cat(2, objectPositions, flashPositions);
+objectRotations = cat(2, objectRotations, flashRotations);
+objectScales = cat(2, objectScales, flashScales);
 
 %% Transfer data from each object document to the scene document.
 sceneIdMap = GenerateSceneIDMap(docNode);
 for ii = 1:numel(objectNames)
     objectName = objectNames{ii};
+    
+    if strcmp(objectName, 'none')
+        continue;
+    end
+    
     objectFullPath = GetVirtualScenesPath(objectFileNames{ii});
     [objectDocNode, objectIdMap] = ReadSceneDOM(objectFullPath);
     if isempty(objectDocNode) || isempty(objectIdMap)
@@ -108,7 +141,8 @@ for ii = 1:numel(objectNames)
             objectIdMap, sceneIdMap, effectId, objectName, newMaterialId);
         
         % move the node to a new position in the scene
-        RepositionNode(sceneIdMap, newNodeId, objectPositions{ii});
+        RepositionNode(sceneIdMap, newNodeId, ...
+            objectPositions{ii}, objectRotations{ii}, objectScales{ii});
     end
 end
 

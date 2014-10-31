@@ -7,12 +7,14 @@
 %   baseSceneLights should be {light1, light2, ...}
 %   insertedObjects should be {'Barrel', 'Barrel', 'RingToy', ...}
 %   objectPositions should be {[xyz], [xyz], [xyz], ...}
+%   objectRotations should be {[xyz], [xyz], [xyz], ...}
+%   objectScales should be {[xyz], [xyz], [xyz], ...}
 %   objectMatteMaterialSets should be {{m1, m2, ...}, {m1, m2, ...}, ...}
 %   objectWardMaterialSets should be {{m1, m2, ...}, {m1, m2, ...}, ...}
 function recipe = BuildVirtualSceneRecipe(hints, defaultMappings, ...
     baseSceneModel, baseSceneMatteMaterials, baseSceneWardMaterials, ...
-    baseSceneLights, ...
-    insertedObjects, objectPositions, ...
+    baseSceneLights, insertedObjects, ...
+    objectPositions, objectRotations, objectScales, ...
     objectMatteMaterialSets, objectWardMaterialSets)
 
 if nargin < 2
@@ -216,13 +218,14 @@ for oo = 1:nInserted
     objectMetadata = ReadMetadata(insertedObjects{oo});
     objectColumn = sprintf('object-%d', oo);
     positionColumn = sprintf('position-%d', oo);
-    objectModelPath = objectMetadata.relativePath;
-    objectPosition = objectPositions{oo};
+    rotationColumn = sprintf('rotation-%d', oo);
+    scaleColumn = sprintf('scale-%d', oo);
     
-    varNames = {objectColumn, positionColumn};
+    varNames = {objectColumn, positionColumn, rotationColumn, scaleColumn};
     allNames = cat(2, allNames, varNames);
     
-    varValues = {objectModelPath, objectPosition};
+    varValues = {objectMetadata.relativePath, objectPositions{oo}, ...
+        objectRotations{oo}, objectScales{oo}};
     allValues = cat(2, allValues, repmat(varValues, nPages+3, 1));
 end
 
