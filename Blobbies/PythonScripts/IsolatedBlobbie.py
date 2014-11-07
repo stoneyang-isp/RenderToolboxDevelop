@@ -2,24 +2,25 @@
 # 
 # 6/24/2014  npc  Wrote it. 
 # 10/31/2014 bsh  Isolated the blobbie, broke out command line args
+# 11/7/2014  bsh  broke out more command line args
 
-def generateScene(sceneParams): 
+def generateScene(sceneParams):
     # Basic imports
     import sys
     import imp
     import bpy
-    from math import pi, floor, cos, sin, sqrt, atan2, pow
+    from math import floor, cos, sin, sqrt, atan2, pow
     from mathutils import Vector
 
     # Append the path to my custom Python scene toolbox to the Blender path
-    sys.path.append(sceneParams['toolboxDirectory']);
+    sys.path.append(sceneParams.toolboxDirectory);
  
     # Import the custom scene toolbox module
     import SceneUtilsV1;
     imp.reload(SceneUtilsV1);
  
     # Initialize a sceneManager
-    params = { 'name'               : sceneParams['sceneName'],  # name of new scene
+    params = { 'name'               : sceneParams.sceneName,     # name of new scene
                'erasePreviousScene' : True,                      # erase old scene
                'sceneWidthInPixels' : 640,                       # pixels along the horizontal-dimension
                'sceneHeightInPixels': 480,                       # pixels along the vertical-dimension
@@ -30,7 +31,7 @@ def generateScene(sceneParams):
     scene = SceneUtilsV1.sceneManager(params);
 
     # Generate the blobbie material
-    params = { 'name'              : sceneParams['objectName'],
+    params = { 'name'              : sceneParams.objectName,
                'diffuse_shader'    : 'LAMBERT',
                'diffuse_intensity' : 0.5,
                'diffuse_color'     : Vector((0.7, 0.0, 0.1)),
@@ -45,46 +46,40 @@ def generateScene(sceneParams):
     print('Generating Blobbie. This may take a while ...')
     
     # Start with a sphere
-    params = {'name'         : sceneParams['objectName'],
+    params = {'name'         : sceneParams.objectName,
               'scaling'      : Vector((1, 1, 1)),
               'rotation'     : Vector((0, 0, 0)),
               'location'     : Vector((0, 0, 0)),
-              'subdivisions' : sceneParams['blobbieSubdivisions'],
+              'subdivisions' : sceneParams.blobbieSubdivisions,
               'material'     : blobbieMaterialType,
               'flipNormal'   : False,
             };
     blobbieObject = scene.addSphere(params);
-    blobbieObject.data.name = sceneParams['objectName'];
+    blobbieObject.data.name = sceneParams.objectName;
 	
 	# Modify vertices to introduce bumps
-    angleX =  pi/3;
-    angleY = -pi/5-pi/2;
-    angleZ = -pi/6+pi/2;
     frequencyX = 9;
     frequencyY = 11;
     frequencyZ = -8;
 
-    aX = cos(angleX) * frequencyX;
-    bX = sin(angleX) * frequencyX;
-    aY = cos(angleY) * frequencyY;
-    bY = sin(angleY) * frequencyY;
-    aZ = cos(angleZ) * frequencyZ;
-    bZ = sin(angleZ) * frequencyZ;
-    gainX = 9/1000;
-    gainY =  8/1000;
-    gainZ = 15/1000;
+    aX = cos(sceneParams.angleX) * sceneParams.frequencyX;
+    bX = sin(sceneParams.angleX) * sceneParams.frequencyX;
+    aY = cos(sceneParams.angleY) * sceneParams.frequencyY;
+    bY = sin(sceneParams.angleY) * sceneParams.frequencyY;
+    aZ = cos(sceneParams.angleZ) * sceneParams.frequencyZ;
+    bZ = sin(sceneParams.angleZ) * sceneParams.frequencyZ;
 
     for f in blobbieObject.data.polygons:
         for idx in f.vertices:
         	oldX = blobbieObject.data.vertices[idx].co.x;
         	oldY = blobbieObject.data.vertices[idx].co.y;
         	oldZ = blobbieObject.data.vertices[idx].co.z;
-        	blobbieObject.data.vertices[idx].co.x = oldX + gainX * sin(aX*oldY + bX*oldZ);
-        	blobbieObject.data.vertices[idx].co.y = oldY + gainY * sin(aY*oldX + bY*oldZ);
-        	blobbieObject.data.vertices[idx].co.z = oldZ + gainZ * sin(aZ*oldX + bZ*oldY);
+        	blobbieObject.data.vertices[idx].co.x = oldX + sceneParams.gainX * sin(aX*oldY + bX*oldZ);
+        	blobbieObject.data.vertices[idx].co.y = oldY + sceneParams.gainY * sin(aY*oldX + bY*oldZ);
+        	blobbieObject.data.vertices[idx].co.z = oldZ + sceneParams.gainZ * sin(aZ*oldX + bZ*oldY);
 
     # Finally, export collada file
-    scene.exportToColladaFile(sceneParams['exportsDirectory']);
+    scene.exportToColladaFile(sceneParams.exportsDirectory);
 
     print('All done !')
 
@@ -93,6 +88,7 @@ def generateScene(sceneParams):
 import os
 import sys
 import argparse
+from math import pi
 
 # Parse args from the command line
 
@@ -112,14 +108,16 @@ parser.add_argument('--objectName', default='Blobbie');
 parser.add_argument('--exportsDirectory', default=os.getcwd());
 parser.add_argument('--toolboxDirectory', default=os.getcwd());
 parser.add_argument('--blobbieSubdivisions', type=int, default=4);
+parser.add_argument('--angleX', type=float, default=pi/3);
+parser.add_argument('--angleY', type=float, default=-pi/5-pi/2);
+parser.add_argument('--angleZ', type=float, default=-pi/6+pi/2);
+parser.add_argument('--frequencyX', type=float, default=9);
+parser.add_argument('--frequencyY', type=float, default=11);
+parser.add_argument('--frequencyZ', type=float, default=-8);
+parser.add_argument('--gainX', type=float, default=-9/1000);
+parser.add_argument('--gainY', type=float, default=-8/1000);
+parser.add_argument('--gainZ', type=float, default=-15/1000);
 
 args = parser.parse_args(pythonArgs);
 
-sceneParams = { 'sceneName'           : args.sceneName,
-                'objectName'          : args.objectName,
-                'exportsDirectory'    : args.exportsDirectory,
-                'toolboxDirectory'    : args.toolboxDirectory,
-                'blobbieSubdivisions' : args.blobbieSubdivisions,
-             };
-
-generateScene(sceneParams);
+generateScene(args);
