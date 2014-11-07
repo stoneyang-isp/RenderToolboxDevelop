@@ -58,10 +58,6 @@ def generateScene(sceneParams):
     blobbieObject.data.name = sceneParams.objectName;
 	
 	# Modify vertices to introduce bumps
-    frequencyX = 9;
-    frequencyY = 11;
-    frequencyZ = -8;
-
     aX = cos(sceneParams.angleX) * sceneParams.frequencyX;
     bX = sin(sceneParams.angleX) * sceneParams.frequencyX;
     aY = cos(sceneParams.angleY) * sceneParams.frequencyY;

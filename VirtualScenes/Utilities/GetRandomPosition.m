@@ -3,8 +3,8 @@
 % outerBound [xMin xMax; yMin yMax; zMin zMax], superset of innerBound
 function position = GetRandomPosition(innerBound, outerBound)
 x = randInDonut(innerBound(1,:), outerBound(1,:));
-y = randInDonut(innerBound(2,:), outerBound(1,:));
-z = randInDonut(innerBound(3,:), outerBound(1,:));
+y = randInDonut(innerBound(2,:), outerBound(2,:));
+z = randInDonut(innerBound(3,:), outerBound(3,:));
 position = [x y z];
 
 % uniform rand in donut region between inner and outer.
