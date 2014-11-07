@@ -1,35 +1,21 @@
 %% Build a recipe for a virutal scene.
-%   hints should be batch renderer hints
 %   defaultMappings should be 'DefaultMappings.txt', etc.
-%   baseSceneModel should be 'IndoorPlant' etc.
-%   baseSceneMatteMaterials should be {material1, material2, ...}
-%   baseSceneWardMaterials should be {material1, material2, ...}
-%   baseSceneLights should be {light1, light2, ...}
-%   insertedObjects should be {'Barrel', 'Barrel', 'RingToy', ...}
-%   objectPositions should be {[xyz], [xyz], [xyz], ...}
-%   objectRotations should be {[xyz], [xyz], [xyz], ...}
-%   objectScales should be {[xyz], [xyz], [xyz], ...}
-%   objectMatteMaterialSets should be {{m1, m2, ...}, {m1, m2, ...}, ...}
-%   objectWardMaterialSets should be {{m1, m2, ...}, {m1, m2, ...}, ...}
-function recipe = BuildWardLandRecipe(hints, defaultMappings, ...
-    baseSceneModel, baseSceneMatteMaterials, baseSceneWardMaterials, ...
-    baseSceneLights, insertedObjects, ...
-    objectPositions, objectRotations, objectScales, ...
-    objectMatteMaterialSets, objectWardMaterialSets)
+%   choices should be struct from GetWardLandChoices()
+%   hints should be struct of RenderToolbox3 options
+function recipe = BuildWardLandRecipe(defaultMappings, choices, hints)
 
-if nargin < 2
+if nargin < 3
     hints = GetDefaultHints();
 else
     hints = GetDefaultHints(hints);
 end
 
 %% Augment batch renderer options.
-hints.renderer = 'Mitsuba';
 hints.remodeler = 'InsertObjectRemodeler';
 ChangeToWorkingFolder(hints);
 mappingsFile = [hints.recipeName '-Mappings.txt'];
 conditionsFile = [hints.recipeName '-Conditions.txt'];
-sceneMetadata = ReadMetadata(baseSceneModel);
+sceneMetadata = ReadMetadata(choices.baseSceneName);
 parentSceneFile = GetVirtualScenesPath(sceneMetadata.relativePath);
 
 %% Set up renderer config.
@@ -88,20 +74,22 @@ flashMaterialId = ['camera-flash-' flashMetadata.materialIds{1}];
 % build a grand list of material ids, matte, and ward materials
 %   inserted object material ids get prefixed with the object name
 allMaterialIds = sceneMetadata.materialIds;
-allSceneMatteMaterials = baseSceneMatteMaterials;
-allSceneWardMaterials = baseSceneWardMaterials;
-nInserted = numel(insertedObjects);
+allSceneMatteMaterials = choices.baseSceneMatteMaterials;
+allSceneWardMaterials = choices.baseSceneWardMaterials;
+nInserted = numel(choices.insertedObjects.names);
 for oo = 1:nInserted
     idPrefix = sprintf('object-%d-', oo);
-    objectMetadata = ReadMetadata(insertedObjects{oo});
+    objectMetadata = ReadMetadata(choices.insertedObjects.names{oo});
     nObjectMaterials = numel(objectMetadata.materialIds);
     objectMaterialIds = cell(1, nObjectMaterials);
     for mm = 1:nObjectMaterials
         objectMaterialIds{mm} = [idPrefix objectMetadata.materialIds{mm}];
     end
     allMaterialIds = cat(2, allMaterialIds, objectMaterialIds);
-    allSceneMatteMaterials = cat(2, allSceneMatteMaterials, objectMatteMaterialSets{oo});
-    allSceneWardMaterials = cat(2, allSceneWardMaterials, objectWardMaterialSets{oo});
+    allSceneMatteMaterials = cat(2, allSceneMatteMaterials, ...
+        choices.insertedObjects.matteMaterialSets{oo});
+    allSceneWardMaterials = cat(2, allSceneWardMaterials, ...
+        choices.insertedObjects.wardMaterialSets{oo});
 end
 
 %% Set up materials for the "boring" rendering.
@@ -156,7 +144,7 @@ end
 AppendMappings(defaultMappings, mappingsFile, ...
     configIds, fullConfig, [congigRenderer ' ward'], 'config');
 AppendMappings(mappingsFile, mappingsFile, ...
-    sceneMetadata.lightIds, baseSceneLights, 'Generic ward', 'lights');
+    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic ward', 'lights');
 AppendMappings(mappingsFile, mappingsFile, ...
     allMaterialIds, allSceneWardMaterials, 'Generic ward', 'materials');
 
@@ -164,7 +152,7 @@ AppendMappings(mappingsFile, mappingsFile, ...
 AppendMappings(mappingsFile, mappingsFile, ...
     configIds, fullConfig, [congigRenderer ' matte'], 'config');
 AppendMappings(mappingsFile, mappingsFile, ...
-    sceneMetadata.lightIds, baseSceneLights, 'Generic matte', 'lights');
+    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic matte', 'lights');
 AppendMappings(mappingsFile, mappingsFile, ...
     allMaterialIds, allSceneMatteMaterials, 'Generic matte', 'materials');
 
@@ -172,11 +160,11 @@ AppendMappings(mappingsFile, mappingsFile, ...
 AppendMappings(mappingsFile, mappingsFile, ...
     configIds, fullConfig, [congigRenderer ' boring'], 'config');
 AppendMappings(mappingsFile, mappingsFile, ...
-    sceneMetadata.lightIds, baseSceneLights, 'Generic boring', 'lights');
+    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic boring', 'lights');
 AppendMappings(mappingsFile, mappingsFile, ...
     allMaterialIds, allSceneBoringMaterials, 'Generic boring', 'materials');
 
-% analysis "maks" renderings
+% analysis "mask" renderings
 maskNames = cell(1, nPages);
 for ii = 1:nPages
     maskNames{ii} = sprintf('mask-%d', ii);
@@ -213,9 +201,9 @@ maskValues = cat(2, maskNames', maskNames', flashValues);
 allValues = cat(1, sceneValues, maskValues);
 
 % append columns for each inserted object
-nInserted = numel(insertedObjects);
+nInserted = numel(choices.insertedObjects.names);
 for oo = 1:nInserted
-    objectMetadata = ReadMetadata(insertedObjects{oo});
+    objectMetadata = ReadMetadata(choices.insertedObjects.names{oo});
     objectColumn = sprintf('object-%d', oo);
     positionColumn = sprintf('position-%d', oo);
     rotationColumn = sprintf('rotation-%d', oo);
@@ -224,8 +212,10 @@ for oo = 1:nInserted
     varNames = {objectColumn, positionColumn, rotationColumn, scaleColumn};
     allNames = cat(2, allNames, varNames);
     
-    varValues = {objectMetadata.relativePath, objectPositions{oo}, ...
-        objectRotations{oo}, objectScales{oo}};
+    varValues = {objectMetadata.relativePath, ...
+        choices.insertedObjects.positions{oo}, ...
+        choices.insertedObjects.rotations{oo}, ...
+        choices.insertedObjects.scales{oo}};
     allValues = cat(2, allValues, repmat(varValues, nPages+3, 1));
 end
 
@@ -233,12 +223,15 @@ end
 WriteConditionsFile(conditionsFile, allNames, allValues);
 
 %% Pack it all up in a recipe.
-toneMapFactor = 100;
-isScale = true;
-pixelThreshold = 0.01;
-filterWidth = 7;
-lmsSensitivities = 'T_cones_ss2';
-dklSensitivities = 'T_CIE_Y2';
+prefName = 'VirtualScenes';
+toneMapFactor = getpref(prefName, 'toneMapFactor');
+isScale = getpref(prefName, 'toneMapScale');
+pixelThreshold = getpref(prefName, 'pixelThreshold');
+filterWidth = getpref(prefName, 'filterWidth');
+lmsSensitivities = getpref(prefName, 'lmsSensitivities');
+dklSensitivities = getpref(prefName, 'dklSensitivities');
+montageScaleFactor = getpref(prefName, 'montageScaleFactor');
+montageScaleMethod = getpref(prefName, 'montageScaleMethod');
 executive = { ...
     @MakeRecipeSceneFiles, ...
     @MakeRecipeRenderings, ...
@@ -246,7 +239,8 @@ executive = { ...
     @(recipe)MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale), ...
     @(recipe)MakeRecipeBoringComparison(recipe, toneMapFactor, isScale), ...
     @(recipe)MakeRecipeLMSImages(recipe, lmsSensitivities), ...
-    @(recipe)MakeRecipeDKLImages(recipe, lmsSensitivities, dklSensitivities)};
+    @(recipe)MakeRecipeDKLImages(recipe, lmsSensitivities, dklSensitivities), ...
+    @(recipe)MakeRecipeImageMontage(recipe, montageScaleFactor, montageScaleMethod)};
 
 recipe = NewRecipe([], executive, parentSceneFile, ...
     conditionsFile, mappingsFile, hints);

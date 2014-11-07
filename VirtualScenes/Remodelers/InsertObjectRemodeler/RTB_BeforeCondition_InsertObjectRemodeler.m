@@ -29,9 +29,6 @@ for ii = 1:numel(varNames)
 end
 
 nObjects = sum(isObject);
-if (0 == nObjects)
-    return;
-end
 
 %% Find object positions.
 isPosition = false(1, numVars);

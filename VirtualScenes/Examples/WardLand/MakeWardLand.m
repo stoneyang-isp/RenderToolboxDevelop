@@ -7,7 +7,7 @@ hints.imageWidth = 640;
 hints.imageHeight = 480;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
-hints.recipeName = 'WardLand';
+hints.recipeName = 'PlandAndBarrel';
 
 defaultMappings = fullfile(VirtualScenesRoot(), 'Data', 'DefaultMappings.txt');
 resources = GetWorkingFolder('resources', false, hints);
@@ -63,7 +63,7 @@ skyArea = BuildDesription('light', 'area', ...
 lights = {whiteArea, sunArea, skyArea};
 
 %% Choose sets of base scenes and objects to work with.
-baseSceneNames = {'CheckerBoard'};
+baseSceneNames = {'IndoorPland'};
 objectNames = {'Blobbie'};
 
 %% Make a recipe for each base scene, with some objects inserted.
@@ -135,6 +135,6 @@ for bb = 1:nBaseScenes
     
     % archive the recipe
     archiveName = sprintf('%s-%d', hints.recipeName, bb);
-    recipeArchives{oo} = fullfile(GetUserFolder(), 'illumination-data', archiveName);
+    recipeArchives{oo} = fullfile(GetUserFolder(), 'frozen-ward-land', archiveName);
     PackUpRecipe(recipe, recipeArchives{oo}, {'temp'});
 end
