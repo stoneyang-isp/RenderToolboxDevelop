@@ -1,5 +1,5 @@
 % Analyze Virtual Scene renderings for inserted object pixel masks.
-%   recipe should be a recipe from BuildVirtualSceneRecipe
+%   recipe should be a recipe from BuildWardLandRecipe()
 %   pixelThreshold can be mask "conservativeness" like 0.1
 %   toneMapFactor and isScale are passed to MakeMontage()
 function recipe = MakeRecipeObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale)

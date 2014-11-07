@@ -1,5 +1,5 @@
 % Convert some LMS images to DKL representations.
-%   recipe should be a recipe from BuildVirtualSceneRecipe
+%   recipe should be a recipe from BuildWardLandRecipe()
 %   lmsSensitivities should be a Psychtoolbox colorimetric mat-file name
 %   dklSensitivities should be a Psychtoolbox colorimetric mat-file name
 function recipe = MakeRecipeDKLImages(recipe, lmsSensitivities, dklSensitivities)

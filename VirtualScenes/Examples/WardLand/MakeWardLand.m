@@ -3,8 +3,8 @@ clear;
 clc;
 
 %% Choose batch renderer options.
-hints.imageWidth = 320;
-hints.imageHeight = 240;
+hints.imageWidth = 640;
+hints.imageHeight = 480;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
 hints.recipeName = 'WardLand';
@@ -111,7 +111,7 @@ for bb = 1:nBaseScenes
     end
     
     % build a new recipe
-    recipe = BuildVirtualSceneRecipe(hints, defaultMappings, ...
+    recipe = BuildWardLandRecipe(hints, defaultMappings, ...
         baseSceneName, ...
         baseSceneMatteMaterials, baseSceneWardMaterials, ...
         baseSceneLights, insertedObjects, ...

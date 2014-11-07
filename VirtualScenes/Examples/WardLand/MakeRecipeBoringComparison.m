@@ -1,5 +1,5 @@
 % Compare virtual scene "boring" rendering vs illumination images.
-%   recipe should be a recipe from BuildVirtualSceneRecipe
+%   recipe should be a recipe from BuildWardLandRecipe()
 %   toneMapFactor and isScale are passed to MakeMontage()
 function recipe = MakeRecipeBoringComparison(recipe, toneMapFactor, isScale)
 

@@ -1,5 +1,5 @@
 % Convert some illumination and reflectance images to LMS representations.
-%   recipe should be a recipe from BuildVirtualSceneRecipe
+%   recipe should be a recipe from BuildWardLandRecipe()
 %   sensitivities should be a Psychtoolbox colorimetric mat-file name
 function recipe = MakeRecipeLMSImages(recipe, sensitivities)
 

@@ -1,5 +1,5 @@
 % Compute "refelctance" and "illumination" images for a rendering.
-%   recipe should be a recipe from BuildVirtualSceneRecipe
+%   recipe should be a recipe from BuildWardLandRecipe()
 %   filterWidth width of sliding average to fill gaps in object pixel mask
 %   toneMapFactor and isScale are passed to MakeMontage()
 function recipe = MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale)
