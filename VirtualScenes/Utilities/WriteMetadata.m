@@ -1,22 +1,39 @@
 %% Write metadata for a base scene or object.
 % metadata stored in BaseScenes/ or Objects/ subfolder
 %   modelName should be "RingToy" for Objects/Models/RingToy.dae
-%   boundingVolume should be [minX maxX; minY maxY; minZ, maxZ]
+%   objectBox should be [minX maxX; minY maxY; minZ, maxZ]
+%   lightBox should be [minX maxX; minY maxY; minZ, maxZ]
+%   lightExcludeBox should be [minX maxX; minY maxY; minZ, maxZ]
 %   materialIds should be {'Floor-material', 'Material1-material', ...}
 %   lightIds should be {'CeilingLight-mesh', 'WindowLight-mesh', ...}
-function metadata = WriteMetadata(modelName, boundingVolume, materialIds, lightIds)
+function metadata = WriteMetadata(modelName, objectBox, lightBox, ...
+    lightExcludeBox, materialIds, lightIds)
 metadata = [];
 
-% check the bounding volume
-if nargin < 2 || ~isnumeric(boundingVolume) || ~isequal([3 2], size(boundingVolume))
+% check the bounding volumes
+if nargin < 2 || ~isnumeric(objectBox) || ~isequal([3 2], size(objectBox))
     defaultVolume = '[-1 1; -1 1; -1 1]';
-    warning('VirtualScenes:BadBoundingVolume', ...
-        '\nUsing default bounding volume, %s', defaultVolume);
-    boundingVolume = eval(defaultVolume);
+    warning('VirtualScenes:BadObjectBox', ...
+        '\nUsing default objectBox, %s', defaultVolume);
+    objectBox = eval(defaultVolume);
+end
+
+if nargin < 3 || ~isnumeric(lightBox) || ~isequal([3 2], size(lightBox))
+    defaultVolume = '[-10 10; -10 10; -10 10]';
+    warning('VirtualScenes:BadLightBox', ...
+        '\nUsing default lightBox, %s', defaultVolume);
+    lightBox = eval(defaultVolume);
+end
+
+if nargin < 4 || ~isnumeric(lightExcludeBox) || ~isequal([3 2], size(lightExcludeBox))
+    defaultVolume = '[-1 1; -1 1; -1 1]';
+    warning('VirtualScenes:BadLightExcludeBox', ...
+        '\nUsing default lightExcludeBox, %s', defaultVolume);
+    lightExcludeBox = eval(defaultVolume);
 end
 
 % check for known material ids
-if nargin < 3 || ~iscell(materialIds) || isempty(materialIds)
+if nargin < 5 || ~iscell(materialIds) || isempty(materialIds)
     warning('VirtualScenes:NoMaterialIds', ...
         '\nUsing default material Ids, %s', ...
         '{''Material01-material'', ..., ''Material10-material''}');
@@ -27,7 +44,7 @@ if nargin < 3 || ~iscell(materialIds) || isempty(materialIds)
 end
 
 % check for known light ids
-if nargin < 4
+if nargin < 6
     lightIds = {};
 end
 
@@ -48,7 +65,9 @@ fprintf('\nFound model:\n  %s\n', fileInfo.absolutePath);
 metadata = struct( ...
     'name', {modelName}, ...
     'relativePath', {fileInfo.resolvedPath}, ...
-    'boundingVolume', {boundingVolume}, ...
+    'objectBox', {objectBox}, ...
+    'lightBox', {lightBox}, ...
+    'lightExcludeBox', {lightExcludeBox}, ...
     'materialIds', {materialIds}, ...
     'lightIds', {lightIds});
 

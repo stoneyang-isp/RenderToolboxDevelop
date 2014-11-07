@@ -5,7 +5,7 @@ clc
 
 %% IndoorPlant base scene
 modelName = 'IndoorPlant';
-boundingVolume = [-6 2; -2 2; 0 6];
+objectBox = [-6 2; -2 2; 0 6];
 modelPath = fullfile(VirtualScenesRoot(), 'BaseScenes', 'Models', 'IndoorPlant.dae');
 materialIds = GetSceneMaterialIds(modelPath);
 lightIds = { ...
@@ -13,26 +13,26 @@ lightIds = { ...
     'HighRearLight-mesh', ...
     'LowRearLight-mesh', ...
     };
-metadata = WriteMetadata(modelName, boundingVolume, materialIds, lightIds);
+metadata = WriteMetadata(modelName, objectBox, [], [], materialIds, lightIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
 %% Warehouse base scene
 modelName = 'Warehouse';
-boundingVolume = [-12 -2; -3 6; 0 3];
+objectBox = [-12 -2; -3 6; 0 3];
 modelPath = fullfile(VirtualScenesRoot(), 'BaseScenes', 'Models', 'Warehouse.dae');
 materialIds = GetSceneMaterialIds(modelPath);
 lightIds = { ...
     'Sun-mesh', ...
     'Sky-mesh', ...
     };
-metadata = WriteMetadata(modelName, boundingVolume, materialIds, lightIds);
+metadata = WriteMetadata(modelName, objectBox, [], [], materialIds, lightIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
 %% CheckerBoard base scene
 modelName = 'CheckerBoard';
-boundingVolume = [-3 3; -3 3; 1 3];
+objectBox = [-3 3; -3 3; 1 3];
 modelPath = fullfile(VirtualScenesRoot(), 'BaseScenes', 'Models', 'CheckerBoard.dae');
 materialIds = GetSceneMaterialIds(modelPath);
 lightIds = { ...
@@ -40,7 +40,7 @@ lightIds = { ...
     'RightLight-mesh', ...
     'BottomLight-mesh', ...
     };
-metadata = WriteMetadata(modelName, boundingVolume, materialIds, lightIds);
+metadata = WriteMetadata(modelName, objectBox, [], [], materialIds, lightIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
@@ -48,7 +48,7 @@ assert(isequal(metadata, readMetadata))
 modelName = 'Barrel';
 modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'Barrel.dae');
 materialIds = GetSceneMaterialIds(modelPath);
-metadata = WriteMetadata(modelName, [], materialIds);
+metadata = WriteMetadata(modelName, [], [], [], materialIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
@@ -56,7 +56,7 @@ assert(isequal(metadata, readMetadata))
 modelName = 'ChampagneBottle';
 modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'ChampagneBottle.dae');
 materialIds = GetSceneMaterialIds(modelPath);
-metadata = WriteMetadata(modelName, [], materialIds);
+metadata = WriteMetadata(modelName, [], [], [], materialIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
@@ -64,7 +64,7 @@ assert(isequal(metadata, readMetadata))
 modelName = 'RingToy';
 modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'RingToy.dae');
 materialIds = GetSceneMaterialIds(modelPath);
-metadata = WriteMetadata(modelName, [], materialIds);
+metadata = WriteMetadata(modelName, [], [], [], materialIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
@@ -72,7 +72,7 @@ assert(isequal(metadata, readMetadata))
 modelName = 'Xylophone';
 modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'Xylophone.dae');
 materialIds = GetSceneMaterialIds(modelPath);
-metadata = WriteMetadata(modelName, [], materialIds);
+metadata = WriteMetadata(modelName, [], [], [], materialIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
@@ -80,7 +80,7 @@ assert(isequal(metadata, readMetadata))
 modelName = 'Blobbie';
 modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'Blobbie.dae');
 materialIds = GetSceneMaterialIds(modelPath);
-metadata = WriteMetadata(modelName, [], materialIds);
+metadata = WriteMetadata(modelName, [], [], [], materialIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
@@ -91,7 +91,7 @@ materialIds = GetSceneMaterialIds(modelPath);
 lightIds = { ...
     'Flash-mesh', ...
     };
-metadata = WriteMetadata(modelName, [], materialIds, lightIds);
+metadata = WriteMetadata(modelName, [], [], [], materialIds, lightIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 

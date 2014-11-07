@@ -5,7 +5,7 @@ metadata = [];
 
 % locate the metadata file
 metadataFile = [modelName '.mat'];
-rootFolder = VirtualScenesRoot();
+rootFolder = getpref('VirtualScenes', 'modelRepository');
 fileInfo = ResolveFilePath(metadataFile, rootFolder);
 
 if ~fileInfo.isRootFolderMatch
