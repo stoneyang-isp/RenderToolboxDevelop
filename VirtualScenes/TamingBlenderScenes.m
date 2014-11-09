@@ -38,6 +38,8 @@
 %   removed, or "applied" to make the modifications part of the mesh data.
 %   - Objects can't use Blender curves or Blender text.  Only meshes will
 %   get exported properly.
+%   - Objects should all transformations "applied" to their mesh data so
+%   that they can be rotated and scaled predictably (Object -> Apply).
 %   - The camera object should be named "Camera"
 %   - The camera object's Transform must have Scale = [1 1 1]
 %   - The Blender file should not "pack" any external data like textures.

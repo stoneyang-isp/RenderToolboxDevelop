@@ -11,7 +11,7 @@ defaultMappings = fullfile(VirtualScenesRoot(), 'Data', 'DefaultMappings.txt');
 
 % choose virutal scenes options
 scaleMin = 0.25;
-scaleMax = 2;
+scaleMax = 2.0;
 rotMin = 0;
 rotMax = 359;
 
