@@ -73,7 +73,7 @@ mondrian = BuildWardLandRecipe(defaultMappings, choices, hints);
 mondrian = ExecuteRecipe(mondrian);
 archive = fullfile( ...
     getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
-PackUpRecipe(plantAndBarrel, archive, {'temp'});
+PackUpRecipe(mondrian, archive, {'temp'});
 
 %% Build the Blobbie recipe.
 
