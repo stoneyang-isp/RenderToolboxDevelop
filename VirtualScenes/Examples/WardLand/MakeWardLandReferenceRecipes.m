@@ -3,8 +3,8 @@ clear;
 clc;
 
 % choose batch renderer options
-hints.imageWidth = 320;
-hints.imageHeight = 240;
+hints.imageWidth = 640;
+hints.imageHeight = 480;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
 defaultMappings = fullfile(VirtualScenesRoot(), 'Data', 'DefaultMappings.txt');

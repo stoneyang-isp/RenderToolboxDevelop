@@ -59,7 +59,7 @@ for ii = 1:nBlobbies
     
     % register metadata in Virtual Scenes repository
     modelPath = fullfile(exportsDirectory, [sceneName '.dae']);
-    materialIds = GetSceneMaterialIds(modelPath);
+    materialIds = GetSceneElementIds(modelPath);
     metadata = WriteMetadata(sceneName, [], [], [], materialIds);
     readMetadata = ReadMetadata(sceneName);
     assert(isequal(metadata, readMetadata))

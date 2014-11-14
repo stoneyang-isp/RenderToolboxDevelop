@@ -45,13 +45,16 @@ quickSampler = BuildDesription('sampler', 'ldsampler', ...
 quickConfig = {quickIntegrator, quickSampler};
 
 %% Set up the base scene lights.
-% set base scene lights turn off base scene lights when making pixel masks
+% turn off base scene and inserted lights when making pixel masks
 blackArea = BuildDesription('light', 'area', ...
     {'intensity'}, ...
     {'300:0 800:0'}, ...
     {'spectrum'});
 maskBaseSceneLightSet = cell(1, numel(sceneMetadata.lightIds));
 [maskBaseSceneLightSet{:}] = deal(blackArea);
+
+maskInsertedLightSet = cell(1, numel(choices.insertedLights.names));
+[maskInsertedLightSet{:}] = deal(blackArea);
 
 %% Set up the "flash" light for making object pixel masks.
 % use a uniform spectrum for the "flash"
@@ -60,22 +63,30 @@ whiteArea = BuildDesription('light', 'area', ...
     {'intensity'}, ...
     {'300:1 800:1'}, ...
     {'spectrum'});
-flashLightId = ['camera-flash-' flashMetadata.lightIds{1}];
+flashLightId = ['light-flash-' flashMetadata.lightIds{1}];
 
 % use a uniform reflectance for the "flash"
 whiteMatte = BuildDesription('material', 'matte', ...
     {'diffuseReflectance'}, ...
     {'300:1 800:1'}, ...
     {'spectrum'});
-flashMaterialId = ['camera-flash-' flashMetadata.materialIds{1}];
+flashMaterialId = ['light-flash-' flashMetadata.materialIds{1}];
+
+% position the flash relative to the camera
+flashFile = flashMetadata.relativePath;
+flashPosition = 'Camera';
+flashRotation = 'Camera';
+flashScale = 'Camera';
 
 %% Set up materials for the full "matte" and "ward" renderings.
 
-% build a grand list of material ids, matte, and ward materials
-%   inserted object material ids get prefixed with the object name
+% build a grand list of material and light ids, matte, and ward materials
 allMaterialIds = sceneMetadata.materialIds;
 allSceneMatteMaterials = choices.baseSceneMatteMaterials;
 allSceneWardMaterials = choices.baseSceneWardMaterials;
+allSceneInsertedLightIds = cell(1, numel(choices.insertedLights.names));
+
+% inserted object material ids get prefixed with the object number
 nInserted = numel(choices.insertedObjects.names);
 for oo = 1:nInserted
     idPrefix = sprintf('object-%d-', oo);
@@ -90,6 +101,24 @@ for oo = 1:nInserted
         choices.insertedObjects.matteMaterialSets{oo});
     allSceneWardMaterials = cat(2, allSceneWardMaterials, ...
         choices.insertedObjects.wardMaterialSets{oo});
+end
+
+% inserted light material ids get prefixed with the light number
+nInserted = numel(choices.insertedLights.names);
+for oo = 1:nInserted
+    idPrefix = sprintf('light-%d-', oo);
+    objectMetadata = ReadMetadata(choices.insertedLights.names{oo});
+    nObjectMaterials = numel(objectMetadata.materialIds);
+    objectMaterialIds = cell(1, nObjectMaterials);
+    for mm = 1:nObjectMaterials
+        objectMaterialIds{mm} = [idPrefix objectMetadata.materialIds{mm}];
+    end
+    allMaterialIds = cat(2, allMaterialIds, objectMaterialIds);
+    allSceneMatteMaterials = cat(2, allSceneMatteMaterials, ...
+        choices.insertedLights.matteMaterialSets{oo});
+    allSceneWardMaterials = cat(2, allSceneWardMaterials, ...
+        choices.insertedLights.wardMaterialSets{oo});
+    allSceneInsertedLightIds{oo} = [idPrefix objectMetadata.lightIds{1}];
 end
 
 %% Set up materials for the "boring" rendering.
@@ -144,7 +173,9 @@ end
 AppendMappings(defaultMappings, mappingsFile, ...
     configIds, fullConfig, [congigRenderer ' ward'], 'config');
 AppendMappings(mappingsFile, mappingsFile, ...
-    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic ward', 'lights');
+    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic ward', 'base scene lights');
+AppendMappings(mappingsFile, mappingsFile, ...
+    allSceneInsertedLightIds, choices.insertedLights.lightSpectra, 'Generic ward', 'inserted lights');
 AppendMappings(mappingsFile, mappingsFile, ...
     allMaterialIds, allSceneWardMaterials, 'Generic ward', 'materials');
 
@@ -152,7 +183,9 @@ AppendMappings(mappingsFile, mappingsFile, ...
 AppendMappings(mappingsFile, mappingsFile, ...
     configIds, fullConfig, [congigRenderer ' matte'], 'config');
 AppendMappings(mappingsFile, mappingsFile, ...
-    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic matte', 'lights');
+    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic matte', 'base scene lights');
+AppendMappings(mappingsFile, mappingsFile, ...
+    allSceneInsertedLightIds, choices.insertedLights.lightSpectra, 'Generic matte', 'inserted lights');
 AppendMappings(mappingsFile, mappingsFile, ...
     allMaterialIds, allSceneMatteMaterials, 'Generic matte', 'materials');
 
@@ -160,7 +193,9 @@ AppendMappings(mappingsFile, mappingsFile, ...
 AppendMappings(mappingsFile, mappingsFile, ...
     configIds, fullConfig, [congigRenderer ' boring'], 'config');
 AppendMappings(mappingsFile, mappingsFile, ...
-    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic boring', 'lights');
+    sceneMetadata.lightIds, choices.baseSceneLights, 'Generic boring', 'base scene lights');
+AppendMappings(mappingsFile, mappingsFile, ...
+    allSceneInsertedLightIds, choices.insertedLights.lightSpectra, 'Generic boring', 'inserted lights');
 AppendMappings(mappingsFile, mappingsFile, ...
     allMaterialIds, allSceneBoringMaterials, 'Generic boring', 'materials');
 
@@ -176,7 +211,9 @@ for ii = 1:nPages
     
     % the scene itself
     AppendMappings(mappingsFile, mappingsFile, ...
-        allMaterialIds, allMaskMaterialPages(ii,:), blockName, 'lights');
+        allMaterialIds, allMaskMaterialPages(ii,:), blockName, 'base scene lights');
+    AppendMappings(mappingsFile, mappingsFile, ...
+        allSceneInsertedLightIds, maskInsertedLightSet, blockName, 'inserted lights');
     AppendMappings(mappingsFile, mappingsFile, ...
         sceneMetadata.lightIds, maskBaseSceneLightSet, blockName, 'materials');
     
@@ -191,23 +228,32 @@ end
 %% Write conditions for inserted objects.
 
 % basic conditions file columns
-allNames = {'imageName', 'groupName', 'camera-flash'};
-sceneValues = { ...
-    'matte', 'matte', 'none'; ...
-    'ward', 'ward', 'none'; ...
-    'boring', 'boring', 'none'};
-flashValues = repmat({flashMetadata.relativePath}, nPages, 1);
-maskValues = cat(2, maskNames', maskNames', flashValues);
-allValues = cat(1, sceneValues, maskValues);
+allNames = {'imageName', 'groupName'};
+allValues = cat(1, ...
+    {'matte', 'matte'}, ...
+    {'ward', 'ward'}, ...
+    {'boring', 'boring'}, ...
+    repmat(maskNames', 1, 2));
+
+% columns for the inserted flash light
+flashNames = {'light-flash', 'position-flash', 'rotation-flash', 'scale-flash'};
+flashSceneValues = {'none', 'none', 'none', 'none'};
+flashMaskValues = {flashFile, flashPosition, flashRotation, flashScale};
+flashValues = cat(1, ...
+    repmat(flashSceneValues, 3, 1), ...
+    repmat(flashMaskValues, nPages, 1));
+
+allNames = cat(2, allNames, flashNames);
+allValues = cat(2, allValues, flashValues);
 
 % append columns for each inserted object
 nInserted = numel(choices.insertedObjects.names);
 for oo = 1:nInserted
     objectMetadata = ReadMetadata(choices.insertedObjects.names{oo});
     objectColumn = sprintf('object-%d', oo);
-    positionColumn = sprintf('position-%d', oo);
-    rotationColumn = sprintf('rotation-%d', oo);
-    scaleColumn = sprintf('scale-%d', oo);
+    positionColumn = sprintf('object-position-%d', oo);
+    rotationColumn = sprintf('object-rotation-%d', oo);
+    scaleColumn = sprintf('object-scale-%d', oo);
     
     varNames = {objectColumn, positionColumn, rotationColumn, scaleColumn};
     allNames = cat(2, allNames, varNames);
@@ -216,6 +262,25 @@ for oo = 1:nInserted
         choices.insertedObjects.positions{oo}, ...
         choices.insertedObjects.rotations{oo}, ...
         choices.insertedObjects.scales{oo}};
+    allValues = cat(2, allValues, repmat(varValues, nPages+3, 1));
+end
+
+% append columns for each inserted light
+nInserted = numel(choices.insertedLights.names);
+for oo = 1:nInserted
+    objectMetadata = ReadMetadata(choices.insertedLights.names{oo});
+    lightColumn = sprintf('light-%d', oo);
+    positionColumn = sprintf('light-position-%d', oo);
+    rotationColumn = sprintf('light-rotation-%d', oo);
+    scaleColumn = sprintf('light-scale-%d', oo);
+    
+    varNames = {lightColumn, positionColumn, rotationColumn, scaleColumn};
+    allNames = cat(2, allNames, varNames);
+    
+    varValues = {objectMetadata.relativePath, ...
+        choices.insertedLights.positions{oo}, ...
+        choices.insertedLights.rotations{oo}, ...
+        choices.insertedLights.scales{oo}};
     allValues = cat(2, allValues, repmat(varValues, nPages+3, 1));
 end
 
@@ -252,3 +317,5 @@ recipe.processing.allSceneWardMaterials = allSceneWardMaterials;
 recipe.processing.allSceneBoringMaterials = allSceneBoringMaterials;
 recipe.processing.allMaskMaterials = allMaskMaterials;
 recipe.processing.allMaskMaterialPages = allMaskMaterialPages;
+recipe.processing.allSceneInsertedLightIds = allSceneInsertedLightIds;
+

@@ -21,11 +21,12 @@
 % @ingroup RemodelerPlugins
 function docNode = RTB_BeforeCondition_InsertObjectRemodeler(docNode, mappings, varNames, varValues, conditionNumber, hints)
 
-%% Find object files.
+%% Find object and light files.
 numVars = numel(varNames);
 isObject = false(1, numVars);
 for ii = 1:numel(varNames)
-    isObject(ii) = ~isempty(strfind(varNames{ii}, 'object'));
+    isObject(ii) = ~isempty(regexp(varNames{ii}, 'object-\w+$', 'once')) ...
+        || ~isempty(regexp(varNames{ii}, 'light-\w+$', 'once'));
 end
 
 nObjects = sum(isObject);
@@ -33,7 +34,7 @@ nObjects = sum(isObject);
 %% Find object positions.
 isPosition = false(1, numVars);
 for ii = 1:numel(varNames)
-    isPosition(ii) = ~isempty(strfind(varNames{ii}, 'position'));
+    isPosition(ii) = ~isempty(regexp(varNames{ii}, 'position-\w+$', 'once'));
 end
 
 nPositions = sum(isPosition);
@@ -44,7 +45,7 @@ end
 %% Find object rotations.
 isRotation = false(1, numVars);
 for ii = 1:numel(varNames)
-    isRotation(ii) = ~isempty(strfind(varNames{ii}, 'rotation'));
+    isRotation(ii) = ~isempty(regexp(varNames{ii}, 'rotation-\w+$', 'once'));
 end
 
 nRotations = sum(isRotation);
@@ -55,18 +56,12 @@ end
 %% Find object scale factors.
 isScale = false(1, numVars);
 for ii = 1:numel(varNames)
-    isScale(ii) = ~isempty(strfind(varNames{ii}, 'scale'));
+    isScale(ii) = ~isempty(regexp(varNames{ii}, 'scale-\w+$', 'once'));
 end
 
 nScales = sum(isScale);
 if (nScales ~= nObjects)
     return;
-end
-
-%% Find optional camera flash.
-isFlash = false(1, numVars);
-for ii = 1:numel(varNames)
-    isFlash(ii) = ~isempty(strfind(varNames{ii}, 'flash'));
 end
 
 %% Choose object documents to insert and where to put them.
@@ -77,27 +72,14 @@ objectPositions = varValues(isPosition);
 objectRotations = varValues(isRotation);
 objectScales = varValues(isScale);
 
-% append special camera flash objects
-objectNames = cat(2, objectNames, varNames(isFlash));
-objectFileNames = cat(2, objectFileNames, varValues(isFlash));
-
-% position camera flash objects at the scene camera
-[flashPositions{1:sum(isFlash)}] = deal('Camera');
-[flashRotations{1:sum(isFlash)}] = deal('Camera');
-[flashScales{1:sum(isFlash)}] = deal('Camera');
-objectPositions = cat(2, objectPositions, flashPositions);
-objectRotations = cat(2, objectRotations, flashRotations);
-objectScales = cat(2, objectScales, flashScales);
-
 %% Transfer data from each object document to the scene document.
 sceneIdMap = GenerateSceneIDMap(docNode);
 for ii = 1:numel(objectNames)
-    objectName = objectNames{ii};
-    
-    if strcmp(objectName, 'none')
+    if strcmp(objectFileNames{ii}, 'none')
         continue;
     end
     
+    objectName = objectNames{ii};
     objectFullPath = GetVirtualScenesPath(objectFileNames{ii});
     [objectDocNode, objectIdMap] = ReadSceneDOM(objectFullPath);
     if isempty(objectDocNode) || isempty(objectIdMap)
