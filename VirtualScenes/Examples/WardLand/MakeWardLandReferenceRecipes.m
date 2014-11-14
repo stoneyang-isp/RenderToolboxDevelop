@@ -3,8 +3,8 @@ clear;
 clc;
 
 % choose batch renderer options
-hints.imageWidth = 640;
-hints.imageHeight = 480;
+hints.imageWidth = 320;
+hints.imageHeight = 240;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
 defaultMappings = fullfile(VirtualScenesRoot(), 'Data', 'DefaultMappings.txt');
@@ -76,10 +76,6 @@ archive = fullfile( ...
 PackUpRecipe(mondrian, archive, {'temp'});
 
 %% Build the Blobbie recipe.
-
-% doesn't work yet
-return;
-
 hints.recipeName = 'Blobbies';
 ChangeToWorkingFolder(hints);
 [matteMaterials, wardMaterials] = GetWardLandMaterials(hints);
@@ -87,8 +83,14 @@ lightSpectra = GetWardLandIlluminantSpectra(hints);
 
 % assemble the recipe
 choices = GetWardLandChoices('CheckerBoard', ...
-    {'Blobbie1', 'Blobbie2', 'Blobbie3', 'Blobbie4'}, 5, ...
-    {'BigBall', 'LittleBall', 'Panel'}, 3, ...
+    {'Blobbie-01', 'Blobbie-02', 'Blobbie-03', 'Blobbie-04', 'Blobbie-05'}, 5, ...
+    {'BigBall', 'SmallBall', 'Panel'}, 3, ...
     scaleMin, scaleMax, rotMin, rotMax, ...
     matteMaterials, wardMaterials, lightSpectra);
 blobbies = BuildWardLandRecipe(defaultMappings, choices, hints);
+
+% render, process and archive
+blobbies = ExecuteRecipe(blobbies);
+archive = fullfile( ...
+    getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
+PackUpRecipe(blobbies, archive, {'temp'});

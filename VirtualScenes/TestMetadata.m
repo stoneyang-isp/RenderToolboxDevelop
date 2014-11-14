@@ -87,3 +87,27 @@ metadata = WriteMetadata(modelName, [], [], [], materialIds, lightIds);
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
+%% Big Ball light
+modelName = 'BigBall';
+modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'BigBall.dae');
+materialIds = GetSceneMaterialIds(modelPath);
+metadata = WriteMetadata(modelName, [], [], [], materialIds, materialIds);
+readMetadata = ReadMetadata(modelName);
+assert(isequal(metadata, readMetadata))
+
+%% Snmall Ball light
+modelName = 'SmallBall';
+modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'SmallBall.dae');
+materialIds = GetSceneMaterialIds(modelPath);
+metadata = WriteMetadata(modelName, [], [], [], materialIds, materialIds);
+readMetadata = ReadMetadata(modelName);
+assert(isequal(metadata, readMetadata))
+
+%% Panel light
+modelName = 'Panel';
+modelPath = fullfile(VirtualScenesRoot(), 'Objects', 'Models', 'Panel.dae');
+materialIds = GetSceneMaterialIds(modelPath);
+metadata = WriteMetadata(modelName, [], [], [], materialIds, materialIds);
+readMetadata = ReadMetadata(modelName);
+assert(isequal(metadata, readMetadata))
+

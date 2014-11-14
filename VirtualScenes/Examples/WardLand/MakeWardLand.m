@@ -3,8 +3,8 @@ clear;
 clc;
 
 %% Choose batch renderer options.
-hints.imageWidth = 640;
-hints.imageHeight = 480;
+hints.imageWidth = 320;
+hints.imageHeight = 240;
 hints.isPlot = false;
 hints.renderer = 'Mitsuba';
 hints.recipeName = 'PlandAndBarrel';
