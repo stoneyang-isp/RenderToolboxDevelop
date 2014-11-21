@@ -6,10 +6,17 @@ imageSize = size(rawImage);
 height= imageSize(1);
 width = imageSize(2);
 depth = imageSize(3);
+sliceSize = height*width;
+
+% does the mask have any area?
+maskIndices = find(mask ~= 0);
+if isempty(maskIndices)
+    meanPixel = [];
+    medianPixel = [];
+    return;
+end
 
 % extrude the mask into the image depth and get 1D indices
-sliceSize = height*width;
-maskIndices = find(mask ~= 0);
 nSamples = numel(maskIndices);
 sampleIndices = repmat(maskIndices, [1, depth]);
 cornerIndices = 1:sliceSize:numel(rawImage);

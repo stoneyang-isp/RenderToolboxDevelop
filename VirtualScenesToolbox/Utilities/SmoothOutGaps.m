@@ -30,11 +30,15 @@ for ii = 1:height
         windowMask(:) = 0;
         windowMask(windowYMin:windowYMax, windowXMin:windowXMax) = 1;
         windowMask(isGap) = 0;
-
+        
         % get the mean under the mask
         [maskMean, maskMedian] = MeanUnderMask(rawImage, windowMask);
         
         % smooth out that gap!
-        smoothImage(ii, jj, :) = maskMedian;
+        if isempty(maskMedian) || any(isnan(maskMedian))
+            smoothImage(ii, jj, :) = 0;
+        else
+            smoothImage(ii, jj, :) = maskMedian;
+        end
     end
 end

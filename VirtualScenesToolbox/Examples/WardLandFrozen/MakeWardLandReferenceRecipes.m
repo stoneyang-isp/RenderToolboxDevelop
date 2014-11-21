@@ -4,10 +4,10 @@
 % You should not need to run this script again.  Instead, run
 % ExecuteWardLandReferenceRecipes to render the packed-up recipes.
 
+%% Overall configuration.
+
 clear;
 clc;
-
-%% Overall configuration.
 
 % batch renderer options
 hints.renderer = 'Mitsuba';
