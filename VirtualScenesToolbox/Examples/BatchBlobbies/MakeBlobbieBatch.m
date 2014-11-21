@@ -6,7 +6,7 @@ clc;
 blender = '/Applications/Blender-2.68a/blender.app/Contents/MacOS/blender';
 blobbieScript = '/Users/ben/Documents/Projects/RenderToolboxDevelop/Blobbies/PythonScripts/IsolatedBlobbie.py';
 toolboxDirectory = fullfile(RenderToolboxRoot(), 'Utilities', 'BlenderPython');
-exportsDirectory = fullfile(VirtualScenesRoot(), 'Objects', 'Models');
+exportsDirectory = fullfile(getpref('VirtualScenes', 'modelRepository'), 'Objects', 'Models');
 objectName = 'Blobbie';
 blobbieSubdivisions = 6;
 

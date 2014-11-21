@@ -13,7 +13,6 @@ if nargin < 2 || isempty(mappingsFileOut)
 end
 
 if nargin < 3 || ~iscell(ids) || isempty(ids)
-    warning('VirtualScenes:NoIds', 'No element ids provided, aborting.');
     return;
 end
 nElements = numel(ids);

@@ -50,12 +50,12 @@ end
 
 % locate the model file
 colladaFile = [modelName '.dae'];
-rootFolder = VirtualScenesRoot();
-fileInfo = ResolveFilePath(colladaFile, rootFolder);
+repository = getpref('VirtualScenes', 'modelRepository');
+fileInfo = ResolveFilePath(colladaFile, repository);
 
 if ~fileInfo.isRootFolderMatch
     warning('VirtualScenes:NoSuchModel', ...
-        'Could not find model named "%s" in %s', modelName, rootFolder);
+        'Could not find model named "%s" in %s', modelName, repository);
     return;
 end
 
@@ -73,9 +73,9 @@ metadata = struct( ...
 
 % choose where to write the metadata
 if IsPathPrefix('BaseScenes', metadata.relativePath)
-    metadataPath = fullfile(VirtualScenesRoot(), 'BaseScenes');
+    metadataPath = fullfile(repository, 'BaseScenes');
 else
-    metadataPath = fullfile(VirtualScenesRoot(), 'Objects');
+    metadataPath = fullfile(repository, 'Objects');
 end
 metadataFile = fullfile(metadataPath, [modelName '.mat']);
 

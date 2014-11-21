@@ -22,7 +22,8 @@ if ispref(prefName)
 end
 
 % 3D model locations
-setpref(prefName, 'modelRepository', VirtualScenesRoot());
+repository = fullfile(VirtualScenesRoot(), 'ModelRepository');
+setpref(prefName, 'modelRepository', repository);
 
 % where to save output recipes
 setpref(prefName, 'outputFolder', fullfile(GetUserFolder(), 'virtual-scenes'));

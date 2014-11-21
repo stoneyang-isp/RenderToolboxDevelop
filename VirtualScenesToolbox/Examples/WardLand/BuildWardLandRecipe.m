@@ -13,10 +13,23 @@ end
 %% Augment batch renderer options.
 hints.remodeler = 'InsertObjectRemodeler';
 ChangeToWorkingFolder(hints);
-mappingsFile = [hints.recipeName '-Mappings.txt'];
 conditionsFile = [hints.recipeName '-Conditions.txt'];
+mappingsFile = [hints.recipeName '-Mappings.txt'];
 sceneMetadata = ReadMetadata(choices.baseSceneName);
-parentSceneFile = GetVirtualScenesPath(sceneMetadata.relativePath);
+
+%% Copy in the parent scene file as a portable recipe resource.
+modelAbsPath = GetVirtualScenesRepositoryPath(sceneMetadata.relativePath);
+[modelPath, modelFile, modelExt] = fileparts(modelAbsPath);
+
+resources = GetWorkingFolder('resources', false, hints);
+parentSceneFile = fullfile(resources, [modelFile, modelExt]);
+parentSceneFile = GetWorkingRelativePath(parentSceneFile, hints);
+
+if exist(parentSceneFile, 'file')
+    delete(parentSceneFile);
+end
+copyfile(modelAbsPath, parentSceneFile);
+
 
 %% Set up renderer config.
 congigRenderer = hints.renderer;
@@ -58,7 +71,8 @@ maskInsertedLightSet = cell(1, numel(choices.insertedLights.names));
 
 %% Set up the "flash" light for making object pixel masks.
 % use a uniform spectrum for the "flash"
-flashMetadata = ReadMetadata('CameraFlash');
+flashModel = 'CameraFlash';
+flashMetadata = ReadMetadata(flashModel);
 whiteArea = BuildDesription('light', 'area', ...
     {'intensity'}, ...
     {'300:1 800:1'}, ...
@@ -73,7 +87,6 @@ whiteMatte = BuildDesription('material', 'matte', ...
 flashMaterialId = ['light-flash-' flashMetadata.materialIds{1}];
 
 % position the flash relative to the camera
-flashFile = flashMetadata.relativePath;
 flashPosition = 'Camera';
 flashRotation = 'Camera';
 flashScale = 'Camera';
@@ -238,7 +251,7 @@ allValues = cat(1, ...
 % columns for the inserted flash light
 flashNames = {'light-flash', 'position-flash', 'rotation-flash', 'scale-flash'};
 flashSceneValues = {'none', 'none', 'none', 'none'};
-flashMaskValues = {flashFile, flashPosition, flashRotation, flashScale};
+flashMaskValues = {flashModel, flashPosition, flashRotation, flashScale};
 flashValues = cat(1, ...
     repmat(flashSceneValues, 3, 1), ...
     repmat(flashMaskValues, nPages, 1));
@@ -249,7 +262,6 @@ allValues = cat(2, allValues, flashValues);
 % append columns for each inserted object
 nInserted = numel(choices.insertedObjects.names);
 for oo = 1:nInserted
-    objectMetadata = ReadMetadata(choices.insertedObjects.names{oo});
     objectColumn = sprintf('object-%d', oo);
     positionColumn = sprintf('object-position-%d', oo);
     rotationColumn = sprintf('object-rotation-%d', oo);
@@ -258,7 +270,7 @@ for oo = 1:nInserted
     varNames = {objectColumn, positionColumn, rotationColumn, scaleColumn};
     allNames = cat(2, allNames, varNames);
     
-    varValues = {objectMetadata.relativePath, ...
+    varValues = {choices.insertedObjects.names{oo}, ...
         choices.insertedObjects.positions{oo}, ...
         choices.insertedObjects.rotations{oo}, ...
         choices.insertedObjects.scales{oo}};
@@ -268,7 +280,6 @@ end
 % append columns for each inserted light
 nInserted = numel(choices.insertedLights.names);
 for oo = 1:nInserted
-    objectMetadata = ReadMetadata(choices.insertedLights.names{oo});
     lightColumn = sprintf('light-%d', oo);
     positionColumn = sprintf('light-position-%d', oo);
     rotationColumn = sprintf('light-rotation-%d', oo);
@@ -277,7 +288,7 @@ for oo = 1:nInserted
     varNames = {lightColumn, positionColumn, rotationColumn, scaleColumn};
     allNames = cat(2, allNames, varNames);
     
-    varValues = {objectMetadata.relativePath, ...
+    varValues = {choices.insertedLights.names{oo}, ...
         choices.insertedLights.positions{oo}, ...
         choices.insertedLights.rotations{oo}, ...
         choices.insertedLights.scales{oo}};

@@ -1,21 +1,15 @@
-%% Construct and archive a set of Ward Land reference recipes.
-
-% We used this script to generate the accompanying packed-up recipes.
-% You should not need to run this script again.  Instead, run
-% ExecuteWardLandReferenceRecipes to render the packed-up recipes.
-
+%% Construct, execute, and archive a set of Ward Land recipes.
 clear;
 clc;
 
-%% Overall configuration.
-
-% batch renderer options
-hints.renderer = 'Mitsuba';
-defaultMappings = fullfile( ...
-    VirtualScenesRoot(), 'MiscellaneousData', 'DefaultMappings.txt');
+% choose batch renderer options
+hints.imageWidth = 320;
+hints.imageHeight = 240;
 hints.isPlot = false;
+hints.renderer = 'Mitsuba';
+defaultMappings = fullfile(VirtualScenesRoot(), 'MiscellaneousData', 'DefaultMappings.txt');
 
-% virutal scenes options for inserted objects
+% choose virutal scenes options
 scaleMin = 0.25;
 scaleMax = 2.0;
 rotMin = 0;
@@ -35,7 +29,8 @@ choices = GetWardLandChoices('IndoorPlant', ...
     matteMaterials, wardMaterials, lightSpectra);
 plantAndBarrel = BuildWardLandRecipe(defaultMappings, choices, hints);
 
-% archive it archive
+% render, process and archive
+plantAndBarrel = ExecuteRecipe(plantAndBarrel);
 archive = fullfile( ...
     getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
 PackUpRecipe(plantAndBarrel, archive, {'temp'});
@@ -54,7 +49,8 @@ choices = GetWardLandChoices('Warehouse', ...
     matteMaterials, wardMaterials, lightSpectra);
 nearFarWarehouse = BuildWardLandRecipe(defaultMappings, choices, hints);
 
-% archive it
+% render, process and archive
+nearFarWarehouse = ExecuteRecipe(nearFarWarehouse);
 archive = fullfile( ...
     getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
 PackUpRecipe(nearFarWarehouse, archive, {'temp'});
@@ -73,7 +69,8 @@ choices = GetWardLandChoices('CheckerBoard', ...
     matteMaterials, wardMaterials, lightSpectra);
 mondrian = BuildWardLandRecipe(defaultMappings, choices, hints);
 
-% archive it
+% render, process and archive
+mondrian = ExecuteRecipe(mondrian);
 archive = fullfile( ...
     getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
 PackUpRecipe(mondrian, archive, {'temp'});
@@ -92,7 +89,8 @@ choices = GetWardLandChoices('CheckerBoard', ...
     matteMaterials, wardMaterials, lightSpectra);
 blobbies = BuildWardLandRecipe(defaultMappings, choices, hints);
 
-% archive it
+% render, process and archive
+blobbies = ExecuteRecipe(blobbies);
 archive = fullfile( ...
     getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
 PackUpRecipe(blobbies, archive, {'temp'});

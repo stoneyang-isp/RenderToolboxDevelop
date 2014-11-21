@@ -67,7 +67,7 @@ end
 %% Choose object documents to insert and where to put them.
 % start with regular inserted objects
 objectNames = varNames(isObject);
-objectFileNames = varValues(isObject);
+objectModelNames = varValues(isObject);
 objectPositions = varValues(isPosition);
 objectRotations = varValues(isRotation);
 objectScales = varValues(isScale);
@@ -75,12 +75,13 @@ objectScales = varValues(isScale);
 %% Transfer data from each object document to the scene document.
 sceneIdMap = GenerateSceneIDMap(docNode);
 for ii = 1:numel(objectNames)
-    if strcmp(objectFileNames{ii}, 'none')
+    if strcmp(objectModelNames{ii}, 'none')
         continue;
     end
     
     objectName = objectNames{ii};
-    objectFullPath = GetVirtualScenesPath(objectFileNames{ii});
+    objectMetadata = ReadMetadata(objectModelNames{ii});
+    objectFullPath = GetVirtualScenesRepositoryPath(objectMetadata.relativePath);
     [objectDocNode, objectIdMap] = ReadSceneDOM(objectFullPath);
     if isempty(objectDocNode) || isempty(objectIdMap)
         continue;
