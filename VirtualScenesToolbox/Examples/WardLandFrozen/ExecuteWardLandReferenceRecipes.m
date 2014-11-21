@@ -5,33 +5,37 @@
 clear;
 clc;
 
-% Edit some batch renderer options.
+% locate the packed-up recipes
+recipesFolder = fullfile( ...
+    VirtualScenesRoot(), 'Examples', 'WardLandFrozen', 'Recipes');
+
+% edit some batch renderer options
 imageWidth = 640/4;
 imageHeight = 480/4;
 
 %% Plant and barrel.
-archive = fullfile(getpref('VirtualScenes', 'outputFolder'), 'PlantAndBarrel.zip');
+archive = fullfile(recipesFolder, 'PlantAndBarrel.zip');
 plantAndBarrel = UnpackRecipe(archive);
 plantAndBarrel.input.hints.imageWidth = imageWidth;
 plantAndBarrel.input.hints.imageHeight = imageHeight;
 plantAndBarrel = ExecuteRecipe(plantAndBarrel);
 
 %% Warehouse with near and areas of interest.
-archive = fullfile(getpref('VirtualScenes', 'outputFolder'), 'NearFarWarehouse.zip');
+archive = fullfile(recipesFolder, 'NearFarWarehouse.zip');
 nearFarWarehouse = UnpackRecipe(archive);
 nearFarWarehouse.input.hints.imageWidth = imageWidth;
 nearFarWarehouse.input.hints.imageHeight = imageHeight;
 nearFarWarehouse = ExecuteRecipe(nearFarWarehouse);
 
 %% Flat checkerboard with no inserted objects.
-archive = fullfile(getpref('VirtualScenes', 'outputFolder'), 'Mondrian.zip');
+archive = fullfile(recipesFolder, 'Mondrian.zip');
 mondrian = UnpackRecipe(archive);
 mondrian.input.hints.imageWidth = imageWidth;
 mondrian.input.hints.imageHeight = imageHeight;
 mondrian = ExecuteRecipe(mondrian);
 
 %% Checkerboard with many inserted blobbie objects.
-archive = fullfile(getpref('VirtualScenes', 'outputFolder'), 'Blobbies.zip');
+archive = fullfile(recipesFolder, 'Blobbies.zip');
 blobbies = UnpackRecipe(archive);
 blobbies.input.hints.imageWidth = imageWidth;
 blobbies.input.hints.imageHeight = imageHeight;
