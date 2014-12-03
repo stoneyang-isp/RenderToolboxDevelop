@@ -57,9 +57,7 @@ function MakeBlobbyObject()
                     'objSpecularReflectanceSPD', ...
                     'objMaterialAlpha'};
                 
-    conditionValues = {};
-    
-    conditionsNum = 0;
+    conditionValues = {}; theSceneNames = {}; conditionsNum = 0;
     for sceneIndex = 1:numel(blobbieSceneNames)  
         for sceneIlluminantIndex = 1:numel(examinedSceneIlluminants)
             for objReflectanceIndex = 1:numel(examinedObjReflectances)
@@ -68,10 +66,10 @@ function MakeBlobbyObject()
                     conditionsNum = conditionsNum + 1;
                 
                     % Select scene file
-                    blobbieSceneNames{conditionsNum} = blobbieSceneNames{sceneIndex};
+                    theSceneNames{conditionsNum} = blobbieSceneNames{sceneIndex};
                 
                     newCondition = { ...
-                            sprintf('%s__sceneNo_%d', blobbieSceneNames{conditionsNum}, conditionsNum),  ...    
+                            sprintf('%s__sceneNo_%d', theSceneNames{conditionsNum}, conditionsNum),  ...    
                             sprintf('%s.spd', examinedSceneIlluminants{sceneIlluminantIndex}{1}), ...            
                             sprintf('%s.spd', examinedSceneIlluminants{sceneIlluminantIndex}{2}), ...
                             sprintf('%s.spd', examinedObjReflectances{objReflectanceIndex}{1}), ...             
@@ -88,7 +86,7 @@ function MakeBlobbyObject()
    for condIndex = 1:conditionsNum  
   
         % Get collada file
-        sceneName = blobbieSceneNames{condIndex};
+        sceneName = theSceneNames{condIndex};
         colladaFile = sprintf('%s/ColladaExports/%s.dae', rootDir, sceneName);
             
         % Get  condition values
