@@ -13,8 +13,8 @@ function MakeBlobbyObject()
     
     % Choose batch renderer options.
     hints.whichConditions = [];
-    hints.imageWidth  = 1024/2; %320;   % 1024; % 320*2; %1000;
-    hints.imageHeight = 876/2; % 240;  % 768;% 240*2; %750;
+    hints.imageWidth  = 1920; % 1024*2; %320;   % 1024; % 320*2; %1000;
+    hints.imageHeight = 1920; % 876*2; % 240;  % 768;% 240*2; %750;
     hints.recipeName = '';
     hints.renderer = 'Mitsuba';
     hints.resources  = resourceDir;
@@ -57,7 +57,9 @@ function MakeBlobbyObject()
                     'objSpecularReflectanceSPD', ...
                     'objMaterialAlpha'};
                 
-    conditionValues = {}; theSceneNames = {}; conditionsNum = 0;
+    conditionValues = {};
+    
+    conditionsNum = 0;
     for sceneIndex = 1:numel(blobbieSceneNames)  
         for sceneIlluminantIndex = 1:numel(examinedSceneIlluminants)
             for objReflectanceIndex = 1:numel(examinedObjReflectances)
@@ -66,10 +68,10 @@ function MakeBlobbyObject()
                     conditionsNum = conditionsNum + 1;
                 
                     % Select scene file
-                    theSceneNames{conditionsNum} = blobbieSceneNames{sceneIndex};
+                    sceneNames{conditionsNum} = blobbieSceneNames{sceneIndex};
                 
                     newCondition = { ...
-                            sprintf('%s__sceneNo_%d', theSceneNames{conditionsNum}, conditionsNum),  ...    
+                            sprintf('%s__sceneNo_%d', blobbieSceneNames{conditionsNum}, conditionsNum),  ...    
                             sprintf('%s.spd', examinedSceneIlluminants{sceneIlluminantIndex}{1}), ...            
                             sprintf('%s.spd', examinedSceneIlluminants{sceneIlluminantIndex}{2}), ...
                             sprintf('%s.spd', examinedObjReflectances{objReflectanceIndex}{1}), ...             
@@ -86,7 +88,7 @@ function MakeBlobbyObject()
    for condIndex = 1:conditionsNum  
   
         % Get collada file
-        sceneName = theSceneNames{condIndex};
+        sceneName = sceneNames{condIndex};
         colladaFile = sprintf('%s/ColladaExports/%s.dae', rootDir, sceneName);
             
         % Get  condition values
