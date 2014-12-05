@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+
+	Automatically converted from COLLADA
+
+-->
+<scene version="0.5.0">
+	
+   <integrator type="multichannel">
+      <integrator id="integrator" type="path">
+         <integer name="maxDepth" value="10"/>
+         <integer name="shadingSamples" value="32"/>
+      </integrator>
+	
+      <integrator type="field">
+	     <string name="field" value="albedo"/>
+	  </integrator>
+	  
+	  <integrator type="field">
+	     <string name="field" value="distance"/>
+	  </integrator>
+   </integrator>
+	
+   <bsdf id="Floor-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-6.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.1 800:0.4"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="BaseBoard-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-24.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.5 800:0.0"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="Wall-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-3.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.0 800:0.5"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="Rocks-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-10.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.2 800:0.3"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="Pot-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-10.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.2 800:0.3"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="Leaves-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-2.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.0 800:0.5"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="HighRearLight-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-24.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.5 800:0.0"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="CeilingLight-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-20.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.4 800:0.1"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="LowRearLight-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-11.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.2 800:0.3"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="object-1-Blobbie-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-12.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.2 800:0.3"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="object-2-Blobbie-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-11.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.2 800:0.3"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="object-3-Blobbie-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-19.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.4 800:0.1"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="object-4-Blobbie-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-16.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.3 800:0.2"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="object-5-Blobbie-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-16.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.3 800:0.2"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="light-1-BigBall-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-5.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.1 800:0.4"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <bsdf id="light-2-SmallBall-material" type="ward">
+      <float name="alphaU" value="0.1"/>
+      <float name="alphaV" value="0.1"/>
+      <spectrum filename="resources/mccBabel-4.spd" name="diffuseReflectance"/>
+      <spectrum name="specularReflectance" value="300:0.1 800:0.4"/>
+      <string name="variant" value="ward"/>
+   </bsdf>
+
+	
+   <shape id="Floor-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="0"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="5.17249 0 0 -1.40929 0 4.3198 0 -1.72282 0 0 4.3198 -0.0185175 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="Floor-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="BaseBoard-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="1"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="-3.20852e-08 0 0.734025 -6.36791 0 0.734025 0 -4.67217 -0.734025 0 -3.20852e-08 -0.242091 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="BaseBoard-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="Wall-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="2"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="7.15501 0 0 0.659815 0 7.15501 0 -4.54162 0 0 7.15501 -6.49835 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="Wall-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="Rocks-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="3"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="-0.240021 -0.987038 0 -2.48585 0.987038 -0.240021 0 -1.68345 0 0 1.0158 1.31471 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="Rocks-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="pot-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="4"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="1.04974 -0.257451 0 -2.49145 0.257451 1.04974 0 -1.69178 0 0 1.08085 1.63401 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="Pot-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="Leaves-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="5"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="-0.215881 -0.453579 -0.26686 -2.49145 0.313801 -0.342502 0.328291 -1.69178 -0.422466 -0.0226241 0.380216 1.14162 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="Leaves-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <sensor id="Camera-camera" type="perspective">
+		
+      <float name="fov" value="37.8493"/>
+		
+      <float name="nearClip" value="0.1"/>
+		
+      <float name="farClip" value="100"/>
+		
+      <string name="fovAxis" value="smaller"/>
+
+		
+      <transform name="toWorld">
+			
+         <matrix value="-0.777146 -0.173464 -0.604942 5 -0.629321 0.21421 0.747041 -10 0 0.961262 -0.275637 6.22341 0 0 0 1"/>
+		
+      </transform>
+
+		
+      <sampler id="Camera-camera_sampler" type="ldsampler">
+         <integer name="sampleCount" value="128"/>
+      </sampler>
+
+		
+      <film id="Camera-camera_film" type="hdrfilm">
+			
+         <integer name="width" value="640"/>
+			
+         <integer name="height" value="480"/>
+			
+         <rfilter type="gaussian">
+            <float name="stddev" value="0.5"/>
+         </rfilter>
+		
+         <boolean name="banner" value="false"/>
+         <string name="componentFormat" value="float16"/>
+         <string name="fileFormat" value="openexr"/>
+         <string name="pixelFormat" value="spectrum, luminance, luminance"/>
+         <string name="channelNames" value="radiance, albedo, distance"/>
+      </film>
+	
+   </sensor>
+
+	
+   <shape id="HighRearLight-mesh_0" type="serialized">
+      <emitter id="HighRearLight-mesh_0-area-light" type="area">
+         <spectrum filename="resources/Sun.spd" name="radiance"/>
+      </emitter>
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="6"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="5.22973 1.49408 -1.49408 -3.50451 2.11295 -3.69797 3.69799 -8.48176 0 -3.98841 -3.98839 11.4789 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="HighRearLight-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="CeilingLight-mesh_0" type="serialized">
+      <emitter id="CeilingLight-mesh_0-area-light" type="area">
+         <spectrum filename="resources/Sun.spd" name="radiance"/>
+      </emitter>
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="7"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="2.89723 0 0 -2.79414 0 -2.89723 5.27275e-06 -1.06435 0 -5.27275e-06 -2.89723 13.1823 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="CeilingLight-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="LowRearLight-mesh_0" type="serialized">
+      <emitter id="LowRearLight-mesh_0-area-light" type="area">
+         <spectrum filename="resources/Sky.spd" name="radiance"/>
+      </emitter>
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="8"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="1.50072 0.895295 -2.3109 4.4043 -0.487612 2.75543 0.750858 -5.43497 2.42983 0 1.57795 1.59294 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="LowRearLight-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="object-1-Blobbie-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="9"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="-1.63223 -0.31244 0.225596 -5.81712 -1.01993 0.810373 -0.260559 -0.202383 -0.339374 -0.932745 -0.301942 1.46184 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="object-1-Blobbie-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="object-2-Blobbie-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="10"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="-1.33434 -0.872405 -0.127377 1.41226 0.622213 -0.931424 0.283628 0.374243 -1.15027 0.508176 0.301182 5.30169 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="object-2-Blobbie-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="object-3-Blobbie-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="11"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="0.00404133 0.588009 1.11981 -0.398199 -0.025516 -1.45523 0.452391 -0.416783 1.48003 -0.026694 0.00474155 0.509429 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="object-3-Blobbie-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="object-4-Blobbie-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="12"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="-0.837687 0.616276 0.172281 -1.57213 -0.565027 -0.259862 -1.60935 0.522291 -0.734122 -0.503209 1.04207 5.91274 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="object-4-Blobbie-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="object-5-Blobbie-mesh_0" type="serialized">
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="13"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="0.154532 -1.72445 -0.07831 -2.48061 -0.0856586 0.0696524 -1.21943 0.40617 0.708645 0.384465 -0.130324 4.32157 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="object-5-Blobbie-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="light-1-BigBall-mesh_0" type="serialized">
+      <emitter id="light-1-BigBall-mesh_0-area-light" type="area">
+         <spectrum name="radiance" value="300:1 800:1"/>
+      </emitter>
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="14"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="-0.116254 0.251146 0.960943 4.54577 -0.104675 0.959017 -0.263306 -11.874 -0.987688 -0.131197 -0.0852004 10.843 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="light-1-BigBall-material" name="bsdf"/>
+	
+   </shape>
+
+	
+   <shape id="light-2-SmallBall-mesh_0" type="serialized">
+      <emitter id="light-2-SmallBall-mesh_0-area-light" type="area">
+         <spectrum filename="resources/Sky.spd" name="radiance"/>
+      </emitter>
+		
+      <string name="filename" value="wardUnadjusted.serialized"/>
+		
+      <integer name="shapeIndex" value="15"/>
+		
+      <transform name="toWorld">
+			
+         <matrix value="0.590628 -0.515574 0.620759 8.43803 -0.340999 0.537743 0.771072 -11.4482 -0.731354 -0.667095 0.141795 14.2246 0 0 0 1"/>
+		
+      </transform>
+		
+      <ref id="light-2-SmallBall-material" name="bsdf"/>
+	
+   </shape>
+
+
+</scene>
