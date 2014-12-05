@@ -25,8 +25,13 @@ end
 repository = fullfile(VirtualScenesRoot(), 'ModelRepository');
 setpref(prefName, 'modelRepository', repository);
 
-% where to save output recipes
-setpref(prefName, 'outputFolder', fullfile(GetUserFolder(), 'virtual-scenes'));
+% where to save recipe archives
+setpref(prefName, 'recipesFolder', ...
+    fullfile(GetUserFolder(), 'virtual-scenes', 'recipe-archives'));
+
+% where to put the RenderToolbox3 working folder
+setpref(prefName, 'workingFolder', ...
+    fullfile(GetUserFolder(), 'virtual-scenes', 'working'));
 
 % image processing defaults
 setpref(prefName, 'toneMapFactor', 100);

@@ -12,9 +12,11 @@ clc;
 
 % batch renderer options
 hints.renderer = 'Mitsuba';
+hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
+hints.isPlot = false;
+
 defaultMappings = fullfile( ...
     VirtualScenesRoot(), 'MiscellaneousData', 'DefaultMappings.txt');
-hints.isPlot = false;
 
 % virutal scenes options for inserted objects
 scaleMin = 0.25;
@@ -38,7 +40,7 @@ plantAndBarrel = BuildWardLandRecipe(defaultMappings, choices, hints);
 
 % archive it archive
 archive = fullfile( ...
-    getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
+    getpref('VirtualScenes', 'recipesFolder'), hints.recipeName);
 PackUpRecipe(plantAndBarrel, archive, {'temp'});
 
 %% Build the Near and Far Warehouse Recipe.
@@ -57,7 +59,7 @@ nearFarWarehouse = BuildWardLandRecipe(defaultMappings, choices, hints);
 
 % archive it
 archive = fullfile( ...
-    getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
+    getpref('VirtualScenes', 'recipesFolder'), hints.recipeName);
 PackUpRecipe(nearFarWarehouse, archive, {'temp'});
 
 %% Build the Mondrian recipe.
@@ -76,7 +78,7 @@ mondrian = BuildWardLandRecipe(defaultMappings, choices, hints);
 
 % archive it
 archive = fullfile( ...
-    getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
+    getpref('VirtualScenes', 'recipesFolder'), hints.recipeName);
 PackUpRecipe(mondrian, archive, {'temp'});
 
 %% Build the Blobbie recipe.
@@ -95,5 +97,5 @@ blobbies = BuildWardLandRecipe(defaultMappings, choices, hints);
 
 % archive it
 archive = fullfile( ...
-    getpref('VirtualScenes', 'outputFolder'), hints.recipeName);
+    getpref('VirtualScenes', 'recipesFolder'), hints.recipeName);
 PackUpRecipe(blobbies, archive, {'temp'});

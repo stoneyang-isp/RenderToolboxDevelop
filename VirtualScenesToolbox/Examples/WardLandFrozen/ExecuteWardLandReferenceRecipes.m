@@ -10,33 +10,43 @@ recipesFolder = fullfile( ...
     VirtualScenesRoot(), 'Examples', 'WardLandFrozen', 'Recipes');
 
 % edit some batch renderer options
-imageWidth = 640/4;
-imageHeight = 480/4;
+hints.renderer = 'Mitsuba';
+hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
+hints.imageWidth = 640/4;
+hints.imageHeight = 480/4;
 
 %% Plant and barrel.
 archive = fullfile(recipesFolder, 'PlantAndBarrel.zip');
-plantAndBarrel = UnpackRecipe(archive);
-plantAndBarrel.input.hints.imageWidth = imageWidth;
-plantAndBarrel.input.hints.imageHeight = imageHeight;
+plantAndBarrel = UnpackRecipe(archive, hints);
+plantAndBarrel.input.hints.renderer = hints.renderer;
+plantAndBarrel.input.hints.workingFolder = hints.workingFolder;
+plantAndBarrel.input.hints.imageWidth = hints.imageWidth;
+plantAndBarrel.input.hints.imageHeight = hints.imageHeight;
 plantAndBarrel = ExecuteRecipe(plantAndBarrel);
 
 %% Warehouse with near and areas of interest.
 archive = fullfile(recipesFolder, 'NearFarWarehouse.zip');
-nearFarWarehouse = UnpackRecipe(archive);
-nearFarWarehouse.input.hints.imageWidth = imageWidth;
-nearFarWarehouse.input.hints.imageHeight = imageHeight;
+nearFarWarehouse = UnpackRecipe(archive, hints);
+nearFarWarehouse.input.hints.renderer = hints.renderer;
+nearFarWarehouse.input.hints.workingFolder = hints.workingFolder;
+nearFarWarehouse.input.hints.imageWidth = hints.imageWidth;
+nearFarWarehouse.input.hints.imageHeight = hints.imageHeight;
 nearFarWarehouse = ExecuteRecipe(nearFarWarehouse);
 
 %% Flat checkerboard with no inserted objects.
 archive = fullfile(recipesFolder, 'Mondrian.zip');
-mondrian = UnpackRecipe(archive);
-mondrian.input.hints.imageWidth = imageWidth;
-mondrian.input.hints.imageHeight = imageHeight;
+mondrian = UnpackRecipe(archive, hints);
+mondrian.input.hints.renderer = hints.renderer;
+mondrian.input.hints.workingFolder = hints.workingFolder;
+mondrian.input.hints.imageWidth = hints.imageWidth;
+mondrian.input.hints.imageHeight = hints.imageHeight;
 mondrian = ExecuteRecipe(mondrian);
 
 %% Checkerboard with many inserted blobbie objects.
 archive = fullfile(recipesFolder, 'Blobbies.zip');
-blobbies = UnpackRecipe(archive);
-blobbies.input.hints.imageWidth = imageWidth;
-blobbies.input.hints.imageHeight = imageHeight;
+blobbies = UnpackRecipe(archive, hints);
+blobbies.input.hints.renderer = hints.renderer;
+blobbies.input.hints.workingFolder = hints.workingFolder;
+blobbies.input.hints.imageWidth = hints.imageWidth;
+blobbies.input.hints.imageHeight = hints.imageHeight;
 blobbies = ExecuteRecipe(blobbies);

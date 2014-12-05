@@ -11,9 +11,11 @@ clc;
 
 % batch renderer options
 hints.renderer = 'Mitsuba';
+hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
+hints.isPlot = false;
+
 defaultMappings = fullfile( ...
     VirtualScenesRoot(), 'MiscellaneousData', 'DefaultMappings.txt');
-hints.isPlot = false;
 
 % virutal scenes options for inserted objects
 scaleMin = 0.25;
@@ -24,7 +26,7 @@ rotMax = 359;
 % where to save new recipes
 projectName = 'WardLand';
 recipeFolder = ...
-    fullfile(getpref('VirtualScenes', 'outputFolder'), projectName);
+    fullfile(getpref('VirtualScenes', 'recipesFolder'), projectName);
 if (~exist(recipeFolder, 'dir'))
     mkdir(recipeFolder);
 end
