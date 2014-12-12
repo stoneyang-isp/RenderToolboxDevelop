@@ -44,3 +44,6 @@ setpref(prefName, 'dklSensitivities', 'T_CIE_Y2');
 % scaling for large montages
 setpref(prefName, 'montageScaleFactor', 1);
 setpref(prefName, 'montageScaleMethod', 'lanczos3');
+
+% alternate RGB version of Mitsuba
+setpref(prefName, 'rgbMitsubaApp', '/Applications/Mitsuba-RGB.app');
