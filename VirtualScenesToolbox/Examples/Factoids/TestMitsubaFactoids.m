@@ -6,7 +6,7 @@ clc;
 % get a frozen scene
 recipesFolder = fullfile( ...
     VirtualScenesRoot(), 'Examples', 'WardLandFrozen', 'Recipes');
-archive = fullfile(recipesFolder, 'Blobbies.zip');
+archive = fullfile(recipesFolder, 'PlantAndBarrel.zip');
 
 hints.renderer = 'Mitsuba';
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
