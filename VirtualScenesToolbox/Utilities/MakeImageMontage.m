@@ -1,6 +1,6 @@
 %% Make an m x n montage from RGB image files.
 %   fileName file name for the new montage
-%   images m x n cell array of image file names
+%   images m x n cell array of images (each element a file name or RGB data)
 %   names m x n cell array of image labels
 %   scaleFactor how much to scale the montage (might be large)
 %   scaleMethod how exactly to scale the montage
@@ -27,13 +27,19 @@ rows = size(images, 1);
 columns = size(images, 2);
 for ii = 1:rows
     for jj = 1:columns
-        panelFile = images{ii,jj};
-        if ~ischar(panelFile) || ~exist(panelFile, 'file')
+        panelData = images{ii,jj};
+        
+        if isempty(panelData)
             continue;
         end
         
+        if ischar(panelData) && exist(panelData, 'file')
+            panel = imread(panelData);
+        else
+            panel = panelData;
+        end
+        
         % load the next panel
-        panel = imread(panelFile);
         panelDepth = size(panel, 3);
         panelWidth = size(panel, 2);
         panelHeight = size(panel, 1);
