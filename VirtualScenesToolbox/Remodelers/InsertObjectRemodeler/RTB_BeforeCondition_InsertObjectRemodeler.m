@@ -39,6 +39,9 @@ end
 
 nPositions = sum(isPosition);
 if (nPositions ~= nObjects)
+    disp('Number of positions does not match number of objects:')
+    disp([nPositions, nObjects])
+    disp('Aborting InsertObjctRemodeler')
     return;
 end
 
@@ -50,6 +53,9 @@ end
 
 nRotations = sum(isRotation);
 if (nRotations ~= nObjects)
+    disp('Number of rotations does not match number of objects:')
+    disp([nRotations, nObjects])
+    disp('Aborting InsertObjctRemodeler')
     return;
 end
 
@@ -61,6 +67,9 @@ end
 
 nScales = sum(isScale);
 if (nScales ~= nObjects)
+    disp('Number of scales does not match number of objects:')
+    disp([nScales, nObjects])
+    disp('Aborting InsertObjctRemodeler')
     return;
 end
 
