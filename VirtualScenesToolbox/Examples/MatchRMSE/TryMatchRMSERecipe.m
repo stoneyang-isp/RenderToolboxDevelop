@@ -9,40 +9,81 @@ hints.imageWidth = 640/4;
 hints.imageHeight = 480/4;
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
 
-recipe = BuildMatchRMSERecipe(wardLandArchive, matchRMSEMappings, hints);
-working = GetWorkingFolder('', false, recipe.input.hints);
+blankRecipe = BuildMatchRMSERecipe(wardLandArchive, matchRMSEMappings, hints);
+working = GetWorkingFolder('', false, blankRecipe.input.hints);
+resources = GetWorkingFolder('resources', false, blankRecipe.input.hints);
+images = GetWorkingFolder('images', true, blankRecipe.input.hints);
+renderings = GetWorkingFolder('renderings', true, blankRecipe.input.hints);
 
-% Build a parameter sweep for object reflectance
-nSteps = 4;
-lambdas = linspace(0, 1, nSteps);
+nSteps = 10;
 
+%% Run a parameter sweep for object reflectance.
+refSweepName = 'reflectance';
+paramName = 'inserted-object-diffuse-1';
 spectrumA = ResolveFilePath('mccBabel-14.spd', working);
-[refWlsA, refMagsA] = ReadSpectrum(spectrumA.absolutePath);
-spectrumB = ResolveFilePath('mccBabel-22.spd', working);
-[refWlsB, refMagsB] = ReadSpectrum(spectrumB.absolutePath);
+spectrumB = ResolveFilePath('mccBabel-19.spd', working);
 
-reflectanceFiles = cell(nSteps, 1);
-imageNames = cell(nSteps, 1);
-resources = GetWorkingFolder('resources', false, recipe.input.hints);
+[spdFiles, refImageNames, refLambdas] = BuildSpectrumSweep( ...
+    refSweepName, spectrumA.absolutePath, spectrumB.absolutePath, nSteps, resources);
+recipe = BuildSweepConditions(blankRecipe, refSweepName, paramName, spdFiles, refImageNames);
+recipe = ExecuteRecipe(recipe);
+
+%% Run a parameter sweep for illumination.
+illumSweepName = 'illumination';
+paramName = 'base-light-illum-1';
+spectrumA = ResolveFilePath('Sun.spd', working);
+spectrumB = ResolveFilePath('Sky.spd', working);
+
+[spdFiles, illumImageNames, illumLambdas] = BuildSpectrumSweep( ...
+    illumSweepName, spectrumA.absolutePath, spectrumB.absolutePath, nSteps, resources);
+recipe = BuildSweepConditions(blankRecipe, illumSweepName, paramName, spdFiles, illumImageNames);
+recipe = ExecuteRecipe(recipe);
+
+%% Run a parameter sweep for camera position.
+cameraSweepName = 'camera';
+paramName = 'camera-position';
+offsetA = [0 0 0];
+offsetB = [1 1 1]*.05;
+
+[offsets, cameraImageNames, cameraLambdas] = BuildVectorSweep( ...
+    cameraSweepName, offsetA, offsetB, nSteps);
+recipe = BuildSweepConditions(blankRecipe, cameraSweepName, paramName, offsets, cameraImageNames);
+recipe = ExecuteRecipe(recipe);
+
+%% Run a parameter sweep for opject scale.
+scaleSweepName = 'scale';
+paramName = 'object-scale-1';
+scaleA = [1.201800 1.511832 1.164367];
+scaleB = scaleA*1.8;
+
+[offsets, scaleImageNames, scaleLambdas] = BuildVectorSweep( ...
+    scaleSweepName, scaleA, scaleB, nSteps);
+recipe = BuildSweepConditions(blankRecipe, scaleSweepName, paramName, offsets, scaleImageNames);
+recipe = ExecuteRecipe(recipe);
+
+%% Plot RMSEs vs lambdas.
+refRmses = ComputeSweepRMSE(recipe, refImageNames);
+illumRmses = ComputeSweepRMSE(recipe, illumImageNames);
+cameraRmses = ComputeSweepRMSE(recipe, cameraImageNames);
+scaleRmses = ComputeSweepRMSE(recipe, scaleImageNames);
+
+plot(refLambdas, refRmses, ...
+    illumLambdas, illumRmses, ...
+    cameraLambdas, cameraRmses, ...
+    scaleLambdas, scaleRmses, ...
+    'LineStyle', 'none', 'Marker', '.');
+legend(refSweepName, illumSweepName, cameraSweepName, scaleSweepName);
+
+%% Make a Big Montage to compare RMSEs.
+toneMapFactor = 100;
+isScale = true;
+outFile = fullfile(images, 'MatchedRMSEs.png');
+inFiles = cell(nSteps, 4);
 for ii = 1:nSteps
-    imageNames{ii} = sprintf('reflectance-%02d', ii);
-    reflectanceFiles{ii} = sprintf('reflectance-%02d.spd', ii);
-    refMags = lambdas(ii)*refMagsA + (1-lambdas(ii))*refMagsB;
-    WriteSpectrumFile(refWlsA, refMags, fullfile(resources, reflectanceFiles{ii}));
+    inFiles{ii, 1} = fullfile(renderings, [refImageNames{ii} '.mat']);
+    inFiles{ii, 2} = fullfile(renderings, [illumImageNames{ii} '.mat']);
+    inFiles{ii, 3} = fullfile(renderings, [cameraImageNames{ii} '.mat']);
+    inFiles{ii, 4} = fullfile(renderings, [scaleImageNames{ii} '.mat']);
 end
 
-% write a new conditions file for the sweep
-conditionsFile = ResolveFilePath(recipe.input.conditionsFile, working);
-[varNames, varValues] = ParseConditions(conditionsFile.absolutePath);
-newValues = repmat(varValues, nSteps, 1);
-isParam = strcmp(varNames, 'inserted-object-diffuse-1');
-newValues(:,isParam) = reflectanceFiles;
-isImageName = strcmp(varNames, 'imageName');
-newValues(:,isImageName) = imageNames;
-
-newConditionsFile = fullfile(working, 'reflectanceConditions.txt');
-WriteConditionsFile(newConditionsFile, varNames, newValues);
-recipe.input.conditionsFile = newConditionsFile;
-
-% go
-recipe = ExecuteRecipe(recipe);
+MakeMontage(inFiles, outFile, toneMapFactor, isScale);

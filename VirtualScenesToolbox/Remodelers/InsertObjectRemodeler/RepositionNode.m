@@ -26,9 +26,9 @@ if isnumeric(position) || ~objectIdMap.isKey(position)
     rotatePath = [nodeId ':rotate|sid=rotationZ'];
     SetSceneValue(objectIdMap, rotatePath, aZ, true, '=');
     
-    % set absolute scale
+    % multiply scale
     scalePath = [nodeId ':scale|sid=scale'];
-    SetSceneValue(objectIdMap, scalePath, scale, true, '=');
+    SetSceneValue(objectIdMap, scalePath, scale, true, '*=');
     return
 end
 
