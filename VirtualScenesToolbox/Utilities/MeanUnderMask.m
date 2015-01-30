@@ -1,6 +1,25 @@
 % Take the mean of a multi-spectral image under a 2D mask.
-%   rawImage some m x n x p image
-%   mask some m x n mask, nonzero where the mean should be taken
+%   @param rawImage any m x n x p image
+%   @param mask an m x n mask with non-zeros indicating a region of @a rawImage
+%
+% @details
+% Computes the mean and median of some pixels in the given multi-spectral
+% @a rawImage.  Non-zero elements of @a mask select the region over which
+% the mean and median should be computed.
+%
+% @details
+% The mean and median are computed separately for each of the p
+% multi-spectral dimensions of rawImage.
+%
+% @details
+% Returns the p-element mean pixel found in @a rawImage under @a mask.
+% Also returns the p-element median pixel.
+%
+% @details
+% Usage:
+%   [meanPixel, medianPixel] = MeanUnderMask(rawImage, mask)
+%
+% @ingroup VirtualScenes
 function [meanPixel, medianPixel] = MeanUnderMask(rawImage, mask)
 imageSize = size(rawImage);
 height= imageSize(1);

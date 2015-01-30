@@ -1,19 +1,27 @@
 %% Write a block of formatted mappings text to the given file.
-%   fid must be a fid from fopen()
-%   comment can by any comment to write before the formatted text
-%   blockName must be Generic, Mitsuba, etc.
-%   elementInfo must be a struct array with fields:
-%       - id - the id of an object, like CeilingLight-mesh
-%       - categoty - the category of the object, like light
-%       - type - the specific object type, like area
-%       - properties - struct array of properties with fields:
-%           - propertyName - a property of the object, like intensity
-%           - propertyValue - a value for the property, like 300:1 800:1
-%           - valueType - the data type of the value, like spectrum
+%   @param fid a file descriptor from fopen().
+%   @param comment any comment to write before the formatted text
+%   @param blockName a recognized mappings block name like 'Generic'
+%   @param elementInfo a struct array with elements from BuildDesription()
 %
-% Writes formatted text for each element of the elementInfo array, like
-%   CeilingLight-mesh:light:area
-%   CeilingLight-mesh:intensity.spectrum = 300:1 800:1
+% @details
+% Writes a formatted block of mappings file syntax to the file at @a fid.
+% The block may be preceeded by any comment line as given in @a comment.  
+% The block must have a recognized type name, for example 'Generic',
+% 'Mitsuba', or 'PBRT-path'.
+%
+% @details
+% @a elementInfo must be a struct array of data describing the content of
+% the mappings block.  The elements of @a elementInfo must be formatted
+% like the outputs of BuildDesription().  Each element will contain the id,
+% categoty, and type of a scene element, as well as properties of each
+% element.
+%
+% @details
+% Usage:
+%   WriteMappingsBlock(fid, comment, blockName, elementInfo)
+%
+% @ingroup VirtualScenes
 function WriteMappingsBlock(fid, comment, blockName, elementInfo)
 fprintf(fid, '\n\n%% %s\n', comment);
 fprintf(fid, '%s {\n', blockName);

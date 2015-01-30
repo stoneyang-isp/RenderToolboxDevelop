@@ -1,7 +1,23 @@
-% Smooth out the gaps in an image with a sliding average.
-%   rawImage some m x n x p image
-%   gapMask some m x n mask with zeros indicating gaps
-%   filterWidth width of sliding filter used to smooth out gaps
+%% Smooth out the gaps in an image by taking a sliding median.
+%   @param rawImage any m x n x p image
+%   @param gapMask an m x n mask with zeros indicating gaps in @a rawImage
+%   @param filterWidth width in pixels of a square sliding filter.
+%
+% @details
+% Passes a sliding square window of width @a filterWidth over the given @a
+% rawImage.  For each pixel where @a gapMask is zero, attempts to "smooth
+% out" the gap by replacing the pixel value with the mean pixel value under
+% the sliding window.  Uses MeanUnderMask() to compute the median.
+%
+% @details
+% Returns a new m x n x p image based on @a rawImage, but with gap pixels
+% replaced with the median of nearby non-gap pixels.
+%
+% @details
+% Usage:
+%   smoothImage = SmoothOutGaps(rawImage, gapMask, filterWidth)
+%
+% @ingroup VirtualScenes
 function smoothImage = SmoothOutGaps(rawImage, gapMask, filterWidth)
 imageSize = size(rawImage);
 height = imageSize(1);

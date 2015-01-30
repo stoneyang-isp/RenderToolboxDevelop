@@ -1,9 +1,21 @@
 %% Simple utility for writing out image files.
-%   fileName should be the name or full path to write out.
-%   imageData should be an image matrix to pass to imwrite.
-% Creates the output path if needed and writes out the given imageData.
-% Also returns the given file name, which can help reduce boilerplate code
-% and typos in the calling function.
+%   @param fileName the name of the image file to write
+%   @param imageData image matrix to pass to imwrite()
+%
+% @details
+% This is a simple wrapper for the built-in imwrite() function.  In case
+% @a fileName contains a path that doesn't exist yet, this function creates
+% the path.
+%
+% @details
+% Returns the given file name, which can be handy and reduce typing in the
+% calling function.
+%
+% @details
+% Usage:
+%   fileName = WriteImage(fileName, imageData)
+%
+% @ingroup VirtualScenes
 function fileName = WriteImage(fileName, imageData)
 [filePath, fileBase, fileExt] = fileparts(fileName);
 if ~isempty(filePath) && ~exist(filePath, 'dir')

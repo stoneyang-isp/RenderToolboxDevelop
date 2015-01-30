@@ -1,5 +1,4 @@
-% Set up machine-specific Virtual Scenes configuration, like where to find
-% BaseScenes, and image processing default parameters.
+%% Set up machine-specific Virtual Scenes configuration
 %
 % This script is intended as a template only.  You should make a copy of
 % this script and save it in a folder separate from Virtual Scenes.  You
@@ -14,6 +13,7 @@
 % customize it, and run it.  You can run it again, any time you want to
 % make sure your Virtual Scenes preferences are correct.
 %
+% @ingroup VirtualScenes
 
 % clear out any old preferences
 prefName = 'VirtualScenes';

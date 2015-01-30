@@ -1,11 +1,65 @@
-%% Write metadata for a base scene or object.
-% metadata stored in BaseScenes/ or Objects/ subfolder
-%   modelName should be "RingToy" for Objects/Models/RingToy.dae
-%   objectBox should be [minX maxX; minY maxY; minZ, maxZ]
-%   lightBox should be [minX maxX; minY maxY; minZ, maxZ]
-%   lightExcludeBox should be [minX maxX; minY maxY; minZ, maxZ]
-%   materialIds should be {'Floor-material', 'Material1-material', ...}
-%   lightIds should be {'CeilingLight-mesh', 'WindowLight-mesh', ...}
+%% Write metadata for a VirtualScenes base scene or object.
+%   @param modelName the name of a VirtualScenes model like "RingToy"
+%   @param objectBox 3x2 bounding box for inserting objects in scene
+%   @param lightBox 3x2 bounding box for inserting lights in scene
+%   @param lightExcludeBox 3x2 bounding box for @b not inserting lights in scene
+%   @param materialIds cell array of string ids for scene materials
+%   @param lightIds cell array of string ids for scene light meshes
+%
+% @details
+% Writes a mat-file of metadata for a 3D Collada model in the VirtualScenes
+% ModelRepository.  This effectively registers (or re-registers) a 3D model
+% for use with the VirtualScenes Toolbox.
+%
+% @details
+% @a modelName must be the name that scripts and toolbox functions and
+% scripts will use to refer to the model, for example "RingToy".  This must
+% correspond to the name of a Collada file in the VirtualScenes Toolbox
+% ModelRepository, such as 
+% 'VirtualScenesToolbox/ModelRepository/Objects/Models/RingToy.dae'.
+%
+% @details
+% @a objectBox should be a matrix of the form 
+% [minX maxX; minY maxY; minZ, maxZ].  This describes the bounding box
+% where it makes sense to insert random objects into the 3D model.
+%
+% @details
+% @a lightBox should be a matrix like @objectBox of the form 
+% [minX maxX; minY maxY; minZ, maxZ].  This describes the bounding box
+% where it makes sense to insert random lights into the 3D model.
+%
+% @details
+% @a lightExcludeBox should be a matrix like @objectBox of the form 
+% [minX maxX; minY maxY; minZ, maxZ].  This describes the bounding box
+% where it @b does @b not make sense to insert random lights into the 3D 
+% model.  @a lightExcludeBox must be totally contained by @a lightBox.
+%
+% @details
+% @a materialIds must be a cell array of string ids for scene materials,
+% for example, {'Floor-material', 'Material1-material', ...}.  These will
+% be the materials that VirtualScenes scripts and toolbox functions can
+% modify automatically.
+%
+% @details
+% @a lightIds should a cell array of string ids for scene mesh objets, 
+% for example, {'CeilingLight-mesh', 'WindowLight-mesh', ...}.  These
+% meshes will be the objects that VirtualScenes scripts and toolbox
+% functions can "bless" automatically as area lights.
+%
+% @details
+% Writes or replaces a mat-file in the VirtualScenes model repository, at
+% either 'VirtualScenesToolbox/ModelRepository/Objects' or 
+% 'VirtualScenesToolbox/ModelRepository/BaseScenes'.
+%
+% @details
+% Returns the struct metadata that was written to the mat-file in the
+% repository.
+%
+% @details
+% Usage:
+%   metadata = WriteMetadata(modelName, objectBox, lightBox, lightExcludeBox, materialIds, lightIds)
+%
+% @ingroup VirtualScenes
 function metadata = WriteMetadata(modelName, objectBox, lightBox, ...
     lightExcludeBox, materialIds, lightIds)
 metadata = [];
