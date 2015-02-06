@@ -114,7 +114,9 @@ line([0 1], [1 1]*targetRmse, 'LineStyle', '--', 'Marker', 'none');
 legend(refSweepName, illumSweepName, cameraSweepName, scaleSweepName, 'target');
 ylabel(plotTitle);
 xlabel('lambda');
-set(gca(), 'YLim', [0 0.01]);
+set(gca(), ...
+    'YLim', [0 0.01], ...
+    'FontSize', 16);
 
 %% Pick renderings closest to the target RMSE.
 [m, refIndex] = min(abs(refRmses - targetRmse));
@@ -155,22 +157,29 @@ set(gca(), ...
     'XTick', [], ...
     'YTick', [0.5, 1.5]*hints.imageHeight, ...
     'YTickLabel', {'reference', 'target'}, ...
-    'Visible', 'on');
+    'Visible', 'on', ...
+    'FontSize', 16);
 
 subplot(1,4,2);
 imshow(uint8(illumSrgb));
 title(illumSweepName)
 xlabel(sprintf('%s = %0.5f\nlambda = %.2f', plotTitle, illumRmses(illumIndex), illumLambdas(illumIndex)));
+set(gca(), ...
+    'FontSize', 16);
 
 subplot(1,4,3);
 imshow(uint8(cameraSrgb));
 title(cameraSweepName)
 xlabel(sprintf('%s = %0.5f\nlambda = %.2f', plotTitle, cameraRmses(cameraIndex), cameraLambdas(cameraIndex)));
+set(gca(), ...
+    'FontSize', 16);
 
 subplot(1,4,4);
 imshow(uint8(scaleSrgb));
 title(scaleSweepName)
 xlabel(sprintf('%s = %0.5f\nlambda = %.2f', plotTitle, scaleRmses(scaleIndex), scaleLambdas(scaleIndex)));
+set(gca(), ...
+    'FontSize', 16);
 
 figPos = get(gcf(), 'Position');
 figPos(3) = figPos(3)*2.5;
