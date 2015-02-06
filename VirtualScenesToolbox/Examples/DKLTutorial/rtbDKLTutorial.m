@@ -1,8 +1,9 @@
-% rtbDKLTutorial
+%% Convert an LMS image to a luminance and chromatic modulation color space.
 %
-% Convert an LMS image to a luminance and chromatic modulation color space.
+% This is a brief example of how to transform LMS images into DKL images.
 %
 % 10/22/14  dhb  Wrote it.
+%
 
 %% Clear, close
 clear; close all;
@@ -36,7 +37,7 @@ coneMean = mean(coneImageCalFormat,2);
 % Convert to cone increments
 coneIncImageCalFormat = bsxfun(@minus,coneImageCalFormat,coneMean);
 
-%% Do the conversion to DKL space. 
+%% Do the conversion to DKL space.
 %
 % Get the conversion matrix
 M_ConeIncToDKL = ComputeDKL_M(coneMean,T_cones,T_Y);
@@ -60,13 +61,6 @@ for i = 1:3
     DKLImageScaled(:,:,i) = thisPlaneOut;
     
     % Show each scaled plane as a grayscale image
-    subplot(1,3,i); 
+    subplot(1,3,i);
     imshow(thisPlaneOut);
 end
-
-
-
-
-  
-
-    

@@ -1,4 +1,12 @@
 %% Sandbox for playing with factoids and Mitsuba's field integrator.
+%
+% The Mitsuba renderer is able to return various "ground truth" data about
+% scene objects as seen by each output image pixel.  We call these
+% "factoids".  See RenderMitsubaFactoids().
+%
+% This is a brief demonstration using the Ward Land "Plant and Barrel"
+% scene. 
+%
 
 clear;
 clc;

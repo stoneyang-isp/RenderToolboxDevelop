@@ -1,4 +1,14 @@
 %% Test writing and reading metadata for a few models.
+%
+% This script re-writes all of the 3D models in the Virtual Scenes Toolbox
+% Model Repository, and verifies that if can read back the same data.
+%
+% This script has already been run and you don't need to run it again,
+% unless you know what you're doing and you want to modify the repository.
+%
+% This scrip is here as documentation of the repository, and as an example
+% of how to read and write repository metadata.
+%
 
 clear;
 clc;

@@ -1,3 +1,15 @@
+%% Do some paramter sweeps and match up renderings by RMSE.
+%
+% This script starts with a Ward Land recipe and does several rendering
+% sweeps over different parameters in the 3D scene.  It computes the RMSE
+% for each rendering in the sweep relative to a reference, then compares
+% renderings from different parameter sweeps that came out with the same
+% RMSE.
+%
+% For some more explanation and images, see 
+%   https://github.com/DavidBrainard/RenderToolboxDevelop/wiki/Matching-RMSE-in-Ward-Land
+%
+
 clear;
 clc;
 

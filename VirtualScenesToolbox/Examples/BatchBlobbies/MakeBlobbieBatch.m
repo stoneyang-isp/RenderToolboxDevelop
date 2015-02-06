@@ -1,4 +1,13 @@
 %% Generate a batch of blobbies to insert into scenes.
+%
+% This produces new Blobbie 3D models in the Virtual Scenes Toolbox Model
+% Repository and registers them with WriteMetadata().
+%
+% This has already been run and saved.  You don't need to run it again.
+% But it's still here as an example of how to generate blobbies and how to
+% register 3D models with WriteMetadata().
+%
+
 clear;
 clc;
 

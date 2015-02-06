@@ -1,7 +1,29 @@
-% Plot image RMSE vs the "lambdas" of a parameter sweep.
-%   recipe - a recipe from BuildSweepConditions()
-%   imageNames - imageNames from BuildSpectrumSweep() or similar
-%   pixelMask - optional 2D mask, true where RMSE should be taken
+%% Plot image RMSE vs the "lambdas" of a parameter sweep.
+%   @a param recipe a recipe from BuildSweepConditions()
+%   @a param imageNames cell array of imageNames from BuildSpectrumSweep()
+%   @a param pixelMask optional 2D mask, true where RMSE should be taken
+%
+% @details
+% Computes the RMSE of each multispectral image in a parameter sweep,
+% relative to the first image in the sweep.  The sweep must have been
+% already rendered using the given @a recipe.  @a imageNames must be a cell
+% array of image names to be used for locating rendering data within the
+% working folder of @a recipe.
+%
+% @details
+% By default, computes RMSE over all image pixels.  If @a pixelMask is
+% provided, it must be a 2D logical mask over the height and width of the
+% @a recipe renderings.  Where @a pixelMask is true, RMSE will be
+% calculated.  Other pixels will be ignored.
+%
+% @details
+% Returns a vector of RMSE values, one for each element in @a imageNames.
+%
+% @details
+% Usage:
+%   rmses = ComputeSweepRMSE(recipe, imageNames, pixelMask)
+%
+% @ingroup MatchRMSE
 function rmses = ComputeSweepRMSE(recipe, imageNames, pixelMask)
 
 % locate the baseline rendering
