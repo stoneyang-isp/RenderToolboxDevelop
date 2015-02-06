@@ -1,6 +1,23 @@
-%% Look for the material and effect references from a Collada node
-%   objectIdMap for a Collada file, as from ReadSceneDOM
-%   nodeId for one of the Collada <node> elements
+%% Look for the material and effect references contained in a Collada node.
+%   @param objectIdMap for a Collada file, as from ReadSceneDOM()
+%   @param nodeId id for one of the Collada <node> elements
+%
+% @details
+% Used internally by the InserteObjectRemodeler.  Starting from the <node>
+% element identified by @a nodeId, looks for a reference to a material
+% element.  If there is at least one material reference, takes the first
+% one.  Then from the material element, looks for a reference to an effect
+% element.
+%
+% @details
+% If found, returns the id of the material element and the id of the effect
+% element that were referenced from the <node> element with id @a nodeId.
+%
+% @details
+% Usage:
+%   [materialId, effectId] = FindNodeMaterialAndEffect(objectIdMap, nodeId)
+%
+% @ingroup InsertObjectRemodeler
 function [materialId, effectId] = FindNodeMaterialAndEffect(objectIdMap, nodeId)
 
 % find node materials

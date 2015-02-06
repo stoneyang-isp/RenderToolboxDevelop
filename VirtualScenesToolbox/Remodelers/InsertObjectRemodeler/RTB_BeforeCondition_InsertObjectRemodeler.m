@@ -1,8 +1,4 @@
-%%% RenderToolbox3 Copyright (c) 2012-2013 The RenderToolbox3 Team.
-%%% About Us://github.com/DavidBrainard/RenderToolbox3/wiki/About-Us
-%%% RenderToolbox3 is released under the MIT License.  See LICENSE.txt.
-%
-% Modify a Collada document once per condition, before applying mappings.
+%% Modify a Collada document once per condition, before applying mappings.
 %   @param docNode XML Collada document node Java object
 %   @param mappings struct of mappings data from ParseMappings()
 %   @param varNames cell array of conditions file variable names
@@ -11,14 +7,24 @@
 %   @param hints struct of RenderToolbox3 options
 %
 % @details
-% Insert an object named in the conditions file into the current scene!
-% The object must come from a collada file named in a column like
-% "object1", "object2", etc.
+% Insert objects named in the conditions file into the current scene!
+%
+% @details
+% For each inserted object, the condidions file must contain a variable
+% with a name like "object-1", "object-2", etc.  The value each object
+% variable must be the name of a 3D model in the Virutal Scenes Toolbox
+% Model Repository, for example, "Xylophone" or "Blobbie-05".
+%
+% @details
+% The conditions file must also specify spatial transformations for each
+% object.  These variables must have names like , "position-1", "rotation-1",
+% "scale-1", "position-2", "rotation-2", "scale-2", etc.  These values must
+% be vectors of the form [x y z].
 %
 % Usage:
 %   docNode = RTB_BeforeCondition_SampleRemodeler(docNode, mappings, varNames, varValues, conditionNumber, hints)
 %
-% @ingroup RemodelerPlugins
+% @ingroup InsertObjectRemodeler
 function docNode = RTB_BeforeCondition_InsertObjectRemodeler(docNode, mappings, varNames, varValues, conditionNumber, hints)
 
 %% Find object and light files.

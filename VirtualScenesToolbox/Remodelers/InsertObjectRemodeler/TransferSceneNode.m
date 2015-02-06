@@ -1,8 +1,29 @@
 %% Import a scene node a Collada source document to a destination document
-%   sourceIdMap for a Collada source document, as from ReadSceneDOM
-%   destinationIdMap for a Collada destination document
-%   nodeId for the scene node element to import
-%   idPrefix to use for the imported node in the destination
+%   @param sourceIdMap for a Collada source document, as from ReadSceneDOM()
+%   @param destinationIdMap for a Collada destination document, as from ReadSceneDOM()
+%   @param nodeId id for the scene node element to import
+%   @param idPrefix prefix to add to the node id in the destination document
+%
+% @details
+% Used internally by the InserteObjectRemodeler.  Copies the scene element
+% with id @a nodeId from the Collada document represented by @a sourceIdMap
+% to the Collada document represented by @a destinationIdMap.  To prevent
+% naming conflicts, the copied element will have a new id, which includes
+% the given @a idPrefix.
+%
+% @details
+% The copied element will be a child of the <visual_scene> element in the
+% destination document.
+%
+% @details
+% Returns the id of the new node in the destination document, based on the
+% given @a nodeId and and @a idPrefix.
+%
+% @details
+% Usage:
+%   newId = TransferSceneNode(sourceIdMap, destinationIdMap, nodeId, idPrefix)
+%
+% @ingroup InsertObjectRemodeler
 function newId = TransferSceneNode(sourceIdMap, destinationIdMap, nodeId, idPrefix)
 
 % document and element that will reveice the new scene node

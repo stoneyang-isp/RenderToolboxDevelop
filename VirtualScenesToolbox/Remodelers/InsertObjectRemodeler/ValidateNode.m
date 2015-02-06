@@ -1,6 +1,23 @@
 %% Should we insert the given node element from a Collada file?
-%   objectIdMap for a Collada file, as from ReadSceneDOM
-%   nodeId for one of the Collada <node> elements
+%   @param objectIdMap for a Collada file, as from ReadSceneDOM()
+%   @param nodeId id for one of the Collada <node> elements
+%
+% @details
+% Used internally by the InserteObjectRemodeler.  Determines whether a
+% Collada scene node should be taken from an Object model and inserted into
+% a BaseScene mode.  The node must be a top-level node that points to a
+% geometry element, and the geometry must have more than a few polygons (to
+% exclude boring geometry like the floor and walls).
+%
+% @details
+% Returns true, if the given @a nodeId is good for inserting.  Also returns
+% the id of the geometry element that this node points to, if any.
+%
+% @details
+% Usage:
+%   [shouldInsert, geometryId] = ValidateNode(objectIdMap, nodeId)
+%
+% @ingroup InsertObjectRemodeler
 function [shouldInsert, geometryId] = ValidateNode(objectIdMap, nodeId)
 
 % is this a valid id?
