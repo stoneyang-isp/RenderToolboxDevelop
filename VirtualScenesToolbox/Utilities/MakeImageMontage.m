@@ -1,9 +1,26 @@
 %% Make an m x n montage from RGB image files.
-%   fileName file name for the new montage
-%   images m x n cell array of images (each element a file name or RGB data)
-%   names m x n cell array of image labels
-%   scaleFactor how much to scale the montage (might be large)
-%   scaleMethod how exactly to scale the montage
+%   @param fileName file name for the new montage
+%   @param images m x n cell array of images (each element a file name or RGB data)
+%   @param names m x n cell array of image labels
+%   @param scaleFactor how much to scale the final montage (it might be large)
+%   @param scaleMethod how exactly to scale the montage
+%
+% @details
+% Combines the given m x n @a images into a new image and writes the image
+% to @a fileName.  If @a names is provided, it must be an m x n cell array
+% of labels to write in each panel of the montage.  @a scaleFactor and @a
+% scaleMethod are passed to imresize() to scale the whole output montage.
+% This is useful if the montage turns out to be very large.
+%
+% @details
+% Returns the file name of the new montage image file, which should be
+% equal to the given @a fileName.
+%
+% @details
+% Usage:
+%   fileName = MakeImageMontage(fileName, images, names, scaleFactor, scaleMethod)
+%
+% @ingroup VirtualScenes
 function fileName = MakeImageMontage(fileName, images, names, scaleFactor, scaleMethod)
 
 if nargin < 1 || isempty(fileName)

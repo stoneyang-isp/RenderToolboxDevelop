@@ -16,6 +16,7 @@ ChangeToWorkingFolder(hints);
 conditionsFile = [hints.recipeName '-Conditions.txt'];
 mappingsFile = [hints.recipeName '-Mappings.txt'];
 sceneMetadata = ReadMetadata(choices.baseSceneName);
+prefName = 'VirtualScenes';
 
 %% Copy in the parent scene file as a portable recipe resource.
 modelAbsPath = GetVirtualScenesRepositoryPath(sceneMetadata.relativePath);
@@ -128,7 +129,7 @@ background = 0;
 inBand = 1;
 allMaskMaterials = cell(1, nMaterials);
 for ii = 1:nMaterials
-    reflectance = GetSingleBandReflectance(wls, wlsOffset+allBands(ii), background, inBand);
+    reflectance = GetSingleBandSpectrum(wls, wlsOffset+allBands(ii), background, inBand);
     singleBandMatte = BuildDesription('material', 'matte', ...
         {'diffuseReflectance'}, ...
         reflectance, ...
@@ -154,7 +155,7 @@ for ii = 1:nPages
 end
 
 %% Write out config, materials, and lights to a big mappings file.
-configs = GetRendererConfigs();
+configs = getpref(prefName, 'rendererConfigs');
 
 % full "ward" rendering
 AppendMappings(defaultMappings, mappingsFile, ...
@@ -289,7 +290,6 @@ end
 WriteConditionsFile(conditionsFile, allNames, allValues);
 
 %% Pack it all up in a recipe.
-prefName = 'VirtualScenes';
 toneMapFactor = getpref(prefName, 'toneMapFactor');
 isScale = getpref(prefName, 'toneMapScale');
 pixelThreshold = getpref(prefName, 'pixelThreshold');
