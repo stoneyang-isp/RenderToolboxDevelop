@@ -1,5 +1,29 @@
 %% Make up some matte and Ward material descriptions.
-%   hints struct of RenderToolbox3 options
+%   @param hints struct of RenderToolbox3 options, see GetDefaultHints()
+%
+% @details
+% Generates descriptions of various matte and ward materials for use with
+% WardLand recipes.  The diffuse reflectances will be based on ColorChecker
+% spectra.  See GetColorCheckerSpectra().  The specular reflectances will
+% be arbitrary.
+%
+% @details
+% Copies any necessary spectrum definition spm-files to the working
+% "resources" folder as indicated by hints.workingFolder. See
+% GetWorkingFolder().
+%
+% @details
+% Returns a cell array of matte material descriptions, as from
+% BuildDesription().  Also returns a cell array of ward material
+% descriptions, with diffuse components corresponding to the returned matte
+% materials.  Also returns a cell array of corresponding file paths to
+% ColorChecker spd-files.
+%
+% @details
+% Usage:
+%   [matteMaterials, wardMaterials, filePaths] = GetWardLandMaterials(hints)
+%
+% @ingroup WardLand
 function [matteMaterials, wardMaterials, filePaths] = GetWardLandMaterials(hints)
 
 % use color checker diffuse spectra

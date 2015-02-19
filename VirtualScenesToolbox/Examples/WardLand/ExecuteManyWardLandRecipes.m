@@ -1,8 +1,16 @@
 %% Locate, unpack, and execute many WardLand recipes created earlier.
+%
+% Use this script to render many archived recipes created earlier, using
+% MakeManyWardLandRecipes.
+%
+% You can configure a few recipe parameters at the top of this script.
+% The values will apply to all generated recipes.  For example, you can
+% change the output image size here, when you execute the recipes.  You
+% don't have to generate new recipes to change the image size.
+%
+% @ingroup WardLand
 
-% Use this script to render many packed-up recipes that you created
-% earlier, using MakeManyWardLandRecipes.
-
+%% Overall Setup.
 clear;
 clc;
 

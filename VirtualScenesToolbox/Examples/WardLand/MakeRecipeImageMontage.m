@@ -1,7 +1,29 @@
 %% Assemble processed images into a handy montage.
-%   recipe should be a recipe from BuildWardLandRecipe()
-%   scaleFactor should be a scalar for the montage size (could be large)
-%   scaleMethod should be a filtering method like (box)
+%   @param recipe a recipe from BuildWardLandRecipe()
+%   @param scaleFactor a scalar for the montage size (could be large)
+%   @param scaleMethod a filtering method like (box)
+%
+% @details
+% Combines several of the WardLand rendered and processed images for the
+% given @a recipe into a large summary montage.  Panels in the montage will
+% be labeled.
+%
+% @details
+% @a scaleFactor and @a scaleMethod can be used to scale entire montage,
+% for example if it would be very large.  The default scale factor and
+% filtering method are from getpref('VirtualScenes', 'montageScaleFactor')
+% and getpref('VirtualScenes', 'montageScaleMethod').
+%
+% @details
+% Returns the given @a recipe, updated with a new montage image
+%   - recipe.processing.montage will contain the name of a new image file
+%   for the new montage.
+%   .
+% @details
+% Usage:
+%   recipe = MakeRecipeImageMontage(recipe, scaleFactor, scaleMethod)
+%
+% @ingroup WardLand
 function recipe = MakeRecipeImageMontage(recipe, scaleFactor, scaleMethod)
 
 if nargin < 2 || isempty(scaleFactor)

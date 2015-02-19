@@ -1,7 +1,59 @@
-%% Build a recipe for a virutal scene.
-%   defaultMappings should be 'DefaultMappings.txt', etc.
-%   choices should be struct from GetWardLandChoices()
-%   hints should be struct of RenderToolbox3 options
+%% Build a new WardLand recipe.
+%   @param defaultMappings a stub mappings file to append to
+%   @param choices struct of random scene picks as from GetWardLandChoices()
+%   @param hints struct of RenderToolbox3 options as from GetDefaultHints()
+%
+% @details
+% Packs up the given WardLand @a choices into a functional recipe that may
+% be executed.  @a defaultMappings should be a stub mappings file that will
+% be copied and appened to for the new recipe.  For example, see
+% VirtualScenesToolbox/MiscellaneousData/DefaultMappings.txt.
+%
+% @details
+% If @a hints is provided, it may specify certain rendering options, like
+% the output film size or which renderer to use.
+%
+% @details
+% The new recipe will have several conditions for rendering.  The "ward"
+% condition will apply Ward model materials to each object in the scene.
+% The "matte" condition will apply matte materials to each object, which
+% the same diffuse components as in the ward condition.  The "boring"
+% condition will apply spectrally flat matte materials to each object in
+% the scene.
+%
+% @details
+% The new recipe will also have at least one "mask" condition named
+% "mask-1".  This condition assigns a unique, single-band reflectance to
+% each object in the scene.  This allows us to identify each object later,
+% by its reflectance.  In case there are more objects than available
+% renderer spectrum bands, the recipe will contain additional conditions
+% named like "mask-2", etc.
+%
+% @details
+% The new recipe will have many executive functions, which will render the
+% scene and perform various WardLand analyses:
+%   - MakeRecipeSceneFiles generates scene files for each condition
+%   - MakeRecipeRenderings renders each condition
+%   - MakeRecipeObjectMasks analyzes "mask" renderings to locate objects
+%   - MakeRecipeIlluminationImage analyzes "matte" renderings for
+%   reflectances and illuminations at each pixel
+%   - MakeRecipeBoringComparison compares "boring" rendering with a similar
+%   computed illumination image
+%   - MakeRecipeLMSImages convert some computed images to LMS sensor images
+%   - MakeRecipeDKLImages convert LMS sensor images to DKL sensor images
+%   - MakeRecipeImageMontage summarize renderings and computed images
+%   - MakeRecipeFactoids use Mitsuba to report scene facts at each pixel
+%   - MakeRecipeFactoidMontage summarize factoids
+%
+% @details
+% Returns a new WardLand recipe suitable for use with other WardLand
+% functions.
+%
+% @details
+% Usage:
+%   recipe = BuildWardLandRecipe(defaultMappings, choices, hints)
+%
+% @ingroup WardLand
 function recipe = BuildWardLandRecipe(defaultMappings, choices, hints)
 
 if nargin < 3
@@ -212,7 +264,7 @@ for ii = 1:nPages
     AppendMappings(mappingsFile, mappingsFile, ...
         configs.PBRT.ids, configs.PBRT.quick.descriptions, ...
         [configs.PBRT.full.blockName ' ' maskNames{ii}], 'config');
-
+    
     % the scene itself
     AppendMappings(mappingsFile, mappingsFile, ...
         allMaterialIds, allMaskMaterialPages(ii,:), blockName, 'base scene lights');

@@ -1,14 +1,47 @@
-%% Choose sets of materials, lights, etc. for an instance of Ward Land.
-%   baseSceneName name of a BaseScene
-%   objectNames cell arrray of Objects to insert
-%   nInsertedObjects number of Objects to choose for insertion
-%   lightNames cell arrray of Lights to insert
-%   nInsertedLights number of Lights to choose for insertion
-%   scaleMin, scaleMax range of random object scaling
-%   rotMin, rotMax range of random object and light rotations
-%   matteMaterials cell array of matte material descriptions
-%   wardMaterials cell array of Ward model material descriptions
-%   lightSpectra cell array of lighting spectra
+%% Choose sets of materials, lights, etc. for an instance of WardLand.
+%   @param baseSceneName name of a BaseScene in the VirtualScenes
+%   model repository
+%   @param objectNames cell array of names of Objects in the VirtualScenes
+%   model repository
+%   @param nInsertedObjects number of Objects pick from among @a
+%   objectNames
+%   @param lightNames cell array of names of light Objects in the
+%   VirtualScenes model repository
+%   @param nInsertedLights number of light Objects pick from among @a
+%   lightNames
+%   @param scaleMin minimum scale factor to apply to each Object picked
+%   from @a objectNames
+%   @param scaleMax maximum scale factor to apply to each Object picked
+%   from @a objectNames
+%   @param rotMin minimum rotation to apply to each Object picked
+%   from @a objectNames and @a lightNames
+%   @param rotMax maximum rotation to apply to each Object picked
+%   from @a objectNames and @a lightNames
+%   @param matteMaterials cell array of matte material descriptions as
+%   from GetWardLandMaterials()
+%   @param wardMaterials cell array of Ward model material descriptions as
+%   from GetWardLandMaterials()
+%   @param lightSpectra cell array of light source descriptions as
+%   from GetWardLandIlluminantSpectra()
+%
+% @details
+% This functioh is the basis for generating random WardLand recipes.  It's
+% job is to make random picks from among the given alternatives and return
+% the picks in a structured way.  See BuildWardLandRecipe() for how the
+% random picks are packaged up into a functioning recipe.
+%
+% @details
+% Returns a struct of random picks from among the gicen alternatives.  The
+% format of the struct is arbitrary, but it needs to be understood by
+% BuildWardLandRecipe().
+%
+% @details
+% Usage:
+%   choices = GetWardLandChoices(baseSceneName, objectNames,
+%   nInsertedObjects, lightNames, nInsertedLights, scaleMin, scaleMax,
+%   rotMin, rotMax, matteMaterials, wardMaterials, lightingSpectra)
+%
+% @ingroup WardLand
 function choices = GetWardLandChoices(baseSceneName, ...
     objectNames, nInsertedObjects, lightNames, nInsertedLights, ...
     scaleMin, scaleMax, rotMin, rotMax, ...

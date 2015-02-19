@@ -1,7 +1,29 @@
-% Analyze Virtual Scene renderings for inserted object pixel masks.
-%   recipe should be a recipe from BuildWardLandRecipe()
-%   pixelThreshold can be mask "conservativeness" like 0.1
-%   toneMapFactor and isScale are passed to MakeMontage()
+%% Analyze Virtual Scene renderings for inserted object pixel masks.
+%   @param recipe a recipe struct from BuildWardLandRecipe()
+%   @param pixelThreshold optional mask "conservativeness", default 0.1
+%   @param toneMapFactor passed to MakeMontage()
+%   @param isScale passed to MakeMontage()
+%
+% @details
+% Uses the "mask" renderings for the given WardLand @a recipe to compute an
+% object pixel mask, indicating which object id located behind each image
+% pixel.  These masks shoudld apply to all WardLand recipe renderings,
+% including "ward", "matte", "mask", and "boring" renderings.
+%
+% @details
+% Returns the given @a recipe, updated with object pixel masks
+%   - recipe.processing.materialIndexMask will contain an object index for
+%   each pixel in the recipe's rendered images
+%   - recipe.processing.maskCoverageFile will contain the name of a
+%   grayscale image file where black pixels indicate gaps in the
+%   materialIndexMask
+%   .
+%
+% @details
+% Usage:
+%   recipe = MakeRecipeObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale)
+%
+% @ingroup WardLand
 function recipe = MakeRecipeObjectMasks(recipe, pixelThreshold, toneMapFactor, isScale)
 
 if nargin < 2 || isempty(pixelThreshold)

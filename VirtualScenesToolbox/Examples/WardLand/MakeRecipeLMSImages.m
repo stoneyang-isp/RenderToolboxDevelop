@@ -1,6 +1,35 @@
-% Convert some illumination and reflectance images to LMS representations.
-%   recipe should be a recipe from BuildWardLandRecipe()
-%   sensitivities should be a Psychtoolbox colorimetric mat-file name
+%% Convert some illumination and reflectance images to LMS representations.
+%   @param recipe a recipe from BuildWardLandRecipe()
+%   @param sensitivities a Psychtoolbox colorimetric mat-file name
+%
+% @details
+% Converts some of the WardLand illumination images for the given @a
+% recipe to LMS sensor images and writes the LMS images to disk.  See
+% MakeRecipeIlluminationImage().
+%
+% @details
+% By default, uses Psychtoolbox "ss2" cone sensor sensitivities to compute
+% the sensor images.  If @a sensitivities is provided, it must be an
+% alternative Psychtoolbox colorimetric mat-file to use instead.
+%
+% @details
+% Returns the given @a recipe, updated with new LMS images:
+%   - recipe.processing.lms.diffuseIlluminationInterp will contain a struct
+%   with the names of new grayscale image files for L, M, and S sensor
+%   images, based on the WardLand interpolated, diffuse illumination image.
+%   - recipe.processing.lms.diffuseIlluminationMeanInterp will contain a
+%   struct with the names of new grayscale image files for L, M, and S
+%   sensor images, based on the WardLand illumination image with mean
+%   illumination taken over each object.
+%   - recipe.processing.lms.diffuseReflectanceInterp will contain a struct
+%   with the names of new grayscale image files for L, M, and S sensor
+%   images, based on the WardLand interpolated, diffuse reflectance image.
+%   .
+% @details
+% Usage:
+%   recipe = MakeRecipeLMSImages(recipe, sensitivities)
+%
+% @ingroup WardLand
 function recipe = MakeRecipeLMSImages(recipe, sensitivities)
 
 if nargin < 2 || isempty(sensitivities)

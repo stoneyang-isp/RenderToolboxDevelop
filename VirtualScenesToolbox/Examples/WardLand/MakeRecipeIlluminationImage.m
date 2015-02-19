@@ -1,7 +1,55 @@
-% Compute "refelctance" and "illumination" images for a rendering.
-%   recipe should be a recipe from BuildWardLandRecipe()
-%   filterWidth width of sliding average to fill gaps in object pixel mask
-%   toneMapFactor and isScale are passed to MakeMontage()
+%% Compute "refelctance" and "illumination" images for a rendering.
+%   @param recipe a recipe from BuildWardLandRecipe()
+%   @param filterWidth width of sliding average to fill gaps in object mask
+%   @param toneMapFactor passed to MakeMontage()
+%   @param isScale passed to MakeMontage()
+%
+% @details
+% Analyzes several renderings for the given WardLand @a recipe.  Computes
+% several "illumination" and "reflectance" images based on the renderings.
+%
+% @details
+% Returns the given @a recipe, updated with some new illumination and
+% reflectance images.  Unless noted, these fields contain the names of
+% sRGB image files written to disk:
+%   - @b sRGB images
+%   - recipe.processing.srgb.main the main "ward" rendering
+%   - recipe.processing.srgb.matte = the diffuse "matte" rendering
+%   - recipe.processing.srgb.specular the main rendering, minus the matte
+%   rendering
+%   - @b diffuse reflectance images
+%   - recipe.processing.srgb.diffuseReflectanceRaw the diffuse relectance
+%   of the material behind each pixel 
+%   - recipe.processing.srgb.diffuseReflectanceInterp like
+%   diffuseReflectanceRaw, with gaps between objects smoothed out 
+%   - recipe.processing.multispectral.diffuseReflectanceInterp in-memory
+%   multi-spectral diffuseReflectanceInterp image matrix
+%   - @b diffuse illumination images
+%   - recipe.processing.srgb.diffuseIlluminationRaw computed diffuse
+%   illumination arriving at the surface behind each pixel
+%   - recipe.processing.srgb.diffuseIlluminationInterp like
+%   diffuseIlluminationRaw with gaps between objects smoothed out
+%   - recipe.processing.multispectral.diffuseIlluminationInterp in-memory
+%   multi-spectral diffuseIlluminationInterp image matrix
+%   - recipe.processing.srgb.diffuseIlluminationMeanRaw like
+%   diffuseIlluminationRaw with mean illumination taken over each object in
+%   the scene
+%   - recipe.processing.srgb.diffuseIlluminationMeanInterp like
+%   diffuseIlluminationMeanRaw, with gaps between objects smoothed out
+%   - recipe.processing.multispectral.diffuseIlluminationMeanInterp
+%   in-memory multi-spectral diffuseIlluminationMeanInterp image matrix
+%   .
+%
+% @details
+% This function also computes some "specular reflectance" and "specular
+% illumination" images similar to the "diffuse" images above.  These may or 
+% may not be useful.
+%
+% @details
+% Usage:
+%   recipe = MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale)
+%
+% @ingroup WardLand
 function recipe = MakeRecipeIlluminationImage(recipe, filterWidth, toneMapFactor, isScale)
 
 if nargin < 2 || isempty(filterWidth)

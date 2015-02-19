@@ -1,11 +1,20 @@
 %% Construct and archive a set of many Ward Land recipes.
-
+%
 % You can use this script to generate the a large set of packed-up recipes.
-% You should not need to run this script very often.  Instead, run
-% ExecuteManyWardLandRecipes to execute all the packed-up recipes.
+% You should not need to run this script very often.
+%
+% You can configure various recipe parameters at the top of this script.
+% The values will apply to all generated recipes.
+%
+% Randomly generates a number of WardLand recipes and archives the recipes
+% in the VirtualScenes Toolbox recipes folder.  See
+% getpref('VirtualScenes', 'recipesFolder').
+%
+% To execute the archived recipes, use ExecuteManyWardLandRecipes.
+%
+% @ingroup WardLand
 
 %% Overall configuration.
-
 clear;
 clc;
 

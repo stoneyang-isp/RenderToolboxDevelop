@@ -1,7 +1,37 @@
 % Convert some LMS images to DKL representations.
-%   recipe should be a recipe from BuildWardLandRecipe()
-%   lmsSensitivities should be a Psychtoolbox colorimetric mat-file name
-%   dklSensitivities should be a Psychtoolbox colorimetric mat-file name
+%   @param recipe a recipe from BuildWardLandRecipe()
+%   @param lmsSensitivities a Psychtoolbox colorimetric mat-file name
+%   @param dklSensitivities a Psychtoolbox colorimetric mat-file name
+%
+% @details
+% Converts some of the WardLand LMS sensor images for the given @a recipe
+% to DKL sensor images and writes the DKL images to disk.  See 
+% MakeRecipeMLSImages().
+%
+% @details
+% By default, uses Psychtoolbox cone "ss2" and CIE "y2" sensitivities to
+% compute the DKL images.  If @a lmsSensitivities or @a dklSensitivities
+% is provided, each must be an alternative Psychtoolbox colorimetric
+% mat-file to use instead.
+%
+% @details
+% Returns the given @a recipe, updated with new DKL images:
+%   - recipe.processing.dkl.diffuseIlluminationInterp will contain a struct
+%   with the names of new grayscale image files for L, RG, and BY sensor
+%   images, based on the WardLand interpolated, diffuse illumination image.
+%   - recipe.processing.dkl.diffuseIlluminationMeanInterp will contain a
+%   struct with the names of new grayscale image files for L, RG, and BY
+%   sensor images, based on the WardLand illumination image with mean
+%   illumination taken over each object.
+%   - recipe.processing.dkl.diffuseReflectanceInterp will contain a struct
+%   with the names of new grayscale image files for L, RG, and BY sensor
+%   images, based on the WardLand interpolated, diffuse reflectance image.
+%   .
+% @details
+% Usage:
+%   recipe = MakeRecipeDKLImages(recipe, lmsSensitivities, dklSensitivities)
+%
+% @ingroup WardLand
 function recipe = MakeRecipeDKLImages(recipe, lmsSensitivities, dklSensitivities)
 
 if nargin < 2 || isempty(lmsSensitivities)

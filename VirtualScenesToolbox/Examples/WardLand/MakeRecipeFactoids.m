@@ -1,5 +1,20 @@
-% Use an RGB build of Mitsuba to record recipe scene factoids.
-%   recipe should be a recipe from BuildWardLandRecipe()
+%% Use an RGB build of Mitsuba to record recipe scene factoids.
+%   @param recipe a recipe from BuildWardLandRecipe()
+%
+% @details
+% Uses an RGB build of the Mitsuba renderer to compute recipe "factoids"
+% about the given WardLand @a recipe.  See RenderMitsubaFactoids().
+%
+% @details
+% Returns the given @a recipe, updated with new factoids:
+%   - recipe.processing.factoids will contain a struct of Mitsuba factoids
+%   from RenderMitsubaFactoids()
+%   .
+% @details
+% Usage:
+%   recipe = MakeRecipeFactoids(recipe)
+%
+% @ingroup WardLand
 function recipe = MakeRecipeFactoids(recipe)
 
 recipe.processing.factoids = [];

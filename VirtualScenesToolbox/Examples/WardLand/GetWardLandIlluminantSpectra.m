@@ -1,5 +1,24 @@
 %% Make up some illuminant spectra.
-%   hints struct of RenderToolbox3 options
+%   @param hints struct of RenderToolbox3 options, see GetDefaultHints()
+%
+% @details
+% Generates descriptions of area light sources, with various arbitrary
+% spectra.
+%
+% @details
+% Writes any necessary spectrum definition spm-files to the working
+% "resources" folder as indicated by hints.workingFolder. See
+% GetWorkingFolder().
+%
+% @details
+% Returns a cell array of area light descriptions, as from
+% BuildDesription().
+%
+% @details
+% Usage:
+%   spectra = GetWardLandIlluminantSpectra(hints)
+%
+% @ingroup WardLand
 function spectra = GetWardLandIlluminantSpectra(hints)
 
 if nargin < 1

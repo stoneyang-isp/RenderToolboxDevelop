@@ -1,7 +1,23 @@
-%% Assemble processed factoids into a handy montage.
-%   recipe should be a recipe from BuildWardLandRecipe()
-%   scaleFactor should be a scalar for the montage size (could be large)
-%   scaleMethod should be a filtering method like (box)
+%% Assemble processed factoids into a handy montage. 
+%   @param recipe a recipe from BuildWardLandRecipe()
+%   @param scaleFactor should be a scalar for the montage size (could be large)
+%   @param scaleMethod should be a filtering method like (box)
+%
+% @details
+% Assembles Mitsuba "factoid" data into a single, large summary montage.
+% See RenderMitsubaFactoids().  @a scaleFactor and @a scaleMethod can be
+% used to scale the resulting montage.  See MakeImageMontage().
+%
+% @details
+% Returns the given @a recipe, updated with a new factoid montage:
+%   - recipe.processing.montage will contain the file name of a new montage
+%   of Mitsuba factoid images.
+%   .
+% @details
+% Usage:
+%   recipe = MakeRecipeFactoidMontage(recipe, scaleFactor, scaleMethod)
+%
+% @ingroup WardLand
 function recipe = MakeRecipeFactoidMontage(recipe, scaleFactor, scaleMethod)
 
 if nargin < 2 || isempty(scaleFactor)
