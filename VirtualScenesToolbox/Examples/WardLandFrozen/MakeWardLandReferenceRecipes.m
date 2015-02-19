@@ -1,9 +1,14 @@
 %% Construct and archive a set of Ward Land reference recipes.
-
-% We used this script to generate the accompanying packed-up recipes.
-% You should not need to run this script again, but it is included for 
-% reference.  Instead, run ExecuteWardLandReferenceRecipes to render the 
-% packed-up recipes.
+%
+% This script was used to generate the accompanying WardLand reference
+% recipes. You should not need to run this script again.  It is included
+% for reference.
+%
+% To execute the reference recipes, use ExecuteWardLandReferenceRecipes.
+%
+% To make new WardLand recipes, use MakeManyWardLandRecipes.
+%
+% @ingroup WardLand
 
 %% Overall configuration.
 

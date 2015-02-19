@@ -1,4 +1,15 @@
 %% Locate, unpack, and execute WardLand reference recipes created earlier.
+%
+% Use this script to render a few archived reference recipes created
+% earlier, using MakeWardLandReferenceRecipes.
+%
+% You can run this script any time to re-render the set of WardLand
+% reference recipes.  These results should not change over time.
+%
+% @ingroup WardLand
+
+
+
 
 % Use this script to render several accompanying packed-up recipes.
 

@@ -1,4 +1,14 @@
 %% Locate, unpack, update, and pack up WardLand reference recipes.
+%
+% This script was used to update the accompanying WardLand reference
+% recipes after they were created. You should not need to run this script
+% again.  It is included for reference.
+%
+% To execute the reference recipes, use ExecuteWardLandReferenceRecipes.
+%
+% To make new WardLand recipes, use MakeManyWardLandRecipes.
+%
+% @ingroup WardLand
 
 clear;
 clc;
