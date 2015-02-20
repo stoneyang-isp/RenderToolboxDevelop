@@ -8,9 +8,6 @@
 %
 % @ingroup WardLand
 
-
-
-
 % Use this script to render several accompanying packed-up recipes.
 
 clear;
@@ -23,8 +20,8 @@ recipesFolder = fullfile( ...
 % edit some batch renderer options
 hints.renderer = 'Mitsuba';
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
-hints.imageWidth = 640/4;
-hints.imageHeight = 480/4;
+hints.imageWidth = 640/2;
+hints.imageHeight = 480/2;
 
 %% Plant and barrel.
 archive = fullfile(recipesFolder, 'PlantAndBarrel.zip');
