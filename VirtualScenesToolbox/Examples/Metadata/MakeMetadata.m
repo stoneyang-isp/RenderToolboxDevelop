@@ -61,6 +61,36 @@ metadata = WriteMetadata(modelName, objectBox, lightBox, lightExcludeBox, materi
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
+%% Library base scene
+modelName = 'Library';
+objectBox = [-2.2 2.5; -1.5 7; -1.2 2.3];
+lightBox = [-10 7; -20 20; -1.2 9];
+lightExcludeBox = [-3 3; -8 8; -1.2 5];
+modelPath = fullfile(repository, 'BaseScenes', 'Models', 'Library.dae');
+materialIds = GetSceneElementIds(modelPath, '\w+-material$');
+lightIds = { ...
+    'AreaLight01-mesh', ...
+    'AreaLight02-mesh', ...
+    };
+metadata = WriteMetadata(modelName, objectBox, lightBox, lightExcludeBox, materialIds, lightIds);
+readMetadata = ReadMetadata(modelName);
+assert(isequal(metadata, readMetadata))
+
+%% Library base scene
+modelName = 'TableChairs';
+objectBox = [-13 5; -5 15; 1 10];
+lightBox = [-14 15; -15 15; 1 10];
+lightExcludeBox = [-13 15; -14 15; 1 10];
+modelPath = fullfile(repository, 'BaseScenes', 'Models', 'TableChairs.dae');
+materialIds = GetSceneElementIds(modelPath, '\w+-material$');
+lightIds = { ...
+    'WindowAreaLight-mesh', ...
+    'DoorAreaLight-mesh', ...
+    };
+metadata = WriteMetadata(modelName, objectBox, lightBox, lightExcludeBox, materialIds, lightIds);
+readMetadata = ReadMetadata(modelName);
+assert(isequal(metadata, readMetadata))
+
 %% Barrel object
 modelName = 'Barrel';
 modelPath = fullfile(repository, 'Objects', 'Models', 'Barrel.dae');
