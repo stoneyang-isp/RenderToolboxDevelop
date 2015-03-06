@@ -11,27 +11,26 @@
 clear;
 clc;
 
+% choose the base scene
+baseSceneName = 'Library';
+sceneMetadata = ReadMetadata(baseSceneName);
+
 % batch renderer options
 hints.renderer = 'Mitsuba';
-hints.recipeName = 'BaseSceneTest';
+hints.recipeName = [baseSceneName 'Test'];
 hints.imageHeight = 480;
 hints.imageWidth = 640;
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
 
 ChangeToWorkingFolder(hints);
+resources = GetWorkingFolder('resources', false, hints);
 
 toneMapFactor = getpref('VirtualScenes', 'toneMapFactor');
 isScale = getpref('VirtualScenes', 'toneMapScale');
 
 defaultMappings = fullfile( ...
     VirtualScenesRoot(), 'MiscellaneousData', 'DefaultMappings.txt');
-
-baseSceneName = 'IndoorPlant';
-sceneMetadata = ReadMetadata(baseSceneName);
-
 mappingsFile = [hints.recipeName '-Mappings.txt'];
-
-resources = GetWorkingFolder('resources', false, hints);
 
 %% Choose lighting.
 
@@ -44,10 +43,14 @@ whiteArea = BuildDesription('light', 'area', ...
 lights = cell(1, numel(sceneMetadata.lightIds));
 [lights{:}] = deal(whiteArea);
 
-%% Choose ColorChecker material resources.
+%% Choose non-dark ColorChecker material resources.
 [colorCheckerSpectra, filePaths] = GetColorCheckerSpectra();
-nColorCheckers = numel(colorCheckerSpectra);
 
+nonDark = setdiff(1:24, [8 16 20 24]);
+colorCheckerSpectra = colorCheckerSpectra(nonDark);
+filePaths = filePaths(nonDark);
+
+nColorCheckers = numel(colorCheckerSpectra);
 colorCheckerMaterials = cell(1, nColorCheckers);
 for ii = 1:nColorCheckers
     % matte materail
