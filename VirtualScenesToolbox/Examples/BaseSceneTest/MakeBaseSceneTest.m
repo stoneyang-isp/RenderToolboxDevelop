@@ -1,0 +1,101 @@
+%% Construct and render a recipe to test a BaseScene.
+%
+% Use this script as a quick test of a tamed BaseScene added to the
+% Virtual Scenes Toolbox Model Repository.
+%
+% Edit the top of this script with the name of the BaseScene to test.
+%
+% @ingroup BaseSceneTest
+
+%% Overall configuration.
+clear;
+clc;
+
+% batch renderer options
+hints.renderer = 'Mitsuba';
+hints.recipeName = 'BaseSceneTest';
+hints.imageHeight = 480;
+hints.imageWidth = 640;
+hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
+
+ChangeToWorkingFolder(hints);
+
+toneMapFactor = getpref('VirtualScenes', 'toneMapFactor');
+isScale = getpref('VirtualScenes', 'toneMapScale');
+
+defaultMappings = fullfile( ...
+    VirtualScenesRoot(), 'MiscellaneousData', 'DefaultMappings.txt');
+
+baseSceneName = 'IndoorPlant';
+sceneMetadata = ReadMetadata(baseSceneName);
+
+mappingsFile = [hints.recipeName '-Mappings.txt'];
+
+resources = GetWorkingFolder('resources', false, hints);
+
+%% Choose lighting.
+
+% a plain white light
+whiteArea = BuildDesription('light', 'area', ...
+    {'intensity'}, ...
+    {'300:1 800:1'}, ...
+    {'spectrum'});
+
+lights = cell(1, numel(sceneMetadata.lightIds));
+[lights{:}] = deal(whiteArea);
+
+%% Choose ColorChecker material resources.
+[colorCheckerSpectra, filePaths] = GetColorCheckerSpectra();
+nColorCheckers = numel(colorCheckerSpectra);
+
+colorCheckerMaterials = cell(1, nColorCheckers);
+for ii = 1:nColorCheckers
+    % matte materail
+    colorCheckerMaterials{ii} = BuildDesription('material', 'matte', ...
+        {'diffuseReflectance'}, ...
+        colorCheckerSpectra(ii), ...
+        {'spectrum'});
+    
+    % resource file
+    copyfile(filePaths{ii}, resources);
+end
+
+nMaterials = numel(sceneMetadata.materialIds);
+colorCheckerIndices = 1 + mod((1:nMaterials) - 1, nColorCheckers);
+materials = colorCheckerMaterials(colorCheckerIndices);
+
+
+%% Copy in the parent scene file resource.
+modelAbsPath = GetVirtualScenesRepositoryPath(sceneMetadata.relativePath);
+[modelPath, modelFile, modelExt] = fileparts(modelAbsPath);
+
+parentSceneFile = fullfile(resources, [modelFile, modelExt]);
+parentSceneFile = GetWorkingRelativePath(parentSceneFile, hints);
+
+if exist(parentSceneFile, 'file')
+    delete(parentSceneFile);
+end
+copyfile(modelAbsPath, parentSceneFile);
+
+%% Write a mappings file.
+configs = getpref('VirtualScenes', 'rendererConfigs');
+conf = configs.(hints.renderer);
+
+AppendMappings(defaultMappings, mappingsFile, ...
+    conf.ids, conf.quick.descriptions, ...
+    conf.quick.blockName, 'config');
+AppendMappings(mappingsFile, mappingsFile, ...
+    sceneMetadata.lightIds, lights, 'Generic', 'lights');
+AppendMappings(mappingsFile, mappingsFile, ...
+    sceneMetadata.materialIds, materials, 'Generic', 'materials');
+
+%% Assemble a recipe.
+executive = { ...
+    @MakeRecipeSceneFiles, ...
+    @MakeRecipeRenderings, ...
+    @(recipe)MakeRecipeMontage(recipe, toneMapFactor, isScale)};
+
+recipe = NewRecipe([], executive, parentSceneFile, [], mappingsFile, hints);
+
+%% Render and view.
+recipe = ExecuteRecipe(recipe);
