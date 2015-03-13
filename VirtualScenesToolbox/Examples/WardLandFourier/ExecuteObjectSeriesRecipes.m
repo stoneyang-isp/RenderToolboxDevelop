@@ -54,10 +54,12 @@ nBands = 25;
 
 %% Make "Fourier Structs" that can be analyzed unifoirmly.
 fourierCell = cell(1, nRecipes);
+lineProps = cell(1, nRecipes);
 for ii = 1:nRecipes
     hints = recipes{ii}.input.hints;    
     fourierCell{ii} = WardLandRenderingFourierStruct( ...
         hints, 'ward', hints.recipeName, toneMapFactor, isScale);
+    lineProps{ii} = recipes{ii}.processing.lineProps;
 end
 
 fourierStructs = [fourierCell{:}];
@@ -66,5 +68,5 @@ fourierStructs = [fourierCell{:}];
 fourierStructs = AnalyzeFourierStruct(fourierStructs, nBands);
 
 %% Plot results for all the structs.
-[fourierStructs, plotFig] = PlotFourierStruct(fourierStructs);
-[fourierStructs, summaryFig] = SummarizeFourierStruct(fourierStructs);
+[fourierStructs, plotFig] = PlotFourierStruct(fourierStructs, [], [], lineProps);
+[fourierStructs, summaryFig] = SummarizeFourierStruct(fourierStructs, [], [], lineProps);

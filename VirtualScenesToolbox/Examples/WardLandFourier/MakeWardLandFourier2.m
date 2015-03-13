@@ -16,12 +16,8 @@ clear;
 clc;
 
 % locate the renderings
-hints.recipeName = 'Blobbies';
 hints.renderer = 'Mitsuba';
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
-
-% locate natural images
-naturalImages = '/Users/ben/Documents/Projects/UPennNaturalImages/tofu.psych.upenn.edu/zip_nxlhtvdlbb/cd16A';
 
 % for sRGB conversion
 toneMapFactor = 100;
@@ -30,31 +26,130 @@ isScale = true;
 % for frequency distribution analysis by rings
 nBands = 25;
 
-%% Make "Fourier Structs" that can be analyzed unifoirmly.
-wardStruct = WardLandRenderingFourierStruct(hints, 'ward', 'ward', toneMapFactor, isScale);
-boringStruct = WardLandRenderingFourierStruct(hints, 'boring', 'boring', toneMapFactor, isScale);
-illuminationStruct = WardLandImageFourierStruct(hints, 'illumination', 'diffuse-interp.png', 'illumination');
-reflectanceStruct = WardLandImageFourierStruct(hints, 'reflectance', 'diffuse-interp.png', 'reflectance');
-rgStruct = WardLandImageFourierStruct(hints, 'dkl', 'diffuseReflectanceInterp-rg.png', 'reflect. r-g');
-byStruct = WardLandImageFourierStruct(hints, 'dkl', 'diffuseReflectanceInterp-by.png', 'reflect. b-y');
+% for plotting
+commonParams = {'LineWidth', 2};
+lineParams = { ...
+    {'Color', [1 0 0], commonParams{:}}, ...
+    {'Color', [1 .5 0], commonParams{:}}, ...
+    {'Color', [.75 0 0], commonParams{:}}, ...
+    {'Color', [.75 .5 0], commonParams{:}}, ...
+    {'Color', [1 1 1] * 0, commonParams{:}}, ...
+    {'Color', [1 1 1] * .17, commonParams{:}}, ...
+    {'Color', [1 1 1] * .33, commonParams{:}}, ...
+    {'Color', [1 1 1] * .5, commonParams{:}}, ...
+    };
 
-cropSize = size(byStruct.grayscale);
-roadStruct = NaturalImageFourierStruct(naturalImages, 'DSC_0001', 'natural road', cropSize);
-fenceStruct = NaturalImageFourierStruct(naturalImages, 'DSC_0003', 'natural fence', cropSize);
+%% Compare 4 natural images to 4 WardLand scenes.
 
-fourierStructs = [ ...
+% ward land scenes
+hints.recipeName = 'Blobbies';
+blobbiesStruct = WardLandRenderingFourierStruct(hints, 'ward', 'blobbies', toneMapFactor, isScale);
+
+hints.recipeName = 'PlantAndBarrel';
+plantStruct = WardLandRenderingFourierStruct(hints, 'ward', 'plant', toneMapFactor, isScale);
+
+hints.recipeName = 'NearFarWarehouse';
+warehouseStruct = WardLandRenderingFourierStruct(hints, 'ward', 'warehouse', toneMapFactor, isScale);
+
+hints.recipeName = 'Mondrian';
+mondrianStruct = WardLandRenderingFourierStruct(hints, 'ward', 'mondrian', toneMapFactor, isScale);
+
+% natural images
+cropSize = size(mondrianStruct.grayscale);
+
+naturalImages = '/Users/ben/Documents/Projects/UPennNaturalImages/tofu.psych.upenn.edu/zip_nxlhtvdlbb/cd16A';
+roadStruct = NaturalImageFourierStruct(naturalImages, 'DSC_0001', 'road', cropSize);
+fenceStruct = NaturalImageFourierStruct(naturalImages, 'DSC_0003', 'fence', cropSize);
+
+naturalImages = '/Users/ben/Documents/Projects/UPennNaturalImages/tofu.psych.upenn.edu/zip_nxlhtvdlbb/cd45A';
+farStruct = NaturalImageFourierStruct(naturalImages, 'DSC_0003', 'mound far', cropSize);
+nearStruct = NaturalImageFourierStruct(naturalImages, 'DSC_0069', 'mound near', cropSize);
+
+% collect em all
+naturalImageStructs = [ ...
+    blobbiesStruct, ...
+    plantStruct, ...
+    warehouseStruct, ...
+    mondrianStruct, ...
     roadStruct, ...
     fenceStruct, ...
-    wardStruct, ...
-    boringStruct, ...
-    illuminationStruct, ...
-    reflectanceStruct, ...
-    rgStruct, ...
-    byStruct];
+    farStruct, ...
+    nearStruct];
 
-%% Do spatial frequency analysis on all the structs.
-fourierStructs = AnalyzeFourierStruct(fourierStructs, nBands);
+% analyze and plot
+naturalImageStructs = AnalyzeFourierStruct(naturalImageStructs, nBands);
+naturalImageStructs = PlotFourierStruct(naturalImageStructs, [], [], lineParams);
+naturalImageStructs = SummarizeFourierStruct(naturalImageStructs, [], [], lineParams);
 
-%% Plot results for all the structs.
-[fourierStructs, plotFig] = PlotFourierStruct(fourierStructs);
-[fourierStructs, summaryFig] = SummarizeFourierStruct(fourierStructs);
+%% Compare 4 illumination and reflectance images.
+
+imageName = 'diffuse-interp.png';
+
+hints.recipeName = 'Blobbies';
+blobbiesIllumStruct = WardLandImageFourierStruct(hints, 'illumination', imageName, 'blobbies illum');
+blobbiesReflectStruct = WardLandImageFourierStruct(hints, 'reflectance', imageName, 'blobbies reflect');
+
+hints.recipeName = 'PlantAndBarrel';
+plantIllumStruct = WardLandImageFourierStruct(hints, 'illumination', imageName, 'plant illum');
+plantReflectStruct = WardLandImageFourierStruct(hints, 'reflectance', imageName, 'plant reflect');
+
+hints.recipeName = 'NearFarWarehouse';
+warehouseIllumStruct = WardLandImageFourierStruct(hints, 'illumination', imageName, 'warehouse illum');
+warehouseReflectStruct = WardLandImageFourierStruct(hints, 'reflectance', imageName, 'warehouse reflect');
+
+hints.recipeName = 'Mondrian';
+mondrianIllumStruct = WardLandImageFourierStruct(hints, 'illumination', imageName, 'mondrian illum');
+mondrianReflectStruct = WardLandImageFourierStruct(hints, 'reflectance', imageName, 'mondrian reflect');
+
+% collect em all
+illumImageStructs = [ ...
+    blobbiesIllumStruct, ...
+    plantIllumStruct, ...
+    warehouseIllumStruct, ...
+    mondrianIllumStruct, ...
+    blobbiesReflectStruct, ...
+    plantReflectStruct, ...
+    warehouseReflectStruct, ...
+    mondrianReflectStruct];
+
+% analyze and plot
+illumImageStructs = AnalyzeFourierStruct(illumImageStructs, nBands);
+illumImageStructs = PlotFourierStruct(illumImageStructs, [], [], lineParams);
+illumImageStructs = SummarizeFourierStruct(illumImageStructs, [], [], lineParams);
+
+%% Compare 4 DKL b-y and r-g images.
+
+imageNameBY = 'diffuseReflectanceInterp-by.png';
+imageNameRG = 'diffuseReflectanceInterp-rg.png';
+
+hints.recipeName = 'Blobbies';
+blobbiesBYStruct = WardLandImageFourierStruct(hints, 'dkl', imageNameBY, 'blobbies by');
+blobbiesRGStruct = WardLandImageFourierStruct(hints, 'dkl', imageNameRG, 'blobbies rg');
+
+hints.recipeName = 'PlantAndBarrel';
+plantBYStruct = WardLandImageFourierStruct(hints, 'dkl', imageNameBY, 'plant by');
+plantRGStruct = WardLandImageFourierStruct(hints, 'dkl', imageNameRG, 'plant rg');
+
+hints.recipeName = 'NearFarWarehouse';
+warehouseBYStruct = WardLandImageFourierStruct(hints, 'dkl', imageNameBY, 'warehouse by');
+warehouseRGStruct = WardLandImageFourierStruct(hints, 'dkl', imageNameRG, 'warehouse rg');
+
+hints.recipeName = 'Mondrian';
+mondrianBYStruct = WardLandImageFourierStruct(hints, 'dkl', imageNameBY, 'mondrian by');
+mondrianRGStruct = WardLandImageFourierStruct(hints, 'dkl', imageNameRG, 'mondrian rg');
+
+% collect em all
+dklImageStructs = [ ...
+    blobbiesBYStruct, ...
+    plantBYStruct, ...
+    warehouseBYStruct, ...
+    mondrianBYStruct, ...
+    blobbiesRGStruct, ...
+    plantRGStruct, ...
+    warehouseRGStruct, ...
+    mondrianRGStruct];
+
+% analyze and plot
+dklImageStructs = AnalyzeFourierStruct(dklImageStructs, nBands);
+dklImageStructs = PlotFourierStruct(dklImageStructs, [], [], lineParams);
+dklImageStructs = SummarizeFourierStruct(dklImageStructs, [], [], lineParams);

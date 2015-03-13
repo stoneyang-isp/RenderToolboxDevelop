@@ -2,10 +2,17 @@
 %   @param fourierStruct "Fourier Struct" as from WardLandToFourierStruct()
 %   @param fig optional figure handle to plot into
 %   @param fontSize optional fontSize for all plots
+%   @param lineProps optional cell array of line() function arguments
 %
 % @details
 % Plots results of spatial frequency analysis stored in the given @a
 % fourierStruct, as returned from AnalyzeFourierStruct().
+%
+% @details
+% If @a lineProps is provided, it must be a cell array of cell arrays of
+% property-value paris, with one element for each element of the given @a
+% fourierStruct.  The arrays of property-value pairs will be passed to the
+% line() function when plotting data for each fourierStruct.
 %
 % @details
 % Returns the given @a fourierStruct with each element (maybe) updated.
@@ -13,10 +20,10 @@
 %
 % @details
 % Usage:
-%   [fourierStruct, fig] = PlotFourierStruct(fourierStruct, fig, fontSize)
+%   [fourierStruct, fig] = PlotFourierStruct(fourierStruct, fig, fontSize, lineProps)
 %
 % @ingroup WardLand
-function [fourierStruct, fig] = PlotFourierStruct(fourierStruct, fig, fontSize)
+function [fourierStruct, fig] = PlotFourierStruct(fourierStruct, fig, fontSize, lineProps)
 
 if nargin < 2 || isempty(fig)
     fig = figure();
@@ -63,12 +70,18 @@ for ii = 1:nTodo
         title('log(fft amplitude)');
     end
     
+    % choose line properties for the frequency distribution
+    if nargin < 4 || isempty(lineProps)
+        lineArgs = {'LineWidth', 2, 'Color', plotColors(ii,:)};
+    else
+        lineArgs = lineProps{ii};
+    end
+    
     % plot frequency distributions
     subplot(nTodo, 4, plotOffset + 4);
     plot(fourierStruct(ii).results.frequencies, ...
         log(fourierStruct(ii).results.amplitudes), ...
-        'LineWidth', 2, ...
-        'Color', plotColors(ii,:));
+        lineArgs{:});
     
     ylim(commonYLim);
     set(gca(), 'FontSize', fontSize);

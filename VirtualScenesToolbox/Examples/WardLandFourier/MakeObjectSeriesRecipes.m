@@ -17,8 +17,21 @@ clc;
 baseScene = 'IndoorPlant';
 
 % how to construct series by number and scale of objects
-objectCountSeries = [1, 6, 12];
-objectScaleSeries = [0.5, 1, 2];
+objectCountSeries = [0, 6, 12];
+objectScaleSeries = [0.5 1, 2];
+
+% how to visualize series later
+lineColors = lines(numel(objectCountSeries));
+objectCountLineProps = { ...
+    {'Color', lineColors(1,:)}, ...
+    {'Color', lineColors(2,:)}, ...
+    {'Color', lineColors(3,:)}, ...
+    };
+objectScaleLineProps = { ...
+    {'LineWidth', 1, 'LineStyle', '-'}, ...
+    {'LineWidth', 2, 'LineStyle', '--'}, ...
+    {'LineWidth', 4, 'LineStyle', ':'}, ...
+    };
 
 % batch renderer options
 hints.renderer = 'Mitsuba';
@@ -77,7 +90,8 @@ for cc = 1:nCountSeries
     
     for ss = 1:nScaleSeries
         % modify the template with the specified object scale
-        [choices.scales{1:nInserted}] = deal(objectScaleSeries(ss));
+        scaleXYZ = [1 1 1] * objectScaleSeries(ss);
+        [choices.insertedObjects.scales{1:nInserted}] = deal(scaleXYZ);
         
         % start a new recipe
         hints.recipeName = sprintf('%s-%do-%ds', ...
@@ -93,6 +107,10 @@ for cc = 1:nCountSeries
         
         % remember some series parameters
         recipe.processing.choices = choices;
+        
+        % remember how to visually identify this recipe
+        recipe.processing.lineProps = ...
+            cat(2, objectCountLineProps{cc}, objectScaleLineProps{ss});
         
         % archive it
         %   only include the resources subfolder
