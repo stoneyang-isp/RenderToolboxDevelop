@@ -28,7 +28,7 @@
 % Usage:
 %   [amplitudes, frequencies] = FourierDistribution(fftShiftImage, nBins)
 %
-% @ingroup WardLand
+% @ingroup Utilities
 function [amplitudes, frequencies] = FourierDistribution(fftShiftImage, nBins)
 
 if nargin < 2 || isempty(nBins)
