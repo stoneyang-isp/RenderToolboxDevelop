@@ -33,16 +33,19 @@ sceneFile = recipe.rendering.scenes{1}.mitsubaFile;
 ChangeToWorkingFolder(recipe.input.hints);
 [status, result, newScene, exrOutput, factoidOutput] = ...
     RenderMitsubaFactoids( ...
-    sceneFile, [], [], [], recipe.input.hints);
+    sceneFile, [], [], [], [], recipe.input.hints);
 
 %% Display the factoids.
 factoids = fieldnames(factoidOutput);
 for ii = 1:numel(factoids)
     factoid = factoids{ii};
-    data = factoidOutput.(factoid);
-    scale = max(data(:));
+    data = factoidOutput.(factoid).data;
+    
+    % assume channels come out alphabetically BGR instead of usual RGB
+    data = flip(data, 3);
     
     subplot(3,3,ii);
+    scale = max(data(:));
     imshow(data ./ scale);
     title(factoid);
 end

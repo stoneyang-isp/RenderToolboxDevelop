@@ -1,4 +1,4 @@
-%% Assemble processed factoids into a handy montage. 
+%% Assemble processed factoids into a handy montage.
 %   @param recipe a recipe from BuildWardLandRecipe()
 %   @param scaleFactor should be a scalar for the montage size (could be large)
 %   @param scaleMethod should be a filtering method like (box)
@@ -40,9 +40,13 @@ factoidNames = fieldnames(recipe.processing.factoids.factoidOutput);
 nFactoids = numel(factoidNames);
 for ii = 1:nFactoids
     name = factoidNames{ii};
-    data = recipe.processing.factoids.factoidOutput.(name);
-    images{ii} = 255 * data ./ max(data(:));
+    factoid = recipe.processing.factoids.factoidOutput.(name);
+    
     names{ii} = name;
+    
+    % assume factoid channels B, G, R, flip to RGB
+    rgbData = 255 * factoid.data ./ max(factoid.data(:));
+    images{ii} = flip(rgbData, 3);
 end
 
 % write out a big montage

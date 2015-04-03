@@ -3,6 +3,7 @@
 %   @param integratorId string id of the <integrator> scene element
 %   @param filmId string id of the <film> scene element
 %   @param factoids cell array of names of factoids to extract
+%   @param factoidFormat mitsuba pixel format for factoids, like 'rgb'
 %   @param hints struct of RenderToolbox3 options, see GetDefaultHints()
 %   @param mitsuba struct of Mitsuba configuration, see getpref('Mitsuba')
 %
@@ -33,6 +34,11 @@
 %   - @b 'primIndex' - integer identifier for the triangle or other primitive under each pixel
 %
 % @details
+% By default, gets all factoid outputs in 'rgb' pixel format.  If @a
+% factoidFormat is provided, it must be a Mitsuba pixel format to use
+% instead, such as 'spectrum'.
+%
+% @details
 % @a hints may be a struct with RenderToolbox3 as returned from
 % GetDefaultHints().  If @a hints is omitted, default options are used.
 %
@@ -51,12 +57,14 @@
 %
 % @details
 % Usage:
-%   [status, result, newScene, exrOutput, factoidOutput] = RenderMitsubaFactoids(sceneFile, integratorId, filmId, factoids, hints, mitsuba)
+%   [status, result, newScene, exrOutput, factoidOutput] = ...
+%    RenderMitsubaFactoids( ...
+%    sceneFile, integratorId, filmId, factoids, factoidFormat, hints, mitsuba)
 %
 % @ingroup VirtualScenes
 function [status, result, newScene, exrOutput, factoidOutput] = ...
     RenderMitsubaFactoids( ...
-    sceneFile, integratorId, filmId, factoids, hints, mitsuba)
+    sceneFile, integratorId, filmId, factoids, factoidFormat, hints, mitsuba)
 
 status = [];
 result = [];
@@ -75,13 +83,17 @@ if nargin < 4 || isempty(factoids)
         'shNormal', 'uv', 'albedo', 'shapeIndex', 'primIndex'};
 end
 
-if nargin < 5 || isempty(hints)
+if nargin < 5 || isempty(factoidFormat)
+    factoidFormat = 'rgb';
+end
+
+if nargin < 6 || isempty(hints)
     hints = GetDefaultHints();
 else
     hints = GetDefaultHints(hints);
 end
 
-if nargin < 6 || isempty(mitsuba)
+if nargin < 7 || isempty(mitsuba)
     mitsuba = getpref('Mitsuba');
     mitsuba.app = getpref('VirtualScenes', 'rgbMitsubaApp');
 end
@@ -104,20 +116,21 @@ SetSceneValue(idMap, filmFormatPath, 'openexr', true);
 formatList = '';
 nameList = '';
 for ii = 1:numel(factoids)
-    factoid = factoids{ii};
+    factoidName = factoids{ii};
     
     % nested integrator
     integratorTypePath = {integratorId, ...
-        [':integrator|name=' factoid], '.type'};
+        [':integrator|name=' factoidName], '.type'};
     SetSceneValue(idMap, integratorTypePath, 'field', true);
     integratorPath = {integratorId, ...
-        [':integrator|name=' factoid], ':string|name=field', '.value'};
-    SetSceneValue(idMap, integratorPath, factoid, true);
+        [':integrator|name=' factoidName], ':string|name=field', '.value'};
+    SetSceneValue(idMap, integratorPath, factoidName, true);
     
     % build up lists of factoid channel info
-    formatList = [formatList 'rgb, '];
-    nameList = [nameList factoid ', '];
+    formatList = [formatList factoidFormat ', '];
+    nameList = [nameList factoidName ', '];
 end
+
 % output channel format
 channelFormatPath = {filmId, ':string|name=pixelFormat', '.value'};
 SetSceneValue(idMap, channelFormatPath, formatList(1:end-2), true);
@@ -132,27 +145,28 @@ newScene = fullfile(scenePath, [sceneBase '-factoids' sceneExt]);
 WriteSceneDOM(newScene, docNode);
 
 %% Render the factoid scene.
+hints.isPlot = false;
 [status, result, exrOutput] = RunMitsuba(newScene, hints, mitsuba);
 
 %% Get the factoid output
 [sliceInfo, data] = ReadMultichannelEXR(exrOutput);
 
-% identify factoid and RGB channel for each image slice
+% group data slices by factoid name
 factoidOutput = struct();
 factoidSize = size(data);
-factoidSize(3) = 3;
-channelNames = 'RGB';
 for ii = 1:numel(sliceInfo)
     split = find(sliceInfo(ii).name == '.');
-    factoid = sliceInfo(ii).name(1:split-1);
+    factoidName = sliceInfo(ii).name(1:split-1);
     channelName = sliceInfo(ii).name(split+1:end);
-    channel = channelName == channelNames;
     
-    if ~isfield(factoidOutput, factoid)
-        factoidOutput.(factoid) = zeros(factoidSize);
+    if ~isfield(factoidOutput, factoidName)
+        factoidOutput.(factoidName).data = ...
+            zeros(factoidSize(1), factoidSize(2), 0);
+        factoidOutput.(factoidName).channels = {};
     end
     
     slice = data(:,:,ii);
-    factoidOutput.(factoid)(:, :, channel) = slice;
+    factoidOutput.(factoidName).data(:,:,end+1) = slice;
+    factoidOutput.(factoidName).channels{end+1} = channelName;
 end
 
