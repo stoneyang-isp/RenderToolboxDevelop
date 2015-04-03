@@ -94,7 +94,7 @@ for ii = 1:rows
 end
 
 % scale the big montage?
-if ~isempty(scaleFactor) || 1 ~= scaleFactor
+if ~isempty(scaleFactor) && 1 ~= scaleFactor
     bigMontage = imresize(bigMontage, scaleFactor, scaleMethod);
 end
 

@@ -54,7 +54,7 @@ end
 
 % where to write the image
 imagesFolder = GetWorkingFolder('images', true, recipe.input.hints);
-imageFileName = fullfile(imagesFolder, group, name, [name '.' imageFormat]);
+imageFileName = fullfile(imagesFolder, group, [name '.' imageFormat]);
 
 % write out the image file
 WriteImage(imageFileName, imageData);
