@@ -8,6 +8,10 @@
 % the path.
 %
 % @details
+% If @a fileName has the 'mat' extension, writes image data using save()
+% instead of imwrite().
+%
+% @details
 % Returns the given file name, which can be handy and reduce typing in the
 % calling function.
 %
@@ -15,10 +19,15 @@
 % Usage:
 %   fileName = WriteImage(fileName, imageData)
 %
-% @ingroup VirtualScenes
+% @ingroup Utilities
 function fileName = WriteImage(fileName, imageData)
 [filePath, fileBase, fileExt] = fileparts(fileName);
 if ~isempty(filePath) && ~exist(filePath, 'dir')
     mkdir(filePath);
 end
-imwrite(imageData, fileName);
+
+if strcmp('.mat', fileExt)
+    save(fileName, 'imageData');
+else
+    imwrite(imageData, fileName);
+end
