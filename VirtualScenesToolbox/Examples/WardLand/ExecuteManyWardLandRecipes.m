@@ -28,6 +28,16 @@ hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
 hints.imageWidth = 640/4;
 hints.imageHeight = 480/4;
 
+%% Choose how to execute the recipes.
+toneMapFactor = 100;
+isScale = true;
+
+executive = { ...
+    @MakeRecipeSceneFiles, ...
+    @MakeRecipeRenderings, ...
+    @(recipe)MakeRecipeRGBImages(recipe, toneMapFactor, isScale), ...
+    };
+
 %% Locate and render each packed-up recipe.
 archiveFiles = FindFiles(recipeFolder, '\.zip$');
 nScenes = numel(archiveFiles);
@@ -38,5 +48,6 @@ for ii = 1:nScenes
     recipes{ii}.input.hints.workingFolder = hints.workingFolder;
     recipes{ii}.input.hints.imageWidth = hints.imageWidth;
     recipes{ii}.input.hints.imageHeight = hints.imageHeight;
+    recipes{ii}.input.executive = executive;
     recipes{ii} = ExecuteRecipe(recipes{ii});
 end

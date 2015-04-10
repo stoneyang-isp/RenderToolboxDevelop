@@ -6,10 +6,9 @@
 % about the given WardLand @a recipe.  See RenderMitsubaFactoids().
 %
 % @details
-% Returns the given @a recipe, updated with new factoids:
-%   - recipe.processing.factoids will contain a struct of Mitsuba factoids
-%   from RenderMitsubaFactoids()
-%   .
+% Returns the given @a recipe, updated with new factoids in the "factoid"
+% group.
+%
 % @details
 % Usage:
 %   recipe = MakeRecipeFactoids(recipe)
@@ -17,17 +16,19 @@
 % @ingroup WardLand
 function recipe = MakeRecipeFactoids(recipe)
 
-recipe.processing.factoids = [];
-
 if ~strcmp(recipe.input.hints.renderer, 'Mitsuba')
     return;
 end
 
 % invoke RGB mitsuba to gather scene factoids under each pixel
-[f.status, f.result, f.newScene, f.exrOutput, f.factoidOutput] = ...
+[status, result, newScene, exrOutput, factoidOutput] = ...
     RenderMitsubaFactoids( ...
     recipe.rendering.scenes{1}.mitsubaFile, ...
     '', '', {}, 'rgb', ...
     recipe.input.hints);
 
-recipe.processing.factoids = f;
+recipe = SetRecipeProcessingData(recipe, 'factoid', 'status', status);
+recipe = SetRecipeProcessingData(recipe, 'factoid', 'result', result);
+recipe = SetRecipeProcessingData(recipe, 'factoid', 'newScene', newScene);
+recipe = SetRecipeProcessingData(recipe, 'factoid', 'exrOutput', exrOutput);
+recipe = SetRecipeProcessingData(recipe, 'factoid', 'factoidOutput', factoidOutput);

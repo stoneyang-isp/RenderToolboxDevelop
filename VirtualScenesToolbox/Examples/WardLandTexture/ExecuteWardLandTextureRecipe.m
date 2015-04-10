@@ -69,6 +69,9 @@ recipe = MakeRecipeIlluminationImages(recipe, filterWidth, toneMapFactor, isScal
 recipe = MakeRecipeBoringComparison(recipe, toneMapFactor, isScale);
 recipe = MakeRecipeLMSImages(recipe, lmsSensitivities);
 recipe = MakeRecipeDKLImages(recipe, lmsSensitivities);
+recipe = MakeRecipeImageMontage(recipe);
+recipe = MakeRecipeFactoids(recipe);
+recipe = MakeRecipeFactoidMontage(recipe);
 
 %% Compare reflectance and albedo and resulting illumination images.
 radiance = LoadRecipeProcessingImageFile(recipe, 'radiance', 'SRGBMatte');
@@ -101,13 +104,3 @@ names = { ...
     };
 
 MakeImageMontage(montageName, images, names);
-
-
-%% TODO: finish refactoring!
-%
-% basic montage, rgb factoids, rgb factoid montage
-%
-% Build recipe just does basic executive
-%
-% Execute recipe adds in longer executive
-%

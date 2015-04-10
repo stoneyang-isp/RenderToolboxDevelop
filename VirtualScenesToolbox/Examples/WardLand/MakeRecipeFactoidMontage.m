@@ -9,10 +9,8 @@
 % used to scale the resulting montage.  See MakeImageMontage().
 %
 % @details
-% Returns the given @a recipe, updated with a new factoid montage:
-%   - recipe.processing.montage will contain the file name of a new montage
-%   of Mitsuba factoid images.
-%   .
+% Returns the given @a recipe, updated with a new montage images folder.
+%
 % @details
 % Usage:
 %   recipe = MakeRecipeFactoidMontage(recipe, scaleFactor, scaleMethod)
@@ -28,19 +26,24 @@ if nargin < 3 || isempty(scaleMethod)
     scaleMethod = getpref('VirtualScenes', 'montageScaleMethod');
 end
 
-if isempty(recipe.processing.factoids)
+
+%% Locate factoids.
+factoidOutput = GetRecipeProcessingData(recipe, 'factoid', 'factoidOutput');
+
+if isempty(factoidOutput)
     disp('No factoids found, not making factoids montage.');
     return;
 end
 
-% organize factoid data and names into a grid
+factoidNames = fieldnames(factoidOutput);
+
+%% Organize factoid data and names into a grid.
 images = cell(3, 3);
 names = cell(3, 3);
-factoidNames = fieldnames(recipe.processing.factoids.factoidOutput);
 nFactoids = numel(factoidNames);
 for ii = 1:nFactoids
     name = factoidNames{ii};
-    factoid = recipe.processing.factoids.factoidOutput.(name);
+    factoid = factoidOutput.(name);
     
     names{ii} = name;
     
@@ -49,7 +52,7 @@ for ii = 1:nFactoids
     images{ii} = flip(rgbData, 3);
 end
 
-% write out a big montage
+%% Write out a big montage.
 imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
 recipe.processing.montage = MakeImageMontage( ...
     fullfile(imageFolder, 'factoids.png'), images, names, scaleFactor, scaleMethod);
