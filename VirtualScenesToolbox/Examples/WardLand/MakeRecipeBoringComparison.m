@@ -9,16 +9,8 @@
 % except for the effects of interreflections.
 %
 % @details
-% Returns the given @a recipe, updated with new images:
-%   - recipe.processing.boring.radiance is an sRGB representation of the
-%   "boring" rendering.
-%   - recipe.processing.boring.boringMinusIllum for visual comparison, an
-%   sRGB representation of the "boring" multi-spectral image, minus the
-%   computed diffuse illumination image.
-%   - recipe.processing.boring.illumMinusBoring for visual comparison, an
-%   sRGB representation of the computed diffuse illumination image, minus
-%   the boring multi-spectral image.
-%   .
+% Returns the given @a recipe, updated with comparison image data saved
+% in the "boring" group.
 %
 % @details
 % Usage:
@@ -35,39 +27,42 @@ if nargin < 3 || isempty(isScale)
     isScale = true;
 end
 
-% find the boring rendering
+%% Load scene renderings.
 nRenderings = numel(recipe.rendering.radianceDataFiles);
-isBoring = false(1, nRenderings);
 for ii = 1:nRenderings
     dataFile = recipe.rendering.radianceDataFiles{ii};
-    isBoring(ii) = ~isempty(regexp(dataFile, 'boring\.mat$', 'once'));
+    if ~isempty(strfind(dataFile, 'boring.mat'))
+        boringDataFile = dataFile;
+        break;
+    end
 end
-boringDataFiles = recipe.rendering.radianceDataFiles(isBoring);
-boringRendering = load(boringDataFiles{1});
+boringRendering = load(boringDataFile);
+boringRadiance = boringRendering.multispectralImage;
 S = boringRendering.S;
 
-% get the interpolated illumination image
-diffuseIlluminationInterp = recipe.processing.multispectral.diffuseIlluminationInterp;
+%% Get the interpolated illumination image.
+illumination = LoadRecipeProcessingImageFile(recipe, 'illumination', 'diffuseInterp');
 
-% scale images and take the diff
-boringMean = mean(boringRendering.multispectralImage(:));
-boringScaled = boringRendering.multispectralImage ./ boringMean;
-illumMean = mean(diffuseIlluminationInterp(~isnan(diffuseIlluminationInterp(:))));
-illumScaled = diffuseIlluminationInterp ./ illumMean;
+%% Scale images and take the diff.
+boringMean = mean(boringRadiance(:));
+boringScaled = boringRadiance ./ boringMean;
+
+illumMean = mean(illumination(~isnan(illumination(:))));
+illumScaled = illumination ./ illumMean;
+
 boringMinusIllum = boringScaled - illumScaled;
 illumMinusBoring = illumScaled - boringScaled;
 
+%% Make sRGB representations.
+boringMinusIllumSRGB = uint8(MultispectralToSRGB(boringMinusIllum, S, toneMapFactor, isScale));
+illumMinusBoringSRGB = uint8(MultispectralToSRGB(illumMinusBoring, S, toneMapFactor, isScale));
+
 %% Write out analysis images to disk.
-imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
+group = 'boring';
+format = 'mat';
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'boringMinusIllum', format, boringMinusIllum);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'illumMinusBoring', format, illumMinusBoring);
 
-recipe.processing.boring.radiance = WriteImage( ...
-    fullfile(imageFolder, 'radiance', 'boring.png'), ...
-    uint8(MultispectralToSRGB(boringRendering.multispectralImage, S, toneMapFactor, isScale)));
-
-recipe.processing.boring.boringMinusIllum = WriteImage( ...
-    fullfile(imageFolder, 'boring', 'boringMinusIllum.png'), ...
-    uint8(MultispectralToSRGB(boringMinusIllum, S, toneMapFactor, isScale)));
-
-recipe.processing.boring.illumMinusBoring = WriteImage( ...
-    fullfile(imageFolder, 'boring', 'illumMinusBoring.png'), ...
-    uint8(MultispectralToSRGB(illumMinusBoring, S, toneMapFactor, isScale)));
+format = 'png';
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBBoringMinusIllum', format, boringMinusIllumSRGB);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBIllumMinusBoring', format, illumMinusBoringSRGB);

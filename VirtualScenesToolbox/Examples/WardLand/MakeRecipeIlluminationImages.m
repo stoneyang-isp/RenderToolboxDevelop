@@ -65,11 +65,11 @@ materialIndexMask = LoadRecipeProcessingImageFile(recipe, 'mask', 'materialIndex
 %% "Divide out" reflectances from radiance to leave illumination.
 if useAlbedo
     diffuseRaw = matteRadiance ./ albedo;
+    diffuseInterp = diffuseRaw;
 else
     diffuseRaw = matteRadiance ./ diffuseReflectance;
+    diffuseInterp = SmoothOutGaps(diffuseRaw, materialIndexMask, filterWidth);
 end
-
-diffuseInterp = SmoothOutGaps(diffuseRaw, materialIndexMask, filterWidth);
 
 
 %% Take mean illumination within each object.

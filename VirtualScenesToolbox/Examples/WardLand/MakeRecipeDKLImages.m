@@ -15,18 +15,9 @@
 % mat-file to use instead.
 %
 % @details
-% Returns the given @a recipe, updated with new DKL images:
-%   - recipe.processing.dkl.diffuseIlluminationInterp will contain a struct
-%   with the names of new grayscale image files for L, RG, and BY sensor
-%   images, based on the WardLand interpolated, diffuse illumination image.
-%   - recipe.processing.dkl.diffuseIlluminationMeanInterp will contain a
-%   struct with the names of new grayscale image files for L, RG, and BY
-%   sensor images, based on the WardLand illumination image with mean
-%   illumination taken over each object.
-%   - recipe.processing.dkl.diffuseReflectanceInterp will contain a struct
-%   with the names of new grayscale image files for L, RG, and BY sensor
-%   images, based on the WardLand interpolated, diffuse reflectance image.
-%   .
+% Returns the given @a recipe, updated with images saved in the "dkl"
+% group.
+%
 % @details
 % Usage:
 %   recipe = MakeRecipeDKLImages(recipe, lmsSensitivities, dklSensitivities)
@@ -42,42 +33,26 @@ if nargin < 3 || isempty(dklSensitivities)
     dklSensitivities = 'T_CIE_Y2';
 end
 
-% get lms and skl sensitivity functions
-S = recipe.processing.multispectral.S;
+%% Get lms and skl sensitivity functions.
+S = GetRecipeProcessingData(recipe, 'radiance', 'S');
 lms = load(lmsSensitivities);
 dkl = load(dklSensitivities);
 T_lms = SplineCmf(lms.S_cones_ss2, lms.T_cones_ss2, S);
 T_dkl = SplineCmf(dkl.S_CIE_Y2, dkl.T_CIE_Y2, S);
 
-% where to write out new images
-imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
+outGroup = 'dkl';
 
-% compute DKL for diffuse illumination
-recipe.processing.dkl.diffuseIlluminationInterp = ...
-    computeDKL('diffuseIlluminationInterp', ...
-    recipe.processing.lms.diffuseIlluminationInterp.lmsImage, ...
-    T_lms, ...
-    T_dkl, ...
-    imageFolder);
+recipe = computeDKL(recipe, 'lms', outGroup, 'illumination_diffuseInterp_', T_lms, T_dkl);
+recipe = computeDKL(recipe, 'lms', outGroup, 'illumination_diffuseMeanInterp_', T_lms, T_dkl);
+recipe = computeDKL(recipe, 'lms', outGroup, 'reflectance_diffuseInterp_', T_lms, T_dkl);
 
-% compute DKL for diffuse illumination, mean per object
-recipe.processing.dkl.diffuseIlluminationMeanInterp = ...
-    computeDKL('diffuseIlluminationMeanInterp', ...
-    recipe.processing.lms.diffuseIlluminationMeanInterp.lmsImage, ...
-    T_lms, ...
-    T_dkl, ...
-    imageFolder);
 
-% compute DKL for diffuse reflectance
-recipe.processing.dkl.diffuseReflectanceInterp = ...
-    computeDKL('diffuseReflectanceInterp', ...
-    recipe.processing.lms.diffuseReflectanceInterp.lmsImage, ...
-    T_lms, ...
-    T_dkl, ...
-    imageFolder);
+%% Compute DKL image and write to disk.
+function recipe = computeDKL(recipe, inGroup, outGroup, namePrefix, T_lms, T_dkl)
+lmsName = [namePrefix 'lms'];
+lmsImage = LoadRecipeProcessingImageFile(recipe, inGroup, lmsName);
 
-function dklData = computeDKL(name, lmsImage, T_lms, T_dkl, imageFolder)
-% convert lms image to Psychtoolbox "cal format" for processing
+%% Convert lms image to Psychtoolbox "cal format" for processing.
 nX = size(lmsImage, 2);
 nY = size(lmsImage, 1);
 [lmsImageCalFormat, nXCheck, nYCheck] = ImageToCalFormat(lmsImage);
@@ -85,38 +60,30 @@ if (nX ~= nXCheck || nY ~= nYCheck)
     error('Something wonky about converstion into cal format');
 end
 
-% subtract mean of each LMS channel as the "background"
+%% Subtract mean of each LMS channel as the "background".
 lmsMeans = mean(lmsImageCalFormat, 2);
 lsmResidualImageCalFormat = bsxfun(@minus, lmsImageCalFormat, lmsMeans);
 
-% compute the DKL image
+%% Compute the DKL image.
 M_LsmResidualToDKL = ComputeDKL_M(lmsMeans, T_lms, T_dkl);
 dklImageCalFormat = M_LsmResidualToDKL * lsmResidualImageCalFormat;
-dklData.dklImage = CalFormatToImage(dklImageCalFormat, nX, nY);
+dklImage = CalFormatToImage(dklImageCalFormat, nX, nY);
 
-% for visualization, stretch each dkl plane into full range of grayscale
-dklImageScaled = zeros(size(dklData.dklImage));
+%% Scale image planes for visualization.
+dklImageScaled = zeros(size(dklImage));
 for ii = 1:3
-    thisPlaneIn = dklData.dklImage(:,:,ii);
+    thisPlaneIn = dklImage(:,:,ii);
     thisPlaneMaxAbs = max(abs(thisPlaneIn(:)));
     thisPlaneOut = thisPlaneIn / thisPlaneMaxAbs + 0.5;
     dklImageScaled(:,:,ii) = thisPlaneOut;
 end
 
-% write out D, K, and L channels to disk
-dklData.l = WriteImage( ...
-    fullfile(imageFolder, 'dkl', [name '-l.png']), ...
-    dklImageScaled(:,:,1));
+%% Write out the the full DKL image.
+format = 'mat';
+recipe = SaveRecipeProcessingImageFile(recipe, outGroup, [namePrefix 'dkl'], format, dklImageScaled);
 
-dklData.rg = WriteImage( ...
-    fullfile(imageFolder, 'dkl', [name '-rg.png']), ...
-    dklImageScaled(:,:,2));
-
-dklData.by = WriteImage( ...
-    fullfile(imageFolder, 'dkl', [name '-by.png']), ...
-    dklImageScaled(:,:,3));
-
-% write all of the DKL data
-dklData.all = fullfile(imageFolder, 'dkl', [name '-all.mat']);
-dklImage = dklData.dklImage;
-save(dklData.all, 'name', 'lmsImage', 'T_lms', 'T_dkl', 'dklImage');
+%% Write out L, M, and S channels separately.
+format = 'png';
+recipe = SaveRecipeProcessingImageFile(recipe, outGroup, [namePrefix 'l'], format, dklImageScaled(:,:,1));
+recipe = SaveRecipeProcessingImageFile(recipe, outGroup, [namePrefix 'rg'], format, dklImageScaled(:,:,2));
+recipe = SaveRecipeProcessingImageFile(recipe, outGroup, [namePrefix 'by'], format, dklImageScaled(:,:,3));

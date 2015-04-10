@@ -3,9 +3,8 @@
 %   @param sensitivities a Psychtoolbox colorimetric mat-file name
 %
 % @details
-% Converts some of the WardLand illumination images for the given @a
-% recipe to LMS sensor images and writes the LMS images to disk.  See
-% MakeRecipeIlluminationImage().
+% Convert some of the WardLand illumination images for the given @a
+% recipe to LMS sensor images and writes the LMS images to disk.
 %
 % @details
 % By default, uses Psychtoolbox "ss2" cone sensor sensitivities to compute
@@ -13,18 +12,9 @@
 % alternative Psychtoolbox colorimetric mat-file to use instead.
 %
 % @details
-% Returns the given @a recipe, updated with new LMS images:
-%   - recipe.processing.lms.diffuseIlluminationInterp will contain a struct
-%   with the names of new grayscale image files for L, M, and S sensor
-%   images, based on the WardLand interpolated, diffuse illumination image.
-%   - recipe.processing.lms.diffuseIlluminationMeanInterp will contain a
-%   struct with the names of new grayscale image files for L, M, and S
-%   sensor images, based on the WardLand illumination image with mean
-%   illumination taken over each object.
-%   - recipe.processing.lms.diffuseReflectanceInterp will contain a struct
-%   with the names of new grayscale image files for L, M, and S sensor
-%   images, based on the WardLand interpolated, diffuse reflectance image.
-%   .
+% Returns the given @a recipe, updated with images saved in the "lms"
+% group.
+%
 % @details
 % Usage:
 %   recipe = MakeRecipeLMSImages(recipe, sensitivities)
@@ -36,54 +26,32 @@ if nargin < 2 || isempty(sensitivities)
     sensitivities = 'T_cones_ss2';
 end
 
-% where to write out new images
-imageFolder = GetWorkingFolder('images', true, recipe.input.hints);
+outGroup = 'lms';
 
-% compute LMS for diffuse illumination
-recipe.processing.lms.diffuseIlluminationInterp = ...
-    computeLMS('diffuseIlluminationInterp', ...
-    recipe.processing.multispectral.diffuseIlluminationInterp, ...
-    recipe.processing.multispectral.S, ...
-    sensitivities, ...
-    imageFolder);
+recipe = computeLMS(recipe, 'illumination', outGroup, 'diffuseInterp', sensitivities);
+recipe = computeLMS(recipe, 'illumination', outGroup, 'diffuseMeanInterp', sensitivities);
+recipe = computeLMS(recipe, 'reflectance', outGroup, 'diffuseInterp', sensitivities);
 
-% compute LMS for diffuse illumination, mean per object
-recipe.processing.lms.diffuseIlluminationMeanInterp = ...
-    computeLMS('diffuseIlluminationMeanInterp', ...
-    recipe.processing.multispectral.diffuseIlluminationMeanInterp, ...
-    recipe.processing.multispectral.S, ...
-    sensitivities, ...
-    imageFolder);
 
-% compute LMS for diffuse reflectance
-recipe.processing.lms.diffuseReflectanceInterp = ...
-    computeLMS('diffuseReflectanceInterp', ...
-    recipe.processing.multispectral.diffuseReflectanceInterp, ...
-    recipe.processing.multispectral.S, ...
-    sensitivities, ...
-    imageFolder);
+%% Compute LMS sensor image and write to disk.
+function recipe = computeLMS(recipe, inGroup, outGroup, name, sensitivities)
+multispectral = LoadRecipeProcessingImageFile(recipe, inGroup, name);
+S = GetRecipeProcessingData(recipe, 'radiance', 'S');
+lmsImage = MultispectralToSensorImage(multispectral, S, sensitivities);
 
-function lmsData = computeLMS(name, multispectral, S, sensitivities, imageFolder)
-% compute actual LMS sensor image
-lmsData.lmsImage = ...
-    MultispectralToSensorImage(multispectral, S, sensitivities);
+%% Scale image planes for visualization.
+lmsMax = max(lmsImage(:));
+lmsL = lmsImage(:,:,1) ./ lmsMax;
+lmsM = lmsImage(:,:,2) ./ lmsMax;
+lmsS = lmsImage(:,:,3) ./ lmsMax;
 
-% write out L, M, and S channels to disk
-lmsMax = max(lmsData.lmsImage(:));
+%% Write out the the full LMS image.
+namePrefix = [inGroup '_' name '_'];
+format = 'mat';
+recipe = SaveRecipeProcessingImageFile(recipe, outGroup, [namePrefix 'lms'], format, lmsImage);
 
-lmsData.l = WriteImage( ...
-    fullfile(imageFolder, 'lms', [name '-l.png']), ...
-    lmsData.lmsImage(:,:,1) ./ lmsMax);
-
-lmsData.m = WriteImage( ...
-    fullfile(imageFolder, 'lms', [name '-m.png']), ...
-    lmsData.lmsImage(:,:,2) ./ lmsMax);
-
-lmsData.s = WriteImage( ...
-    fullfile(imageFolder, 'lms', [name '-s.png']), ...
-    lmsData.lmsImage(:,:,3) ./ lmsMax);
-
-% write all of the LMS data
-lmsData.all = fullfile(imageFolder, 'lms', [name '-all.mat']);
-lmsImage = lmsData.lmsImage;
-save(lmsData.all, 'name', 'multispectral', 'S', 'sensitivities', 'lmsImage');
+%% Write out L, M, and S channels separately.
+format = 'png';
+recipe = SaveRecipeProcessingImageFile(recipe, outGroup, [namePrefix 'l'], format, lmsL);
+recipe = SaveRecipeProcessingImageFile(recipe, outGroup, [namePrefix 'm'], format, lmsM);
+recipe = SaveRecipeProcessingImageFile(recipe, outGroup, [namePrefix 's'], format, lmsS);

@@ -26,8 +26,8 @@ end
 % edit some batch renderer options
 hints.renderer = 'Mitsuba';
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
-hints.imageWidth = 640;
-hints.imageHeight = 480;
+hints.imageWidth = 640 / 4;
+hints.imageHeight = 480 / 4;
 
 
 %% Locate the packed-up recipe.
@@ -58,11 +58,17 @@ toneMapFactor = 100;
 isScale = true;
 pixelThreshold = 0.01;
 filterWidth = 7;
+lmsSensitivities = 'T_cones_ss2';
+dklSensitivities = 'T_CIE_Y2';
 
 recipe = MakeRecipeRGBImages(recipe, toneMapFactor, isScale);
 recipe = MakeRecipeObjectMasks(recipe, pixelThreshold);
 recipe = MakeRecipeReflectanceImages(recipe, filterWidth, toneMapFactor, isScale);
 recipe = MakeRecipeAlbedoFactoidImages(recipe, toneMapFactor, isScale);
+recipe = MakeRecipeIlluminationImages(recipe, filterWidth, toneMapFactor, isScale, true);
+recipe = MakeRecipeBoringComparison(recipe, toneMapFactor, isScale);
+recipe = MakeRecipeLMSImages(recipe, lmsSensitivities);
+recipe = MakeRecipeDKLImages(recipe, lmsSensitivities);
 
 %% Compare reflectance and albedo and resulting illumination images.
 radiance = LoadRecipeProcessingImageFile(recipe, 'radiance', 'SRGBMatte');
@@ -99,7 +105,7 @@ MakeImageMontage(montageName, images, names);
 
 %% TODO: finish refactoring!
 %
-% boring, LMS, DKL, basic montage, rgb factoids, rgb, factoid montage
+% basic montage, rgb factoids, rgb factoid montage
 %
 % Build recipe just does basic executive
 %

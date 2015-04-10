@@ -36,6 +36,8 @@ for ii = 1:nRenderings
         matteDataFile = dataFile;
     elseif ~isempty(strfind(dataFile, 'ward.mat'))
         wardDataFile = dataFile;
+    elseif ~isempty(strfind(dataFile, 'boring.mat'))
+        boringDataFile = dataFile;
     elseif ~isempty(regexp(dataFile, 'mask-\d+\.mat$', 'once'));
         maskDataFiles{end+1} = dataFile;
     end
@@ -48,11 +50,15 @@ wardRadiance = wardRendering.multispectralImage;
 matteRendering = load(matteDataFile);
 matteRadiance = matteRendering.multispectralImage;
 
+boringRendering = load(boringDataFile);
+boringRadiance = boringRendering.multispectralImage;
+
 specularRadiance = wardRadiance - matteRadiance;
 
 S = wardRendering.S;
 wardSRGB = uint8(MultispectralToSRGB(wardRadiance, S, toneMapFactor, isScale));
 matteSRGB = uint8(MultispectralToSRGB(matteRadiance, S, toneMapFactor, isScale));
+boringSRGB = uint8(MultispectralToSRGB(boringRadiance, S, toneMapFactor, isScale));
 specularSRGB = uint8(MultispectralToSRGB(specularRadiance, S, toneMapFactor, isScale));
 
 nMaskRenderings = numel(maskDataFiles);
@@ -68,6 +74,7 @@ group = 'radiance';
 format = 'png';
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBWard', format, wardSRGB);
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBMatte', format, matteSRGB);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBBoring', format, boringSRGB);
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBSpecular', format, specularSRGB);
 
 for ii = 1:nMaskRenderings
