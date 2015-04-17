@@ -32,7 +32,7 @@ factoids = {'albedo'};
 mitsuba = getpref('Mitsuba');
 [status, result, newScene, exrOutput, factoidOutput] = ...
     RenderMitsubaFactoids( ...
-    sceneFile, [], [], factoids, 'spectrum', hints, mitsuba);
+    sceneFile, [], [], [], factoids, 'spectrum', hints, mitsuba);
 
 [wls, S, order] = GetWlsFromSliceNames(factoidOutput.albedo.channels);
 spectralAlbedo = factoidOutput.albedo.data(:,:,order);

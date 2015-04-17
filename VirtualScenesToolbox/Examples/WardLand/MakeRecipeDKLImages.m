@@ -42,9 +42,9 @@ T_dkl = SplineCmf(dkl.S_CIE_Y2, dkl.T_CIE_Y2, S);
 
 outGroup = 'dkl';
 
-recipe = computeDKL(recipe, 'lms', outGroup, 'illumination_diffuseInterp_', T_lms, T_dkl);
-recipe = computeDKL(recipe, 'lms', outGroup, 'illumination_diffuseMeanInterp_', T_lms, T_dkl);
-recipe = computeDKL(recipe, 'lms', outGroup, 'reflectance_diffuseInterp_', T_lms, T_dkl);
+recipe = computeDKL(recipe, 'lms', outGroup, 'illumination_illumInterp_', T_lms, T_dkl);
+recipe = computeDKL(recipe, 'lms', outGroup, 'illumination_illumMeanInterp_', T_lms, T_dkl);
+recipe = computeDKL(recipe, 'lms', outGroup, 'reflectance_reflectance_', T_lms, T_dkl);
 
 
 %% Compute DKL image and write to disk.

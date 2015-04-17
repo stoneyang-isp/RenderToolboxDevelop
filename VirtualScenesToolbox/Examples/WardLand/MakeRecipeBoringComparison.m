@@ -41,7 +41,7 @@ boringRadiance = boringRendering.multispectralImage;
 S = boringRendering.S;
 
 %% Get the interpolated illumination image.
-illumination = LoadRecipeProcessingImageFile(recipe, 'illumination', 'diffuseInterp');
+illumination = LoadRecipeProcessingImageFile(recipe, 'illumination', 'illumination');
 
 %% Scale images and take the diff.
 boringMean = mean(boringRadiance(:));

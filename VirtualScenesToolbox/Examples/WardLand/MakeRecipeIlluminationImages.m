@@ -3,7 +3,6 @@
 %   @param filterWidth width of sliding average to fill gaps in object mask
 %   @param toneMapFactor passed to MakeMontage()
 %   @param isScale passed to MakeMontage()
-%   @param useAlbedo whether to use "albedo" instead of "reflectance" data
 %
 % @details
 % Uses results from MakeRecipeRGBImages(), MakeRecipeReflectanceImages(),
@@ -16,10 +15,10 @@
 %
 % @details
 % Usage:
-%   recipe = MakeRecipeIlluminationImages(recipe, filterWidth, toneMapFactor, isScale, useAlbedo)
+%   recipe = MakeRecipeIlluminationImages(recipe, filterWidth, toneMapFactor, isScale)
 %
 % @ingroup WardLand
-function recipe = MakeRecipeIlluminationImages(recipe, filterWidth, toneMapFactor, isScale, useAlbedo)
+function recipe = MakeRecipeIlluminationImages(recipe, filterWidth, toneMapFactor, isScale)
 
 if nargin < 2 || isempty(filterWidth)
     filterWidth = 5;
@@ -31,10 +30,6 @@ end
 
 if nargin < 4 || isempty(isScale)
     isScale = true;
-end
-
-if nargin < 5 || isempty(useAlbedo)
-    useAlbedo = false;
 end
 
 %% Load scene renderings.
@@ -56,61 +51,63 @@ S = GetRecipeProcessingData(recipe, 'radiance', 'S');
 wls = MakeItWls(S);
 nWls = numel(wls);
 
-%% Get reflectance, albedo, and object mask data.
-diffuseReflectance = LoadRecipeProcessingImageFile(recipe, 'reflectance', 'diffuseInterp');
-albedo = LoadRecipeProcessingImageFile(recipe, 'albedo', 'albedo');
-materialIndexMask = LoadRecipeProcessingImageFile(recipe, 'mask', 'materialIndexes');
+%% Get reflectance and object mask data.
+reflectance = LoadRecipeProcessingImageFile(recipe, 'reflectance', 'reflectance');
+objectIndexMask = LoadRecipeProcessingImageFile(recipe, 'mask', 'objectIndexes');
 
 
 %% "Divide out" reflectances from radiance to leave illumination.
-if useAlbedo
-    diffuseRaw = matteRadiance ./ albedo;
-    diffuseInterp = diffuseRaw;
-else
-    diffuseRaw = matteRadiance ./ diffuseReflectance;
-    diffuseInterp = SmoothOutGaps(diffuseRaw, materialIndexMask, filterWidth);
-end
+illumRaw = matteRadiance ./ reflectance;
 
+% avoid infinities
+illumRaw(reflectance == 0) = 0;
 
 %% Take mean illumination within each object.
-diffuseMeanRaw = zeros(imageSize);
+illumMeanRaw = zeros(imageSize);
 
-fatMask = repmat(materialIndexMask, [1, 1, nWls]);
-objectMask = zeros(size(materialIndexMask));
+fatMask = repmat(objectIndexMask, [1, 1, nWls]);
+objectMask = zeros(size(objectIndexMask));
 
 nMaterials = numel(recipe.processing.allSceneMatteMaterials);
 for ii = 1:nMaterials
     objectMask(:) = 0;
-    objectMask(materialIndexMask == ii) = 1;
+    objectMask(objectIndexMask == ii) = 1;
     nIsObject = sum(objectMask(:));
     if nIsObject > 0
         isMaterial = fatMask == ii;
-        diffuseMeanIllum = MeanUnderMask(diffuseInterp, objectMask);
-        diffuseMeanRaw(isMaterial(:)) = repmat(diffuseMeanIllum, nIsObject, 1);
+        diffuseMeanIllum = MeanUnderMask(illumRaw, objectMask);
+        illumMeanRaw(isMaterial(:)) = repmat(diffuseMeanIllum, nIsObject, 1);
     end
 end
 
-diffuseMeanInterp = SmoothOutGaps(diffuseMeanRaw, materialIndexMask, filterWidth);
+%% Smooth out gaps between objects if necessary.
+illumInterp = SmoothOutGaps(illumRaw, objectIndexMask, filterWidth);
+illumMeanInterp = SmoothOutGaps(illumMeanRaw, objectIndexMask, filterWidth);
 
 
 %% Make sRGB representations.
-diffuseRawSRGB = uint8(MultispectralToSRGB(diffuseRaw, S, toneMapFactor, isScale));
-diffuseInterpSRGB = uint8(MultispectralToSRGB(diffuseInterp, S, toneMapFactor, isScale));
+illumRawSRGB = uint8(MultispectralToSRGB(illumRaw, S, toneMapFactor, isScale));
+illumInterpSRGB = uint8(MultispectralToSRGB(illumInterp, S, toneMapFactor, isScale));
 
-diffuseMeanRawSRGB = uint8(MultispectralToSRGB(diffuseMeanRaw, S, toneMapFactor, isScale));
-diffuseMeanInterpSRGB = uint8(MultispectralToSRGB(diffuseMeanInterp, S, toneMapFactor, isScale));
+illumMeanRawSRGB = uint8(MultispectralToSRGB(illumMeanRaw, S, toneMapFactor, isScale));
+illumMeanInterpSRGB = uint8(MultispectralToSRGB(illumMeanInterp, S, toneMapFactor, isScale));
 
 
 %% Save images.
 group = 'illumination';
 format = 'mat';
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'diffuseRaw', format, diffuseRaw);
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'diffuseInterp', format, diffuseInterp);
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'diffuseMeanRaw', format, diffuseMeanRaw);
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'diffuseMeanInterp', format, diffuseMeanInterp);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'illumRaw', format, illumRaw);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'illumInterp', format, illumInterp);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'illumMeanRaw', format, illumMeanRaw);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'illumMeanInterp', format, illumMeanInterp);
+
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'illumination', format, illumInterp);
 
 format = 'png';
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBDiffuseRaw', format, diffuseRawSRGB);
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBDiffuseInterp', format, diffuseInterpSRGB);
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBDiffuseMeanRaw', format, diffuseMeanRawSRGB);
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBDiffuseMeanInterp', format, diffuseMeanInterpSRGB);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBIllumRaw', format, illumRawSRGB);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBIllumInterp', format, illumInterpSRGB);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBIllumMeanRaw', format, illumMeanRawSRGB);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBIllumMeanInterp', format, illumMeanInterpSRGB);
+
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBIllumination', format, illumInterpSRGB);
+

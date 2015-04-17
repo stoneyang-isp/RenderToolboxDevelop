@@ -93,12 +93,15 @@ recipe = SaveRecipeProcessingImageFile(recipe, group, 'diffuseInterp', format, d
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'specularRaw', format, specularRaw);
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'specularInterp', format, specularInterp);
 
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'reflectance', format, diffuseInterp);
+
 format = 'png';
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBDiffuseRaw', format, diffuseRawSRGB);
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBDiffuseInterp', format, diffuseInterpSRGB);
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBSpecularRaw', format, specularRawSRGB);
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBSpecularInterp', format, specularInterpSRGB);
 
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBReflectance', format, diffuseInterpSRGB);
 
 %% Dig out the spectrum from a WardLand material description.
 function spexel = extractMaterialSpexel(material, propertyName, spacing, spexelWls)

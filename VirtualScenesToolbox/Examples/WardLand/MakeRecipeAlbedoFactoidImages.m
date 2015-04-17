@@ -10,7 +10,7 @@
 %
 % @details
 % Returns the given @a recipe, updated with albedo image data saved
-% in the "albedo" group.
+% in the "albedo" and "reflectance" groups.
 %
 % @details
 % Usage:
@@ -44,7 +44,7 @@ mitsuba = getpref('Mitsuba');
 factoids = {'albedo'};
 
 [status, result, newScene, exrOutput, factoidOutput] = ...
-    RenderMitsubaFactoids(sceneFile, [], [], ...
+    RenderMitsubaFactoids(sceneFile, [], [], [], ...
     factoids, 'spectrum', recipe.input.hints, mitsuba);
 
 [wls, S, order] = GetWlsFromSliceNames(factoidOutput.albedo.channels);
@@ -58,7 +58,9 @@ albedoSRGB = uint8(MultispectralToSRGB(albedo, S, toneMapFactor, isScale));
 group = 'albedo';
 format = 'mat';
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'albedo', format, albedo);
+recipe = SaveRecipeProcessingImageFile(recipe, 'reflectance', 'reflectance', format, albedo);
 
 format = 'png';
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBAlbedo', format, albedoSRGB);
+recipe = SaveRecipeProcessingImageFile(recipe, 'reflectance', 'SRGBReflectance', format, albedoSRGB);
 

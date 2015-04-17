@@ -19,6 +19,8 @@ archive = fullfile(recipesFolder, 'PlantAndBarrel.zip');
 hints.renderer = 'Mitsuba';
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
 
+hints.whichConditions = 1;
+
 % unpack the recipe and generate its scene files.
 recipe = UnpackRecipe(archive, hints);
 recipe.input.hints.workingFolder = hints.workingFolder;
@@ -33,7 +35,7 @@ sceneFile = recipe.rendering.scenes{1}.mitsubaFile;
 ChangeToWorkingFolder(recipe.input.hints);
 [status, result, newScene, exrOutput, factoidOutput] = ...
     RenderMitsubaFactoids( ...
-    sceneFile, [], [], [], [], recipe.input.hints);
+    sceneFile, [], [], [], [], [], recipe.input.hints);
 
 %% Display the factoids.
 factoids = fieldnames(factoidOutput);

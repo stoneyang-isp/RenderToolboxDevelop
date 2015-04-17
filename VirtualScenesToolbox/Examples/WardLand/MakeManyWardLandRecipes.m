@@ -41,9 +41,9 @@ if (~exist(recipeFolder, 'dir'))
 end
 
 %% Choose how many recipes to make and from what components.
-nScenes = 2;
+nScenes = 5;
 nObjectsPerScene = 5;
-nLightsPerScene = 2;
+nLightsPerScene = 0;
 
 baseSceneSet = { ...
     'IndoorPlant', ...
@@ -75,14 +75,22 @@ for ii = 1:nScenes
     hints.recipeName = sprintf('%s-%02d', projectName, ii);
     ChangeToWorkingFolder(hints);
     
-    % make sure Ward Land resources are available to this recipe
-    [matteMaterials, wardMaterials] = GetWardLandMaterials(hints);
+    % make sure Ward Land material resources are available to this recipe
+    [textureIds, textures, matteTextured, wardTextured, filePaths] = ...
+        GetWardLandTextureMaterials(hints);
+    [matteMacbeth, wardMacbeth] = GetWardLandMaterials(hints);
     lightSpectra = GetWardLandIlluminantSpectra(hints);
     
     % choose a random base scene for this recipe
     baseScene = baseSceneSet{randi(numel(baseSceneSet), 1)};
     
     % choose objects, materials, lights, and spectra for this recipe
+    whichMacbeth = 1:4;
+    matteMacbeth = matteMacbeth(whichMacbeth);
+    wardMacbeth = wardMacbeth(whichMacbeth);
+    
+    matteMaterials = cat(2, matteTextured, matteMacbeth);
+    wardMaterials = cat(2, wardTextured, wardMacbeth);
     choices = GetWardLandChoices(baseScene, ...
         objectSet, nObjectsPerScene, ...
         lightSet, nLightsPerScene, ...
@@ -90,7 +98,7 @@ for ii = 1:nScenes
         matteMaterials, wardMaterials, lightSpectra);
     
     % assemble the recipe
-    recipe = BuildWardLandRecipe(defaultMappings, choices, hints);
+    recipe = BuildWardLandRecipe(defaultMappings, choices, textureIds, textures, hints);
     
     % archive it
     %   only include the resources subfolder

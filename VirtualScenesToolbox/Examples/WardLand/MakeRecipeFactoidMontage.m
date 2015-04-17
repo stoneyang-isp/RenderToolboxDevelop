@@ -47,8 +47,12 @@ for ii = 1:nFactoids
     
     names{ii} = name;
     
+    % avoid infinities
+    data = factoid.data;
+    data(~isfinite(data)) = 0;
+    
     % assume factoid channels B, G, R, flip to RGB
-    rgbData = 255 * factoid.data ./ max(factoid.data(:));
+    rgbData = 255 * data ./ max(data(:));
     images{ii} = flip(rgbData, 3);
 end
 

@@ -86,7 +86,7 @@ choices = GetWardLandChoices(baseScene, ...
     matteMaterials, wardMaterials, lightSpectra);
 
 % assemble the recipe
-recipe = BuildWardLandRecipe(defaultMappings, choices, hints);
+recipe = BuildWardLandRecipe(defaultMappings, choices, [], [], hints);
 
 % add an executive funciton for Mitsuba's "albedo" factoid
 

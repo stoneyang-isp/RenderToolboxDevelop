@@ -28,9 +28,9 @@ end
 
 outGroup = 'lms';
 
-recipe = computeLMS(recipe, 'illumination', outGroup, 'diffuseInterp', sensitivities);
-recipe = computeLMS(recipe, 'illumination', outGroup, 'diffuseMeanInterp', sensitivities);
-recipe = computeLMS(recipe, 'reflectance', outGroup, 'diffuseInterp', sensitivities);
+recipe = computeLMS(recipe, 'illumination', outGroup, 'illumInterp', sensitivities);
+recipe = computeLMS(recipe, 'illumination', outGroup, 'illumMeanInterp', sensitivities);
+recipe = computeLMS(recipe, 'reflectance', outGroup, 'reflectance', sensitivities);
 
 
 %% Compute LMS sensor image and write to disk.

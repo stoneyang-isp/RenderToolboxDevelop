@@ -26,6 +26,11 @@ if ~isempty(filePath) && ~exist(filePath, 'dir')
     mkdir(filePath);
 end
 
+if ischar(imageData) && exist(imageData, 'file')
+    copyfile(imageData, fileName);
+    return;
+end
+
 if strcmp('.mat', fileExt)
     save(fileName, 'imageData');
 else

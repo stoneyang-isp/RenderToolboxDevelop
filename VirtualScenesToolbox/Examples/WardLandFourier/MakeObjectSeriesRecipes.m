@@ -103,7 +103,7 @@ for cc = 1:nCountSeries
         lightSpectra = GetWardLandIlluminantSpectra(hints);
         
         % assemble the recipe
-        recipe = BuildWardLandRecipe(defaultMappings, choices, hints);
+        recipe = BuildWardLandRecipe(defaultMappings, choices, [], [], hints);
         
         % remember some series parameters
         recipe.processing.choices = choices;

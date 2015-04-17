@@ -8,8 +8,8 @@
 % be arbitrary.
 %
 % @details
-% Copies any necessary spectrum definition spm-files to the working
-% "resources" folder as indicated by hints.workingFolder. See
+% If @a hints is provided, copies any necessary texture image files to the
+% working "resources" folder as indicated by @a hints.workingFolder. See
 % GetWorkingFolder().
 %
 % @details
@@ -26,6 +26,12 @@
 % @ingroup WardLand
 function [matteMaterials, wardMaterials, filePaths] = GetWardLandMaterials(hints)
 
+if nargin < 1 || isempty(hints)
+    resources = [];
+else
+    resources = GetWorkingFolder('resources', false, hints);
+end
+
 % use color checker diffuse spectra
 [colorCheckerSpectra, filePaths] = GetColorCheckerSpectra();
 nSpectra = numel(colorCheckerSpectra);
@@ -37,7 +43,6 @@ specLong = linspace(0.5, 0, nSpectra);
 % build material descriptions and copy resource files
 matteMaterials = cell(1, nSpectra);
 wardMaterials = cell(1, nSpectra);
-resources = GetWorkingFolder('resources', false, hints);
 for ii = 1:nSpectra
     % matte materail
     matteMaterials{ii} = BuildDesription('material', 'matte', ...
@@ -54,6 +59,7 @@ for ii = 1:nSpectra
         {'spectrum', 'spectrum'});
     
     % resource file
-    copyfile(filePaths{ii}, resources);
+    if ~isempty(resources)
+        copyfile(filePaths{ii}, resources);
+    end
 end
-

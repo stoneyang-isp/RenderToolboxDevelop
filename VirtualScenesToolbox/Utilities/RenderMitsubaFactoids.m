@@ -2,10 +2,12 @@
 %   @param sceneFile a Mitsuba XML scene file
 %   @param integratorId string id of the <integrator> scene element
 %   @param filmId string id of the <film> scene element
+%   @param samplerId string id of the <sampler> scene element
 %   @param factoids cell array of names of factoids to extract
 %   @param factoidFormat mitsuba pixel format for factoids, like 'rgb'
 %   @param hints struct of RenderToolbox3 options, see GetDefaultHints()
 %   @param mitsuba struct of Mitsuba configuration, see getpref('Mitsuba')
+%   @param singleSampling whether to reduce sampling and pixel filtering
 %
 % @details
 % Modifies a copy of the given Mitsuba @a sceneFile to instruct Mitsuba to
@@ -14,11 +16,12 @@
 % samples.
 %
 % @details
-% @a integratorId and @a filmId must be the string "id" attributes for the
-% <integrator> and <film> elements of the given @a sceneFile.  These
-% are required when modifying the scene to produce factoids instead of
-% radiance data.  The default @a integratorId is 'integrator'.  The default
-% @a filmId is 'Camera-camera_film'.
+% @a integratorId, @a filmId, and @a samplerId must be the string "id"
+% attributes for the <integrator>, <film>, and <sampler> elements of the
+% given @a sceneFile.  These are required when modifying the scene to
+% produce factoids instead of radiance data.  The default @a integratorId
+% is 'integrator'.  The default @a filmId is 'Camera-camera_film'. The
+% default @a samplerId is 'Camera-camera_sampler'.
 %
 % @details
 % Mitsuba supports a few different ground-truth factoids. @a factiods must
@@ -49,6 +52,12 @@
 % build of the renderer.
 %
 % @details
+% By default, uses the same pixel sampling and image reconstruction
+% filtering specified in the given @a sceneFile.  If @a singleSampling is
+% true, reduces sampling to one sample per pixel and uses a simple "box"
+% filter for image reconstruction.
+%
+% @details
 % Returns the status code and command line result from invoking Mitsuba.
 % Also returns the file name of the modified copy of the given @a
 % sceneFile.  Also returns the file name of the OpenEXR data returned from
@@ -57,14 +66,15 @@
 %
 % @details
 % Usage:
-%   [status, result, newScene, exrOutput, factoidOutput] = ...
-%    RenderMitsubaFactoids( ...
-%    sceneFile, integratorId, filmId, factoids, factoidFormat, hints, mitsuba)
+%   function [status, result, newScene, exrOutput, factoidOutput] = ...
+%   RenderMitsubaFactoids(sceneFile, integratorId, filmId, samplerId, ...
+%   factoids, factoidFormat, hints, mitsuba, singleSampling)
 %
 % @ingroup VirtualScenes
 function [status, result, newScene, exrOutput, factoidOutput] = ...
-    RenderMitsubaFactoids( ...
-    sceneFile, integratorId, filmId, factoids, factoidFormat, hints, mitsuba)
+    RenderMitsubaFactoids(sceneFile, integratorId, filmId, samplerId, ...
+    factoids, factoidFormat, hints, mitsuba, singleSampling)
+
 
 status = [];
 result = [];
@@ -78,24 +88,32 @@ if nargin < 3 || isempty(filmId)
     filmId = 'Camera-camera_film';
 end
 
-if nargin < 4 || isempty(factoids)
+if nargin < 4 || isempty(samplerId)
+    samplerId = 'Camera-camera_sampler';
+end
+
+if nargin < 5 || isempty(factoids)
     factoids = {'position', 'relPosition', 'distance', 'geoNormal', ...
         'shNormal', 'uv', 'albedo', 'shapeIndex', 'primIndex'};
 end
 
-if nargin < 5 || isempty(factoidFormat)
+if nargin < 6 || isempty(factoidFormat)
     factoidFormat = 'rgb';
 end
 
-if nargin < 6 || isempty(hints)
+if nargin < 7 || isempty(hints)
     hints = GetDefaultHints();
 else
     hints = GetDefaultHints(hints);
 end
 
-if nargin < 7 || isempty(mitsuba)
+if nargin < 8 || isempty(mitsuba)
     mitsuba = getpref('Mitsuba');
     mitsuba.app = getpref('VirtualScenes', 'rgbMitsubaApp');
+end
+
+if nargin < 9 || isempty(singleSampling)
+    singleSampling = false;
 end
 
 %% Modify the input file.
@@ -138,6 +156,15 @@ SetSceneValue(idMap, channelFormatPath, formatList(1:end-2), true);
 % output channel name
 channelNamePath = {filmId, ':string|name=channelNames', '.value'};
 SetSceneValue(idMap, channelNamePath, nameList(1:end-2), true);
+
+% reduce sampling and reconstruction filtering?
+if singleSampling
+    sampleCountPath = {samplerId, ':integer|name=sampleCount', '.value'};
+    SetSceneValue(idMap, sampleCountPath, '1', true);
+    
+    filterTypePath = {filmId, ':rfilter', '.type'};
+    SetSceneValue(idMap, filterTypePath, 'box', true);
+end
 
 % write a new scene file
 [scenePath, sceneBase, sceneExt] = fileparts(sceneFile);

@@ -58,10 +58,13 @@ for ii = 1:imageSize(1)
 end
 
 %% Summarize the "gaps" where we couldn't tell which object is there.
-maskCoverage = zeros(imageSize(1), imageSize(2), 'uint8');
-maskCoverage(materialIndexMask > 0) = 255;
+materialCoverage = zeros(imageSize(1), imageSize(2), 'uint8');
+materialCoverage(materialIndexMask > 0) = 255;
 
 %% Save mask images.
 group = 'mask';
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'materialIndexes', 'mat', materialIndexMask);
-recipe = SaveRecipeProcessingImageFile(recipe, group, 'coverage', 'png', maskCoverage);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'materialCoverage', 'png', materialCoverage);
+
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'objectIndexes', 'mat', materialIndexMask);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'objectCoverage', 'png', materialCoverage);

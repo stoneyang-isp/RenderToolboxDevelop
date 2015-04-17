@@ -1,6 +1,9 @@
 %% Build a new WardLand recipe.
 %   @param defaultMappings a stub mappings file to append to
 %   @param choices struct of random scene picks as from GetWardLandChoices()
+%   @param auxiliaryIds cell array of strings of auxiliary object ids
+%   @param auxiliaryObjects cell array auxiliary object descriptions
+%   @param choices struct of random scene picks as from GetWardLandChoices()
 %   @param hints struct of RenderToolbox3 options as from GetDefaultHints()
 %
 % @details
@@ -30,22 +33,6 @@
 % named like "mask-2", etc.
 %
 % @details
-% The new recipe will have many executive functions, which will render the
-% scene and perform various WardLand analyses:
-%   - MakeRecipeSceneFiles generates scene files for each condition
-%   - MakeRecipeRenderings renders each condition
-%   - MakeRecipeObjectMasks analyzes "mask" renderings to locate objects
-%   - MakeRecipeIlluminationImage analyzes "matte" renderings for
-%   reflectances and illuminations at each pixel
-%   - MakeRecipeBoringComparison compares "boring" rendering with a similar
-%   computed illumination image
-%   - MakeRecipeLMSImages convert some computed images to LMS sensor images
-%   - MakeRecipeDKLImages convert LMS sensor images to DKL sensor images
-%   - MakeRecipeImageMontage summarize renderings and computed images
-%   - MakeRecipeFactoids use Mitsuba to report scene facts at each pixel
-%   - MakeRecipeFactoidMontage summarize factoids
-%
-% @details
 % Returns a new WardLand recipe suitable for use with other WardLand
 % functions.
 %
@@ -54,9 +41,17 @@
 %   recipe = BuildWardLandRecipe(defaultMappings, choices, hints)
 %
 % @ingroup WardLand
-function recipe = BuildWardLandRecipe(defaultMappings, choices, hints)
+function recipe = BuildWardLandRecipe(defaultMappings, choices, auxiliaryIds, auxiliaryObjects, hints)
 
-if nargin < 3
+if nargin < 3 || isempty(hints)
+    auxiliaryIds = {};
+end
+
+if nargin < 4 || isempty(hints)
+    auxiliaryObjects = {};
+end
+
+if nargin < 5 || isempty(hints)
     hints = GetDefaultHints();
 else
     hints = GetDefaultHints(hints);
@@ -280,6 +275,9 @@ for ii = 1:nPages
         {flashMaterialId}, {whiteMatte}, blockName, 'flash material');
 end
 
+% any auxiliary objects
+AppendMappings(mappingsFile, mappingsFile, ...
+    auxiliaryIds, auxiliaryObjects, 'Generic', 'auxiliary');
 
 %% Write conditions for inserted objects.
 

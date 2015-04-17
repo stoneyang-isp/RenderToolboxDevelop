@@ -25,8 +25,8 @@ end
 % edit some batch renderer options
 hints.renderer = 'Mitsuba';
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
-hints.imageWidth = 640/4;
-hints.imageHeight = 480/4;
+hints.imageWidth = 640;
+hints.imageHeight = 480;
 
 %% Choose how to execute the recipes.
 toneMapFactor = 100;
@@ -50,4 +50,26 @@ for ii = 1:nScenes
     recipes{ii}.input.hints.imageHeight = hints.imageHeight;
     recipes{ii}.input.executive = executive;
     recipes{ii} = ExecuteRecipe(recipes{ii});
+end
+
+%% Analyze the renderings.
+toneMapFactor = 10;
+isScale = true;
+filterWidth = 7;
+lmsSensitivities = 'T_cones_ss2';
+dklSensitivities = 'T_CIE_Y21';
+
+for ii = 1:nScenes
+    recipes{ii} = MakeRecipeAlbedoFactoidImages(recipes{ii}, toneMapFactor, isScale);
+    recipes{ii} = MakeRecipeShapeIndexFactoidImages(recipes{ii});
+    
+    recipes{ii} = MakeRecipeIlluminationImages(recipes{ii}, filterWidth, toneMapFactor, isScale);
+    recipes{ii} = MakeRecipeBoringComparison(recipes{ii}, toneMapFactor, isScale);
+    
+    recipes{ii} = MakeRecipeLMSImages(recipes{ii}, lmsSensitivities);
+    recipes{ii} = MakeRecipeDKLImages(recipes{ii}, lmsSensitivities);
+    
+    recipes{ii} = MakeRecipeImageMontage(recipes{ii});
+    recipes{ii} = MakeRecipeFactoids(recipes{ii});
+    recipes{ii} = MakeRecipeFactoidMontage(recipes{ii});
 end
