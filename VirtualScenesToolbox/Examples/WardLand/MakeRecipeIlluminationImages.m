@@ -81,8 +81,9 @@ for ii = 1:nMaterials
 end
 
 %% Smooth out gaps between objects if necessary.
-illumInterp = SmoothOutGaps(illumRaw, objectIndexMask, filterWidth);
-illumMeanInterp = SmoothOutGaps(illumMeanRaw, objectIndexMask, filterWidth);
+objectCoverage = LoadRecipeProcessingImageFile(recipe, 'mask', 'objectCoverage');
+illumInterp = SmoothOutGaps(illumRaw, objectCoverage, filterWidth);
+illumMeanInterp = SmoothOutGaps(illumMeanRaw, objectCoverage, filterWidth);
 
 
 %% Make sRGB representations.

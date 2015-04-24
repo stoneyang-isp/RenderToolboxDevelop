@@ -26,22 +26,29 @@ mitsuba.app = getpref('VirtualScenes', 'rgbMitsubaApp');
 
 factoids = {'shapeIndex'};
 format = 'rgb';
-singleSampling = true;
 
+% invoke once with "single sampling" to get an answer in every pixel
+singleSampling = true;
 [status, result, newScene, exrOutput, factoidOutput] = ...
     RenderMitsubaFactoids(sceneFile, [], [], [], ...
     factoids, format, recipe.input.hints, mitsuba, singleSampling);
+shapeIndexes = factoidOutput.shapeIndex.data(:,:,1);
+
+% invoke again without "single sampling" to detect object borders
+singleSampling = false;
+[status, result, newScene, exrOutput, factoidOutput] = ...
+    RenderMitsubaFactoids(sceneFile, [], [], [], ...
+    factoids, format, recipe.input.hints, mitsuba, singleSampling);
+shapeIndexesBlurred = factoidOutput.shapeIndex.data(:,:,1);
 
 %% Determine object masks and coverage.
-shindexes = factoidOutput.shapeIndex.data(:,:,1);
-isGood = mod(shindexes, 1) == 0;
-
-shapeIndexMask = 1 + shindexes;
+isGood = mod(shapeIndexes, 1) == 0;
+shapeIndexMask = 1 + shapeIndexes;
 shapeIndexMask(~isGood) = 0;
 
-%% Summarize the "gaps" where we couldn't tell which object is there.
-shapeCoverage = zeros(size(shindexes), 'uint8');
-shapeCoverage(shapeIndexMask > 0) = 255;
+isGood = mod(shapeIndexesBlurred, 1) == 0;
+shapeCoverage = zeros(size(shapeIndexes), 'uint8');
+shapeCoverage(isGood) = 255;
 
 %% Give each shape a color.
 colorMap = [0 0 0; 255*lines(max(shapeIndexMask(:)))];
