@@ -12,7 +12,7 @@ clear;
 clc;
 
 % choose the base scene
-baseSceneName = 'Library';
+baseSceneName = 'Mill';
 sceneMetadata = ReadMetadata(baseSceneName);
 
 % batch renderer options
@@ -83,10 +83,11 @@ copyfile(modelAbsPath, parentSceneFile);
 %% Write a mappings file.
 configs = getpref('VirtualScenes', 'rendererConfigs');
 conf = configs.(hints.renderer);
+confStyle = conf.full;
 
 AppendMappings(defaultMappings, mappingsFile, ...
-    conf.ids, conf.quick.descriptions, ...
-    conf.quick.blockName, 'config');
+    conf.ids, confStyle.descriptions, ...
+    confStyle.blockName, 'config');
 AppendMappings(mappingsFile, mappingsFile, ...
     sceneMetadata.lightIds, lights, 'Generic', 'lights');
 AppendMappings(mappingsFile, mappingsFile, ...

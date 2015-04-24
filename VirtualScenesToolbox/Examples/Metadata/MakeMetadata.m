@@ -92,6 +92,21 @@ metadata = WriteMetadata(modelName, objectBox, lightBox, lightExcludeBox, materi
 readMetadata = ReadMetadata(modelName);
 assert(isequal(metadata, readMetadata))
 
+%% Mill base scene
+modelName = 'Mill';
+objectBox = [-13 5; -5 15; 1 10];
+lightBox = [-14 15; -15 15; 1 10];
+lightExcludeBox = [-13 15; -14 15; 1 10];
+modelPath = fullfile(repository, 'BaseScenes', 'Models', 'Mill.dae');
+materialIds = GetSceneElementIds(modelPath, '\w+-material$');
+lightIds = { ...
+    'SkyLight-mesh', ...
+    'SunLight-mesh', ...
+    };
+metadata = WriteMetadata(modelName, objectBox, lightBox, lightExcludeBox, materialIds, lightIds);
+readMetadata = ReadMetadata(modelName);
+assert(isequal(metadata, readMetadata))
+
 %% Barrel object
 modelName = 'Barrel';
 modelPath = fullfile(repository, 'Objects', 'Models', 'Barrel.dae');

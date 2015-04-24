@@ -20,9 +20,9 @@
 %   - All objects, meshes, and materials should use CamelCase names without
 %   punctuation.  Names can have numbers at the end like MyThing01,
 %   MyThing02.
-%   - Each object should contain exactly one mesh.  The object and mesh
+%   - Each object should usually contain one mesh.  The object and mesh
 %   should have the same name.
-%   - Each mesh should have exactly one material assigned.  The material
+%   - Each mesh should usually have one material assigned.  The material
 %   can have a different name from the mesh, so that materials can be
 %   shared.
 %   - Each "whole object" should have its own material assigned, to
@@ -31,8 +31,9 @@
 %   identical soda bottles located in different places should have distinct
 %   materials assigned.
 %   - All lights should be converted to meshes, which will later be
-%   "blessed" as area lights.  Make sure the mesh normals face outwards,
-%   towards the objects in the scene.
+%   "blessed" as area lights.
+%   _ All objects should have normals recalculated to make sure they face
+%   outwards.  This is especially important for lights!
 %   - Objects should not have Blender constraints on them.
 %   - Objects should not have Blender modifiers on them.  These should be
 %   removed, or "applied" to make the modifications part of the mesh data.
@@ -45,6 +46,12 @@
 %   - The Blender file should not "pack" any external data like textures.
 %   External data should be unpacked into separate files, and will be
 %   ignored.
+%
+% This Blender work can be really slow and tedious, especially if you
+% rename each object by hand.  Often it makes sense to rename objects in
+% groups with sequence numbers.  Blender Python integration can really help
+% wiht this.  See below for some little scripts that can automate this
+% work.
 %
 % Finally, export the Blender scene to a Collada (.dae) file.  In the lower
 % left of the export dialog, choose Collada Options: Transformation Type
@@ -73,3 +80,61 @@
 %   - Write a metadata file for the new scene using WriteMetadata().  See
 %   TestMetadata.m for examples.
 %
+% Blender Python Sripts
+%
+% Here are some scripts which can automate tedious and difficult Blender
+% work.  To run these in Belnder, choose "Python Console" from the menu in
+% the bottom left corner of any Blender pane.  Paste in the code then hit
+% the "Run Script" button in the Python Console.
+%
+% In order to read Python results and errors, you might have to launch
+% Blender from the command line.  On OS X you might run a command like
+% this:
+% @code
+% /Applications/Blender-2.73a/blender.app/Contents/MacOS/blender
+% @endcode
+%
+% This script will rename all the currently selected objects (hold shift
+% and left click multiple objects).  All the objects will have the same
+% base name, plus a sequence number.  Change the base name "MyBaseName" to
+% whatever you want.
+% @code
+% import bpy
+% count = 0
+% for obj in bpy.context.selected_objects:
+%     count += 1
+%     newName = "MyBaseName{:0>2d}".format(count)
+%     obj.name = newName
+%     obj.data.name = newName
+% @endcode
+%
+% This script will convert a 2D planar object to a 3D solid object.  This
+% is useful when you want the object to be viewable from all sides.  It
+% will only solidify objects that start with a given prefix, "Grass" in the
+% example below.  Edit this prefix to solidify the objects you want.
+% @code
+% import bpy
+% for obj in bpy.context.scene.objects:
+%     if obj.type == 'MESH' and obj.name.startswith("Grass"):
+%         bpy.context.scene.objects.active = obj
+%         for modifier in obj.modifiers:
+%             obj.modifiers.remove(modifier)
+%         bpy.ops.object.modifier_add(type='SOLIDIFY')
+%         obj.modifiers["Solidify"].thickness = .04
+%         bpy.ops.object.modifier_apply(modifier='Solidify', apply_as='DATA')
+% @endcode
+%
+% This script will clean up object vertices and normals to make sure all
+% the normals face outwards.
+% @code
+% import bpy
+% for obj in bpy.context.scene.objects:
+%     if obj.type == 'MESH':
+%         bpy.context.scene.objects.active = obj
+%         bpy.ops.object.transform_apply(location=False)
+%         bpy.ops.object.mode_set(mode='EDIT')
+%         bpy.ops.mesh.select_all(action='SELECT')
+%         bpy.ops.mesh.remove_doubles()
+%         bpy.ops.mesh.normals_make_consistent(inside=False)
+%         bpy.ops.object.editmode_toggle()        
+% @endcode
