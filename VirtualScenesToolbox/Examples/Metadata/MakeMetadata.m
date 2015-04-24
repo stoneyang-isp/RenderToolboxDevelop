@@ -94,9 +94,9 @@ assert(isequal(metadata, readMetadata))
 
 %% Mill base scene
 modelName = 'Mill';
-objectBox = [-13 5; -5 15; 1 10];
-lightBox = [-14 15; -15 15; 1 10];
-lightExcludeBox = [-13 15; -14 15; 1 10];
+objectBox = [-15 0; -10 0; 0 10];
+lightBox = [-20 0; -10 10; 10 20];
+lightExcludeBox = [-20 -20; -10 -10; 10 10];
 modelPath = fullfile(repository, 'BaseScenes', 'Models', 'Mill.dae');
 materialIds = GetSceneElementIds(modelPath, '\w+-material$');
 lightIds = { ...

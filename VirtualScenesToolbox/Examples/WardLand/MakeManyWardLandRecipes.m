@@ -33,7 +33,7 @@ rotMin = 0;
 rotMax = 359;
 
 % where to save new recipes
-projectName = 'WardLand';
+projectName = 'WardLandDatabase';
 recipeFolder = ...
     fullfile(getpref('VirtualScenes', 'recipesFolder'), projectName);
 if (~exist(recipeFolder, 'dir'))
@@ -41,17 +41,17 @@ if (~exist(recipeFolder, 'dir'))
 end
 
 %% Choose how many recipes to make and from what components.
-nScenes = 1;
-nObjectsPerScene = 5;
-nLightsPerScene = 0;
-
 baseSceneSet = { ...
+    'CheckerBoard', ...
     'IndoorPlant', ...
-    'Warehouse', ...
-    'CheckerBoard'};
+    'Library', ...
+    'Mill', ...
+    'TableChairs', ...
+    'Warehouse'};
 
 objectSet = { ...
     'Barrel', ...
+    'BigBall', ...
     'Blobbie-01', ...
     'Blobbie-02', ...
     'Blobbie-03', ...
@@ -69,40 +69,56 @@ lightSet = { ...
     'Panel', ...
     };
 
-%% Build multiple from the sets above.
-for ii = 1:nScenes
-    % start a new recipe
-    hints.recipeName = sprintf('%s-%02d', projectName, ii);
-    ChangeToWorkingFolder(hints);
+%% Build multiple recipes based on the sets above.
+objectConditions = 4:8;
+lightConditions = 0:3;
+
+nSceneConditions = numel(baseSceneSet);
+nObjectConditions = numel(objectConditions);
+nLightConditions = numel(lightConditions);
+nRecipes = nSceneConditions * nObjectConditions * nLightConditions;
+
+for ss = 1:nSceneConditions
+    baseScene = baseSceneSet{ss};
     
-    % make sure Ward Land material resources are available to this recipe
-    [textureIds, textures, matteTextured, wardTextured, filePaths] = ...
-        GetWardLandTextureMaterials(hints);
-    [matteMacbeth, wardMacbeth] = GetWardLandMaterials(hints);
-    lightSpectra = GetWardLandIlluminantSpectra(hints);
-    
-    % choose a random base scene for this recipe
-    baseScene = baseSceneSet{randi(numel(baseSceneSet), 1)};
-    
-    % choose objects, materials, lights, and spectra for this recipe
-    whichMacbeth = 1:4;
-    matteMacbeth = matteMacbeth(whichMacbeth);
-    wardMacbeth = wardMacbeth(whichMacbeth);
-    
-    matteMaterials = cat(2, matteTextured, matteMacbeth);
-    wardMaterials = cat(2, wardTextured, wardMacbeth);
-    choices = GetWardLandChoices(baseScene, ...
-        objectSet, nObjectsPerScene, ...
-        lightSet, nLightsPerScene, ...
-        scaleMin, scaleMax, rotMin, rotMax, ...
-        matteMaterials, wardMaterials, lightSpectra);
-    
-    % assemble the recipe
-    recipe = BuildWardLandRecipe(defaultMappings, choices, textureIds, textures, hints);
-    
-    % archive it
-    %   only include the resources subfolder
-    archiveFile = fullfile(recipeFolder, hints.recipeName);
-    excludeFolders = {'scenes', 'renderings', 'images', 'temp'};
-    PackUpRecipe(recipe, archiveFile, excludeFolders);
+    for oo = 5%:nObjectConditions
+        nObjects = objectConditions(oo);
+        
+        for ll = 4%:nLightConditions
+            nLights = lightConditions(ll);
+            
+            recipeName = sprintf('%s-%02d-Obj-%02d-Ilum', baseScene, nObjects, nLights);
+            hints.recipeName = recipeName;
+            ChangeToWorkingFolder(hints);
+            
+            % copy resources into this recipe working folder
+            [textureIds, textures, matteTextured, wardTextured, filePaths] = ...
+                GetWardLandTextureMaterials(3:6, hints);
+            [matteMacbeth, wardMacbeth] = GetWardLandMaterials(hints);
+            lightSpectra = GetWardLandIlluminantSpectra(6500, 3000, [4000 12000], 20, hints);
+            
+            % choose a 50/50 mix of textured and Macbeth materials
+            nPick = 10;
+            textureInds = randi(numel(matteTextured), [1 nPick]);
+            macbethInds = randi(numel(matteMacbeth), [1 nPick]);
+            matteMaterials = cat(2, matteTextured(textureInds), matteMacbeth(macbethInds));
+            wardMaterials = cat(2, wardTextured(textureInds), wardMacbeth(macbethInds));
+            
+            % choose objects, materials, lights, and spectra
+            choices = GetWardLandChoices(baseScene, ...
+                objectSet, nObjects, ...
+                lightSet, nLights, ...
+                scaleMin, scaleMax, rotMin, rotMax, ...
+                matteMaterials, wardMaterials, lightSpectra);
+            
+            % assemble the recipe
+            recipe = BuildWardLandRecipe( ...
+                defaultMappings, choices, textureIds, textures, hints);
+            
+            % archive it
+            archiveFile = fullfile(recipeFolder, hints.recipeName);
+            excludeFolders = {'scenes', 'renderings', 'images', 'temp'};
+            PackUpRecipe(recipe, archiveFile, excludeFolders);
+        end
+    end
 end

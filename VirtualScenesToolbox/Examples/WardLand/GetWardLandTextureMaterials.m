@@ -1,4 +1,5 @@
 %% Make up some textured matte and Ward material descriptions.
+%   @param whichImages optional indices to select specific images
 %   @param hints struct of RenderToolbox3 options, see GetDefaultHints()
 %
 % @details
@@ -24,19 +25,23 @@
 %
 % @details
 % Usage:
-%   [textureIDs, textures, matteMaterials, wardMaterials, filePaths] = GetWardLandTextureMaterials(hints)
+%   [textureIDs, textures, matteMaterials, wardMaterials, filePaths] = GetWardLandTextureMaterials(whichImages, hints)
 %
 % @ingroup WardLand
-function [textureIds, textures, matteMaterials, wardMaterials, filePaths] = GetWardLandTextureMaterials(hints)
+function [textureIds, textures, matteMaterials, wardMaterials, filePaths] = GetWardLandTextureMaterials(whichImages, hints)
 
-if nargin < 1 || isempty(hints)
+if nargin < 1 || isempty(whichImages)
+    whichImages = [];
+end
+
+if nargin < 2 || isempty(hints)
     resources = [];
 else
     resources = GetWorkingFolder('resources', false, hints);
 end
 
 % use color checker diffuse spectra
-[textureImages, filePaths] = GetTextureImages();
+[textureImages, filePaths] = GetTextureImages(whichImages);
 nImages = numel(textureImages);
 
 % use arbitrary specular spectra

@@ -56,17 +56,18 @@ boringRadiance = boringRendering.multispectralImage;
 specularRadiance = wardRadiance - matteRadiance;
 
 S = wardRendering.S;
-wardSRGB = uint8(MultispectralToSRGB(wardRadiance, S, toneMapFactor, isScale));
-matteSRGB = uint8(MultispectralToSRGB(matteRadiance, S, toneMapFactor, isScale));
-boringSRGB = uint8(MultispectralToSRGB(boringRadiance, S, toneMapFactor, isScale));
-specularSRGB = uint8(MultispectralToSRGB(specularRadiance, S, toneMapFactor, isScale));
+[wardSRGB, wardXYZ] = toRgbAndXyz(wardRadiance, S, toneMapFactor, isScale);
+[matteSRGB, matteXYZ] = toRgbAndXyz(matteRadiance, S, toneMapFactor, isScale);
+[boringSRGB, boringXYZ] = toRgbAndXyz(boringRadiance, S, toneMapFactor, isScale);
+[specularSRGB, specularXYZ] = toRgbAndXyz(specularRadiance, S, toneMapFactor, isScale);
 
 nMaskRenderings = numel(maskDataFiles);
 maskSRGB = cell(1, nMaskRenderings);
+maskXYZ = cell(1, nMaskRenderings);
 for ii = 1:nMaskRenderings
     maskRendering = load(maskDataFiles{ii});
     maskRadiance = maskRendering.multispectralImage;
-    maskSRGB{ii} = uint8(MultispectralToSRGB(maskRadiance, S, toneMapFactor, isScale));
+    [maskSRGB{ii}, maskXYZ{ii}] = toRgbAndXyz(maskRadiance, S, toneMapFactor, isScale);
 end
 
 %% Save images to disk.
@@ -77,10 +78,27 @@ recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBMatte', format, matte
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBBoring', format, boringSRGB);
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'SRGBSpecular', format, specularSRGB);
 
+format = 'mat';
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'XYZWard', format, wardXYZ);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'XYZMatte', format, matteXYZ);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'XYZBoring', format, boringXYZ);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'XYZSpecular', format, specularXYZ);
+
 for ii = 1:nMaskRenderings
     maskName = sprintf('SRGBMask%d', ii);
-    recipe = SaveRecipeProcessingImageFile(recipe, group, maskName, format, maskSRGB{ii});
+    recipe = SaveRecipeProcessingImageFile(recipe, group, maskName, 'png', maskSRGB{ii});
+    maskName = sprintf('XYZMask%d', ii);
+    recipe = SaveRecipeProcessingImageFile(recipe, group, maskName, 'mat', maskXYZ{ii});
 end
 
 recipe = SetRecipeProcessingData(recipe, group, 'S', S);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'ward', 'mat', wardRadiance);
+recipe = SaveRecipeProcessingImageFile(recipe, group, 'matte', 'mat', matteRadiance);
 recipe = SaveRecipeProcessingImageFile(recipe, group, 'specular', 'mat', specularRadiance);
+
+
+%% Get uint8 versions of sRGB and XYZ images.
+function [srgbUint, xyzUint] = toRgbAndXyz(radiance, S, toneMapFactor, isScale)
+[srgb, xyz] = MultispectralToSRGB(radiance, S, toneMapFactor, isScale);
+srgbUint = uint8(srgb);
+xyzUint = uint8(xyz);
