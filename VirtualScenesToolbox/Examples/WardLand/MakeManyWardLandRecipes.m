@@ -41,7 +41,7 @@ if (~exist(recipeFolder, 'dir'))
 end
 
 %% Choose how many recipes to make and from what components.
-nScenes = 5;
+nScenes = 1;
 nObjectsPerScene = 5;
 nLightsPerScene = 0;
 

@@ -2,3 +2,10 @@
 Collada {
     Camera:scale|sid=scale = -1 1 1
 }
+
+% configure a "crisp" image reconstruction filter
+Mitsuba-path {
+    Camera-camera_film:rfilter.type = gaussian
+    Camera-camera_film:rfilter:float|name=stddev.value = 0.15
+    
+}

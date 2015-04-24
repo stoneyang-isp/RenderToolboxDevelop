@@ -25,8 +25,8 @@ end
 % edit some batch renderer options
 hints.renderer = 'Mitsuba';
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
-hints.imageWidth = 640;
-hints.imageHeight = 480;
+hints.imageWidth = 640 / 2;
+hints.imageHeight = 480 / 2;
 
 %% Choose how to execute the recipes.
 toneMapFactor = 100;
