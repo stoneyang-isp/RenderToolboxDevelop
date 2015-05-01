@@ -98,7 +98,6 @@ recipe = SaveRecipeProcessingImageFile(recipe, group, 'specular', 'mat', specula
 
 
 %% Get uint8 versions of sRGB and XYZ images.
-function [srgbUint, xyzUint] = toRgbAndXyz(radiance, S, toneMapFactor, isScale)
+function [srgbUint, xyz] = toRgbAndXyz(radiance, S, toneMapFactor, isScale)
 [srgb, xyz] = MultispectralToSRGB(radiance, S, toneMapFactor, isScale);
 srgbUint = uint8(srgb);
-xyzUint = uint8(xyz);

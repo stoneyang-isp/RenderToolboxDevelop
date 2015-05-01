@@ -34,8 +34,7 @@ rotMax = 359;
 
 % where to save new recipes
 projectName = 'WardLandDatabase';
-recipeFolder = ...
-    fullfile(getpref('VirtualScenes', 'recipesFolder'), projectName);
+recipeFolder = fullfile(getpref('VirtualScenes', 'recipesFolder'), projectName, 'Originals');
 if (~exist(recipeFolder, 'dir'))
     mkdir(recipeFolder);
 end
@@ -78,16 +77,16 @@ nObjectConditions = numel(objectConditions);
 nLightConditions = numel(lightConditions);
 nRecipes = nSceneConditions * nObjectConditions * nLightConditions;
 
-for ss = 1:nSceneConditions
+for ss = 1:2%nSceneConditions
     baseScene = baseSceneSet{ss};
     
-    for oo = 5%:nObjectConditions
+    for oo = 1%:nObjectConditions
         nObjects = objectConditions(oo);
         
-        for ll = 4%:nLightConditions
+        for ll = 1%:nLightConditions
             nLights = lightConditions(ll);
             
-            recipeName = sprintf('%s-%02d-Obj-%02d-Ilum', baseScene, nObjects, nLights);
+            recipeName = sprintf('%s-%02d-Obj-%02d-Illum', baseScene, nObjects, nLights);
             hints.recipeName = recipeName;
             ChangeToWorkingFolder(hints);
             
