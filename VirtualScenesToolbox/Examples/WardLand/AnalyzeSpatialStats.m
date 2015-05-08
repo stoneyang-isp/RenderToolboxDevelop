@@ -2,8 +2,9 @@
 %   @param rgb 3-channel rgb representation of an image
 %   @param lum 1-channel luminance representation of the same image
 %   @param lms 3-channel LMS representation of the same image
-%   @param binEdges bins to use for two-point correlation
-%   @param samplesPerBin samples to use for two-point correlation analysis
+%   @param corrBinEdges bins to use for two-point correlation
+%   @param samplesPerCorrBin samples to use for two-point correlation analysis
+%   @param histCenters bins to use for luminance histograms
 %   @param doPlot whether to make a figure, or just return reduction stats
 %
 % @details
@@ -28,41 +29,53 @@
 %
 % @details
 % Usage:
-%   [reductions, fig] = AnalyzeSpatialStats(rgb, lum, lms, binEdges, samplesPerBin, doPlot)
-function [reductions, fig] = AnalyzeSpatialStats(rgb, lum, lms, binEdges, samplesPerBin, doPlot)
+%   [reductions, fig] = AnalyzeSpatialStats(rgb, lum, lms, corrBinEdges, samplesPerCorrBin, doPlot)
+function [reductions, fig] = AnalyzeSpatialStats(rgb, lum, lms, corrBinEdges, samplesPerCorrBin, histCenters, doPlot)
 
 fig = [];
 
 s = size(rgb);
 diagonal = sqrt(s(1)*s(1) + s(2)*s(2));
 
-if nargin < 4 || isempty(binEdges)
-    binEdges = 0:5:diagonal/2;
+if nargin < 4 || isempty(corrBinEdges)
+    corrBinEdges = 0:5:diagonal/2;
 end
 
-if nargin < 5 || isempty(samplesPerBin)
-    samplesPerBin = 1000;
+if nargin < 5 || isempty(samplesPerCorrBin)
+    samplesPerCorrBin = 1000;
 end
 
-if nargin < 6 || isempty(doPlot)
+if nargin < 6 || isempty(histCenters)
+    histCenters = linspace(0, 1e5, 100);
+end
+
+if nargin < 7 || isempty(doPlot)
     doPlot = true;
 end
 
 
 %% Always calculate the reductions.
-reductions.lum = calculateReductions(lum, nan, nan);
+lumHist = hist(lum(:), histCenters);
+reductions.lumHist = calculateReductions(lumHist ./ mean(lumHist), nan, nan, histCenters, ...
+    'luminance', 'count / mean', 'luminance histogram');
 
 twoPointLow = -0.2;
 twoPointHigh = 1.0;
 L = lms(:,:,1);
 M = lms(:,:,2);
 S = lms(:,:,3);
-reductions.LL = calculateReductions(TwoPointCorrelationDistribution(L, L, binEdges, samplesPerBin), twoPointLow, twoPointHigh);
-reductions.LS = calculateReductions(TwoPointCorrelationDistribution(L, S, binEdges, samplesPerBin), twoPointLow, twoPointHigh);
-reductions.SS = calculateReductions(TwoPointCorrelationDistribution(S, S, binEdges, samplesPerBin), twoPointLow, twoPointHigh);
-reductions.LM = calculateReductions(TwoPointCorrelationDistribution(L, M, binEdges, samplesPerBin), twoPointLow, twoPointHigh);
-reductions.MM = calculateReductions(TwoPointCorrelationDistribution(M, M, binEdges, samplesPerBin), twoPointLow, twoPointHigh);
-reductions.MS = calculateReductions(TwoPointCorrelationDistribution(M, S, binEdges, samplesPerBin), twoPointLow, twoPointHigh);
+reductions.LL = calculateReductions(TwoPointCorrelationDistribution(L, L, corrBinEdges, samplesPerCorrBin), twoPointLow, twoPointHigh, corrBinEdges(2:end), ...
+    'distance', '2-point corr.', 'L x L');
+reductions.LS = calculateReductions(TwoPointCorrelationDistribution(L, S, corrBinEdges, samplesPerCorrBin), twoPointLow, twoPointHigh, corrBinEdges(2:end), ...
+    'distance', '2-point corr.', 'L x S');
+reductions.SS = calculateReductions(TwoPointCorrelationDistribution(S, S, corrBinEdges, samplesPerCorrBin), twoPointLow, twoPointHigh, corrBinEdges(2:end), ...
+    'distance', '2-point corr.', 'S x S');
+reductions.LM = calculateReductions(TwoPointCorrelationDistribution(L, M, corrBinEdges, samplesPerCorrBin), twoPointLow, twoPointHigh, corrBinEdges(2:end), ...
+    'distance', '2-point corr.', 'L x M');
+reductions.MM = calculateReductions(TwoPointCorrelationDistribution(M, M, corrBinEdges, samplesPerCorrBin), twoPointLow, twoPointHigh, corrBinEdges(2:end), ...
+    'distance', '2-point corr.', 'M x M');
+reductions.MS = calculateReductions(TwoPointCorrelationDistribution(M, S, corrBinEdges, samplesPerCorrBin), twoPointLow, twoPointHigh, corrBinEdges(2:end), ...
+    'distance', '2-point corr.', 'M x S');
 
 if ~doPlot
     return;
@@ -77,41 +90,52 @@ title('rgb')
 
 subplot(4,3,2);
 imshow(lum, [0 max(lum(:))]);
-title('lum')
+title('luminance')
 
 subplot(4,3,3);
-hist(lum(:))
-title('histogram of lum')
+bar(histCenters, lumHist);
+xlim(histCenters([1 numel(histCenters)]));
+title('luminance histogram')
+ylabel('count')
+xlabel('luminance')
 
 subplot(4,3,4);
 maxLms = max(lms(:));
 imshow(L, [0 maxLms]);
-title('L')
+title('LMS L')
 
 subplot(4,3,5);
 imshow(M, [0 maxLms]);
-title('M')
+title('LMS M')
 
 subplot(4,3,6);
 imshow(S, [0 maxLms]);
-title('S')
+title('LMS S')
 
 reductionNames = {'LL', 'LS', 'SS', 'LM', 'MM', 'MS'};
 for ii = 1:numel(reductionNames)
     name = reductionNames{ii};
-    raw = reductions.(name).raw;
+    r = reductions.(name);
     
     subplot(4,3,6+ii);
-    plot(binEdges(2:end), raw);
-    ylim([-0.2 1])
-    title(name)
+    plot(r.xCoords, r.raw);
+    ylim([r.low, r.high]);
+    title(r.titleName);
+    ylabel(r.yName);
+    xlabel(r.xName);
 end
 
 
 % calculate reduction statis for a matrix, put them in a struct
-function r = calculateReductions(x, low, high)
+function r = calculateReductions(x, low, high, xCoords, xName, yName, titleName)
+r.raw = x;
+r.xCoords = xCoords;
+
 r.low = low;
 r.high = high;
-r.raw = x;
 r.mean = mean(x(:));
 r.std = std(x(:));
+
+r.xName = xName;
+r.yName = yName;
+r.titleName = titleName;

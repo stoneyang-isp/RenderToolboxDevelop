@@ -31,12 +31,15 @@ isScale = true;
 filterWidth = 7;
 lmsSensitivities = 'T_cones_ss2';
 
+% easier to read plots
+set(0, 'DefaultAxesFontSize', 14)
+
 %% Analyze each packed up recipe.
 archiveFiles = FindFiles(recipeFolder, '\.zip$');
-nScenes = 2;%numel(archiveFiles);
+nRecipes = numel(archiveFiles);
 
-reductions = cell(1, nScenes);
-for ii = 1:nScenes
+reductions = cell(1, nRecipes);
+for ii = 1:nRecipes
     % get the recipe
     recipe = UnpackRecipe(archiveFiles{ii}, hints);
     ChangeToWorkingFolder(recipe.input.hints);
@@ -66,8 +69,9 @@ end
 
 %% Show a grand summary across packed up recipes.
 fig = SummarizeSpatialStats(reductions);
+figName = sprintf('Summary of %d recipes', nRecipes);
 set(fig, ...
-    'Position', [100 100 1000 1000], ...
-    'Name', 'Two Point Correlations');
-figureFile = fullfile(figureFolder, 'two-point-correlation-summary.fig');
+    'Position', [100 100 1000 1100], ...
+    'Name', figName);
+figureFile = fullfile(figureFolder, 'aaa-summary.fig');
 WriteImage(figureFile, fig);

@@ -20,38 +20,45 @@
 function fig = SummarizeSpatialStats(reductions)
 
 %% Organize the data for plotting.
-nReductions = numel(reductions);
 allReductions = [reductions{:}];
 plotNames = fieldnames(allReductions);
 nPlots = numel(plotNames);
 for ii = 1:nPlots
     name = plotNames{ii};
     r = [allReductions.(name)];
-    plotData.(name).mean = [r.mean];
-    plotData.(name).std = [r.std];
-    plotData.(name).low = [r.low];
-    plotData.(name).high = [r.high];
+    
+    % mean and std of data
+    allRaw = cat(1, r.raw);
+    plotData.(name).mean = mean(allRaw, 1);
+    plotData.(name).std = std(allRaw, 0, 1);
+    
+    % range for plotting data
+    plotData.(name).low = min([r.low]);
+    plotData.(name).high = max([r.high]);
+    
+    % other plot polish (take the last one)
+    plotData.(name).xCoords = r.xCoords;
+    plotData.(name).xName = r.xName;
+    plotData.(name).yName = r.yName;
+    plotData.(name).titleName = r.titleName;
 end
 
 %% Plot a summary.
 fig = figure();
-xAxis = 1:nReductions;
 
 for ii = 1:nPlots
     name = plotNames{ii};
-    low = min(plotData.(name).low);
-    high = max(plotData.(name).high);
-    y = plotData.(name).mean;
-    e = plotData.(name).std;
+    pd = plotData.(name);
     
     subplot(nPlots, 1, ii);
-    errorbar(xAxis, y, e);
+    errorbar(pd.xCoords, pd.mean, pd.std);
     
-    title(name);
-    set(gca(), 'XTick', xAxis);
+    title(pd.titleName);
+    xlabel(pd.xName);
+    ylabel(pd.yName);
     
-    if ~isnan(low) && ~isnan(high)
-        set(gca(), 'YLim', [low high]);
+    if ~isnan(pd.low) && ~isnan(pd.high)
+        set(gca(), 'YLim', [pd.low pd.high]);
     end
 end
 
