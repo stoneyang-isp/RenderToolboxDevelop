@@ -57,6 +57,8 @@ for ii = 1:nPlots
     xlabel(pd.xName);
     ylabel(pd.yName);
     
+    xlim(pd.xCoords([1 numel(pd.xCoords)]));
+    
     if ~isnan(pd.low) && ~isnan(pd.high)
         set(gca(), 'YLim', [pd.low pd.high]);
     end

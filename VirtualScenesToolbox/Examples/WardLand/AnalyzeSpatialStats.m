@@ -46,7 +46,7 @@ if nargin < 5 || isempty(samplesPerCorrBin)
 end
 
 if nargin < 6 || isempty(histCenters)
-    histCenters = linspace(0, 1e5, 100);
+    histCenters = linspace(0, 1, 100);
 end
 
 if nargin < 7 || isempty(doPlot)
@@ -55,9 +55,10 @@ end
 
 
 %% Always calculate the reductions.
+lum = lum ./ max(lum(:));
 lumHist = hist(lum(:), histCenters);
 reductions.lumHist = calculateReductions(lumHist ./ mean(lumHist), nan, nan, histCenters, ...
-    'luminance', 'count / mean', 'luminance histogram');
+    'luminance / max', 'count / mean', 'luminance histogram');
 
 twoPointLow = -0.2;
 twoPointHigh = 1.0;
@@ -85,31 +86,32 @@ end
 fig = figure();
 
 subplot(4,3,1);
-imshow(rgb, [0 max(rgb(:))]);
+imshow(toneMapAndScale(rgb));
 title('rgb')
 
 subplot(4,3,2);
-imshow(lum, [0 max(lum(:))]);
+imshow(toneMapAndScale(lum));
 title('luminance')
 
 subplot(4,3,3);
-bar(histCenters, lumHist);
-xlim(histCenters([1 numel(histCenters)]));
-title('luminance histogram')
-ylabel('count')
-xlabel('luminance')
+xCoords = reductions.lumHist.xCoords;
+bar(xCoords, reductions.lumHist.raw);
+xlim(xCoords([1 numel(xCoords)]));
+title(reductions.lumHist.titleName)
+ylabel(reductions.lumHist.yName)
+xlabel(reductions.lumHist.xName)
 
 subplot(4,3,4);
-maxLms = max(lms(:));
-imshow(L, [0 maxLms]);
+mappedLms = toneMapAndScale(lms);
+imshow(mappedLms(:,:,1));
 title('LMS L')
 
 subplot(4,3,5);
-imshow(M, [0 maxLms]);
+imshow(mappedLms(:,:,2));
 title('LMS M')
 
 subplot(4,3,6);
-imshow(S, [0 maxLms]);
+imshow(mappedLms(:,:,3));
 title('LMS S')
 
 reductionNames = {'LL', 'LS', 'SS', 'LM', 'MM', 'MS'};
@@ -139,3 +141,10 @@ r.std = std(x(:));
 r.xName = xName;
 r.yName = yName;
 r.titleName = titleName;
+
+% do simple tone mapping and scaling vor visualization
+function x = toneMapAndScale(x)
+xMean = mean(x(:));
+xClip = 5 * xMean;
+x = x ./ xClip;
+x(x > 1) = 1;

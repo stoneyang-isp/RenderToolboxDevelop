@@ -53,17 +53,22 @@ for ii = 1:nRecipes
     
     % run spatial statistics analysis
     rgb = LoadRecipeProcessingImageFile(recipe, 'radiance', 'SRGBWard');
+    rgb = double(rgb);
     xyz = LoadRecipeProcessingImageFile(recipe, 'radiance', 'XYZWard');
+    lum = double(xyz(:,:,2));
     lms = LoadRecipeProcessingImageFile(recipe, 'lms', 'radiance_ward_lms');
-    [reductions{ii}, fig] = AnalyzeSpatialStats(rgb, double(xyz(:,:,2)), lms);
+    [reductions{ii}, fig] = AnalyzeSpatialStats(rgb, lum, lms);
     
     % save figures for later
     set(fig, ...
+        'PaperPositionMode', 'auto', ...
         'Position', [100 100 1000 1000], ...
         'Name', sprintf('%d: %s', ii, recipe.input.hints.recipeName));
     drawnow();
     figureFile = fullfile(figureFolder, [recipe.input.hints.recipeName '.fig']);
     WriteImage(figureFile, fig);
+    pngFile = fullfile(figureFolder, [recipe.input.hints.recipeName '.png']);
+    saveas(fig, pngFile);
     close(fig);
 end
 
@@ -71,7 +76,10 @@ end
 fig = SummarizeSpatialStats(reductions);
 figName = sprintf('Summary of %d recipes', nRecipes);
 set(fig, ...
+    'PaperPositionMode', 'auto', ...
     'Position', [100 100 1000 1100], ...
     'Name', figName);
-figureFile = fullfile(figureFolder, 'aaa-summary.fig');
+figureFile = fullfile(figureFolder, 'aaa-wardland-summary.fig');
 WriteImage(figureFile, fig);
+pngFile = fullfile(figureFolder, 'aaa-wardland-summary.png');
+saveas(fig, pngFile);
