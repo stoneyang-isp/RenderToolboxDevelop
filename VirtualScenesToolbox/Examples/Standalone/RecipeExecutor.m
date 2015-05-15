@@ -29,10 +29,20 @@
 %
 function RecipeExecutor(recipeFile, whichExecutives, beforeScript, afterScript)
 
-% tell Matlab about functions that recipes will need
+%% Include these functions.
+
+% batch renderer
 %#function MakeRecipeRenderings, MakeRecipeSceneFiles
 
-% TODO: tell Matlab about Renderer and Remodeler API functions!
+% renderer plugins
+%#function RTB_VersionInfo_PBRT, RTB_Render_PBRT, RTB_ImportCollada_PBRT, RTB_DataToRadiance_PBRT, RTB_ApplyMappings_PBRT
+%#function RTB_VersionInfo_Mitsuba, RTB_Render_Mitsuba, RTB_ImportCollada_Mitsuba, RTB_DataToRadiance_Mitsuba, RTB_ApplyMappings_Mitsuba
+%#function RTB_VersionInfo_SampleRenderer, RTB_Render_SampleRenderer, RTB_ImportCollada_SampleRenderer, RTB_DataToRadiance_SampleRenderer, RTB_ApplyMappings_SampleRenderer
+
+% remodeler plugins
+%#function RTB_BeforeAll_SampleRemodeler, RTB_AfterCondition_SampleRemodeler, RTB_BeforeCondition_SampleRemodeler
+%#function RTB_BeforeAll_MaterialSphere, RTB_BeforeCondition_MaterialSphere
+%#function RTB_BeforeCondition_InsertObjectRemodeler
 
 if nargin < 1 || isempty(recipeFile)
     recipeFile = '';

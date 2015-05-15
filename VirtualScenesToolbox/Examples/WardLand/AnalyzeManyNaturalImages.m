@@ -17,8 +17,8 @@ allImageFiles = FindFiles(naturalImages, matchPattern);
 nImages = numel(allImageFiles);
 
 % pick some repeatably-randomly
-randomSeed = 42;
-nPicks = 3;
+randomSeed = 101;
+nPicks = 119;
 rng(randomSeed);
 pickInds = randi(nImages, [1, nPicks]);
 

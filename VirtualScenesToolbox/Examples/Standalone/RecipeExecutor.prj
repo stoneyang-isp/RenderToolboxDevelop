@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3230468931" file="/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.app" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
+  <configuration build-checksum="2067738801" file="/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.app" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
     <param.appname>RecipeExecutor</param.appname>
     <param.icon />
     <param.icons />
@@ -75,6 +75,18 @@
     </fileset.main>
     <fileset.resources>
       <file>${MATLAB_ROOT}/toolbox/local/userpath.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychCal/BasicToneMapCalFormat.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychCal/CalFormatToImage.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychCal/ImageToCalFormat.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/FindLinMod.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/MakeItS.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/MakeItWls.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/SRGBGammaCorrect.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/SToWls.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/SplineCmf.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/SplineRaw.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/WlsToS.m</file>
+      <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychColorimetric/XYZToSRGBPrimary.m</file>
       <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychOneliners/GetGITInfo.m</file>
       <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychOneliners/GetGitPath.m</file>
       <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychOneliners/GetSVNInfo.m</file>
@@ -84,16 +96,22 @@
       <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychOneliners/IsWin.m</file>
       <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychOneliners/PsychtoolboxRoot.m</file>
       <file>/Users/ben/Documents/Projects/Psychtoolbox3/Psychtoolbox/PsychOneliners/streq.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Admin/MinimalMitsubaImport/DemoteEnvPathEntries.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/BatchRender.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/GetDefaultHints.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/MakeSceneFiles.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/ApplySceneDOMPaths.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/EditObjectProperty.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/FillInObjectProperty.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/GetObjectProperty.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/MappingsToObjects.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/ParseConditions.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/ParseMappings.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/ResolveMappingsValues.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/SetObjectProperty.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/BatchRenderer/Mappings/SupplementGenericObjects.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/ExampleScenes/MaterialSphere/RTB_BeforeAll_MaterialSphere.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/ExampleScenes/MaterialSphere/RTB_BeforeCondition_MaterialSphere.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/RecipeAPI/AppendRecipeLog.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/RecipeAPI/ChangeToRecipeFolder.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/RecipeAPI/ConfigureForRecipe.m</file>
@@ -104,18 +122,61 @@
       <file>/Users/ben/Documents/Projects/RenderToolbox3/RecipeAPI/MakeRecipeSceneFiles.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/RecipeAPI/UnpackRecipe.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/RemodelerPlugins/GetRemodelerAPIFunction.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RemodelerPlugins/RTB_AfterCondition_SampleRemodeler.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RemodelerPlugins/RTB_BeforeAll_SampleRemodeler.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RemodelerPlugins/RTB_BeforeCondition_SampleRemodeler.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/GetRendererAPIFunction.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/Mitsuba/ApplyMitsubaObjects.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/Mitsuba/GenericObjectsToMitsuba.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/Mitsuba/RTB_ApplyMappings_Mitsuba.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/Mitsuba/RTB_DataToRadiance_Mitsuba.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/Mitsuba/RTB_ImportCollada_Mitsuba.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/Mitsuba/RTB_Render_Mitsuba.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/Mitsuba/RTB_VersionInfo_Mitsuba.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/Mitsuba/RunMitsuba.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ApplyPBRTObjects.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/AddParameter.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/AddReference.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/AddTransform.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/ConvertCamera.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/ConvertGeometry.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/ConvertLight.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/ConvertMaterial.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/ConvertNode.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/ConvertReferences.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/CreateStubDOM.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/PopulateStubDOM.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/PrintPBRTStatement.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/SetType.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/ColladaToPBRT/WritePBRTFile.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/GenericObjectsToPBRT.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/RTB_ApplyMappings_PBRT.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/RTB_DataToRadiance_PBRT.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/RTB_ImportCollada_PBRT.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/RTB_Render_PBRT.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/RTB_VersionInfo_PBRT.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/PBRT/RunPBRT.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/SampleRenderer/RTB_ApplyMappings_SampleRenderer.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/SampleRenderer/RTB_DataToRadiance_SampleRenderer.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/SampleRenderer/RTB_ImportCollada_SampleRenderer.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/SampleRenderer/RTB_Render_SampleRenderer.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/RendererPlugins/SampleRenderer/RTB_VersionInfo_SampleRenderer.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/CreateElementChild.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/ElementToStruct.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/GenerateSceneIDMap.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/GenerateScenePathMap.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/GetColladaAuthorInfo.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/GetColladaLightType.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/GetElementAttributes.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/GetElementChildren.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/GetNodePath.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/GetSceneValue.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/MergeAdjustments.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/PathCellToString.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/PathStringToCell.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/PrintPathPart.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/ReadSceneDOM.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/RemoveSceneNode.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/ScanPathPart.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/SearchScene.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/SceneDOM/SetSceneValue.m</file>
@@ -128,14 +189,38 @@
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/GetUserFolder.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/GetWorkingAbsolutePath.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/GetWorkingFolder.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/GetWorkingRelativePath.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/InitializeRenderToolbox.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/IsPathPrefix.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/IsStructFieldPresent.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/IsVerticesClockwise.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/MultispectralToSRGB.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/MultispectralToSensorImage.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/ParsePsychColorimetricMatFile.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/ReadDAT.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/ReadMultispectralEXR/GetWlsFromSliceNames.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/ReadMultispectralEXR/ReadMultichannelEXR.mexmaci64</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/ReadMultispectralEXR/ReadMultispectralEXR.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/RenderToolboxRoot.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/ResolveFilePath.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/RunCommand.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/SetRenderToolboxLibraryPath.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/ShowXYZAndSRGB.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/SpdPowerPerNmToPowerPerWlBand.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/StringToVector.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/VectorToString.m</file>
       <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/WriteASCII7BitOnly.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolbox3/Utilities/XYZToSRGB.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/FindNodeMaterialAndEffect.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/RTB_BeforeCondition_InsertObjectRemodeler.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/RepositionNode.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/TransferEffectAsMatte.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/TransferGeometry.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/TransferMaterial.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/TransferSceneNode.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/ValidateNode.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Utilities/GetVirtualScenesRepositoryPath.m</file>
+      <file>/Users/ben/Documents/Projects/RenderToolboxDevelop/VirtualScenesToolbox/Utilities/ReadMetadata.m</file>
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
