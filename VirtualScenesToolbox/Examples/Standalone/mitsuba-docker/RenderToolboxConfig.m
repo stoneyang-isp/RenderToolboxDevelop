@@ -5,6 +5,12 @@
 %
 % @ingroup VirtualScenes
 
+%% Set our toolbox paths.
+addpath(genpath('~/Psychtoolbox-3'));
+addpath(genpath('~/RenderToolbox3'));
+addpath(genpath('~/RenderToolboxDevelop'));
+CleanMatlabPath();
+
 %% RenderToolbox3.
 InitializeRenderToolbox(true);
 
@@ -20,8 +26,8 @@ adjustmentsFile = fullfile(RenderToolboxRoot(), ...
 
 radiometricScaleFactor = 0.0795827427;
 
-myMistubaExecutable = '~/mitsuba/mitsuba/mitsuba';
-myMistubaImporter = '~/mitsuba/mitsuba/mtsimport';
+myMistubaExecutable = '~/mitsuba-multi/mitsuba/mitsuba';
+myMistubaImporter = '~/mitsuba-multi/converter/mtsimport';
 myMistubaApp = '';
 
 setpref('Mitsuba', 'adjustments', adjustmentsFile);
@@ -57,7 +63,7 @@ setpref(prefName, 'dklSensitivities', 'T_CIE_Y2');
 setpref(prefName, 'montageScaleFactor', 1);
 setpref(prefName, 'montageScaleMethod', 'lanczos3');
 
-setpref(prefName, 'rgbMitsubaApp', '~/mitsuba/mitsuba-rgb/mitsuba');
+setpref(prefName, 'rgbMitsubaApp', '~/mitsuba-rgb/mitsuba/mitsuba';);
 
 %% Typical Mappings used to configure Mitsuba
 integratorId = 'integrator';
