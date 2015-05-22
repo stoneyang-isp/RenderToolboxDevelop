@@ -18,7 +18,7 @@ nImages = numel(allImageFiles);
 
 % pick some repeatably-randomly
 randomSeed = 101;
-nPicks = 119;
+nPicks = 5;%119;
 rng(randomSeed);
 pickInds = randi(nImages, [1, nPicks]);
 
