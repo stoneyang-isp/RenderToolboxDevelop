@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
     libxxf86vm-dev \
     mercurial \
     qt4-dev-tools \
-    scons
+    scons \
+    zliblg-dev
 RUN wget http://www.mitsuba-renderer.org/releases/current/trusty/collada-dom-dev_2.4.0-1_amd64.deb \
     && wget http://www.mitsuba-renderer.org/releases/current/trusty/collada-dom_2.4.0-1_amd64.deb
     && dpkg --install collada-dom_*.deb
