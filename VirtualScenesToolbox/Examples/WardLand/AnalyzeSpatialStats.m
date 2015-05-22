@@ -46,7 +46,7 @@ if nargin < 5 || isempty(samplesPerCorrBin)
 end
 
 if nargin < 6 || isempty(histCenters)
-    histCenters = linspace(0, 1, 100);
+    histCenters = linspace(0, 5, 100);
 end
 
 if nargin < 7 || isempty(doPlot)
@@ -55,10 +55,10 @@ end
 
 
 %% Always calculate the reductions.
-lum = lum ./ max(lum(:));
+lum = lum ./ mean(lum(:));
 lumHist = hist(lum(:), histCenters);
 reductions.lumHist = calculateReductions(lumHist ./ mean(lumHist), nan, nan, histCenters, ...
-    'luminance / max', 'count / mean', 'luminance histogram');
+    'luminance / mean', 'count / mean', 'luminance histogram');
 
 twoPointLow = -0.2;
 twoPointHigh = 1.0;
