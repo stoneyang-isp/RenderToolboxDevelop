@@ -1,36 +1,46 @@
 %% Render Recipes as a standalone Matlab executable.
-%   @param recipeFile packed-up recipe archive from PackUpRecipe()
-%   @param whichExecutives passed to ExecuteRecipe()
-%   @param beforeScript optional script to run before executing recipe
-%   @param afterScript optional script to run after executing recipe
+%   @param configScript script to configure Matlab preferences
+%   @param fetchCommand unix() command to fetch recipes into @a
+%   recipeFolder
+%   @param inputFolder folder that contains recipes to execute
+%   @param outputFolder folder to receive executed recipes
+%   @param pushCommand unix() command to publish recipes from @a
+%   outputFolder
 %
 % @details
-% Expects 1-3 parameters from the command line.  These should all be file
-% names that can be found from the current directly.  If @a beforeScript is
-% found, it's executed first.  Then the given @a recipeFile is unarchived
-% and executed.  Then, if @a afterScript is found, it's executed.  Will
-% attempt to execute @a afterScript even if there's an error during recipe
-% execution.
+% Expects 5 parameters from the command line.  These tell us how to get set
+% up for recipe execution, which recipes to execute, and what to do with
+% the recipes after we've executed them.
 %
 % @details
-% Something we would like to solve: recipes invoke "random" functions
-% specified in their "executive" cell array via feval().  For this to work,
-% we need to tell MCC about them explicitly ("%#function" pragma or command
-% args).  We can add a bunch of "best guess" pragmas here.  Can we find a
-% way to incorporate "random" user functions without having to build a
-% separate standalone for each recipe?
+% We can run this on a local workstation.  In that case, we can probably
+% omit @a configScript, @a fetchCommand, and @a pushCommand.  We would just
+% look for recipes contained in @a inputFolder, execute each one, and save
+% the output in @A outputFolder.
+%
+% @details
+% What we really want is to run this from a standalone Matlab executable on
+% a compute cluster, like Amazon EC2.  In this case, we need @a
+% configScript to set up our cluster environment, like where renderers are
+% installed.  We also need @a fetchCommand and @a pushCommand to
+% exchange files.  For example, we might fetch recipes from Amazon
+% S3, execute them, then publish them back to S3.
+%
+% @details
+% Attempts to capture command window and error messages with the diary()
+% function.  The diary file will be named "recipe-executor-log.txt" and
+% written to the given @a outputFolder.
 %
 % @details
 % Usage as a regular function in Matlab:
-%   function RecipeExecutor(recipeFile, whichExecutives, beforeScript, afterScript)
+%   function RecipeExecutor(configScript, fetchCommand, inputFolder, outputFolder, pushCommand)
 %
-% Usage as a standalone on the command line:
-%   ./run_RecipeExecutor.sh/Applications/MATLAB/MATLAB_Compiler_Runtime/v84 recipeFile [whichExecutives] [beforeScript] [afterScript]
+% Sample usage as a standalone on the command line:
+%   ./run_RecipeExecutor.sh /Applications/MATLAB/MATLAB_Compiler_Runtime/v84 configScript fetchCommand inputFolder outputFolder pushCommand
 %
-function RecipeExecutor(recipeFile, whichExecutives, beforeScript, afterScript)
+function RecipeExecutor(configScript, fetchCommand, inputFolder, outputFolder, pushCommand)
 
-%% Include these functions.
-
+%% Include these functions for Matlab Compiler.
 % batch renderer
 %#function MakeRecipeRenderings, MakeRecipeSceneFiles
 
@@ -44,42 +54,85 @@ function RecipeExecutor(recipeFile, whichExecutives, beforeScript, afterScript)
 %#function RTB_BeforeAll_MaterialSphere, RTB_BeforeCondition_MaterialSphere
 %#function RTB_BeforeCondition_InsertObjectRemodeler
 
-if nargin < 1 || isempty(recipeFile)
-    recipeFile = '';
+%% Args.
+if nargin < 1 || isempty(configScript)
+    configScript = '';
 end
 
-if nargin < 2 || isempty(whichExecutives)
-    whichExecutives = [];
-end
-if ischar(whichExecutives)
-    whichExecutives = eval(whichExecutives);
+if nargin < 2 || isempty(fetchCommand)
+    fetchCommand = '';
 end
 
-if nargin < 3 || isempty(beforeScript)
-    beforeScript = '';
+if nargin < 3 || isempty(inputFolder)
+    inputFolder = pwd();
 end
 
-if nargin < 4 || isempty(afterScript)
-    afterScript = '';
+if nargin < 4 || isempty(outputFolder)
+    outputFolder = fullfile(inputFolder, 'output');
 end
 
-if ~exist(recipeFile, 'file')
-    error('RecipeExecutor:NoSuchRecipe', ...
-        'recipeFile not found: %s', recipeFile);
+if nargin < 5 || isempty(pushCommand)
+    pushCommand = '';
 end
 
-% Get the Recipe.
-recipe = UnpackRecipe(recipeFile);
+%% Start Logging.
+if (~exist(outputFolder, 'dir'))
+    mkdir(outputFolder);
+end
+diaryFile = fullfile(outputFolder, 'recipe-executor-log.txt');
+diary(diaryFile);
 
-% Set Up.
-if exist(beforeScript, 'file')
-    run(beforeScript);
+disp(['RecipeExecutor starting at ' datestr(now)])
+configScript
+fetchCommand
+inputFolder
+outputFolder
+pushCommand
+
+%% Set up environment.
+if exist(configScript, 'file')
+    run(configScript);
 end
 
-% Execute the Recipe.
-recipe = ExecuteRecipe(recipe, whichExecutives, false);
+%% Fetch files as needed.
+if ~isempty(fetchCommand)
+    disp(['Running fetch command: ' fetchCommand])
+    [fetchStatus, fetchResult] = unix(fetchCommand)
+end
 
-% Tear Down.
-if exist(afterScript, 'file')
-    run(afterScript);
+%% Execute from inputFolder and save to outputFolder.
+archiveFiles = FindFiles(inputFolder, '\.zip$');
+nRecipes = numel(archiveFiles);
+disp(sprintf('Found %d recipes in input folder %s', nRecipes, inputFolder))
+for ii = 1:nRecipes
+    % render and proceed after errors
+    try
+        disp(sprintf('Recipe %d of %d', ii, nRecipes))
+        
+        % get the recipe
+        disp(['Unpacking recipe: ' archiveFiles{ii}])
+        recipe = UnpackRecipe(archiveFiles{ii});
+        
+        % execute recipe
+        disp(['Executing recipe: ' recipe.input.hints.recipeName])
+        recipe = ExecuteRecipe(recipe, [], true);
+        
+        % pack up the results
+        [archivePath, archiveBase, archiveExt] = fileparts(archiveFiles{ii});
+        renderedArchiveFile = fullfile(outputFolder, [archiveBase archiveExt]);
+        disp(['Packing up recipe: ' renderedArchiveFile])
+        excludeFolders = {'temp'};
+        PackUpRecipe(recipe, renderedArchiveFile, excludeFolders);
+        
+    catch err
+        disp(sprintf('Error executing recipe %d of %d', ii, nRecipes))
+        disp(err.getReport())
+        continue;
+    end
+end
+
+%% Push files as needed.
+if ~isempty(pushCommand)
+    disp(['Running push command: ' pushCommand])
+    [pushStatus, pushResult] = unix(pushCommand)
 end
