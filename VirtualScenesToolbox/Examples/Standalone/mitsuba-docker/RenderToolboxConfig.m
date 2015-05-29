@@ -63,7 +63,7 @@ setpref(prefName, 'dklSensitivities', 'T_CIE_Y2');
 setpref(prefName, 'montageScaleFactor', 1);
 setpref(prefName, 'montageScaleMethod', 'lanczos3');
 
-setpref(prefName, 'rgbMitsubaApp', '~/mitsuba-rgb/mitsuba/mitsuba';);
+setpref(prefName, 'rgbMitsubaApp', '~/mitsuba-rgb/mitsuba/mitsuba');
 
 %% Typical Mappings used to configure Mitsuba
 integratorId = 'integrator';
