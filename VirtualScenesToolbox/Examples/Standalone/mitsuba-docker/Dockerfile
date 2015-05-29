@@ -87,15 +87,12 @@ RUN wget http://www.mathworks.com/supportfiles/downloads/R2015a/deployment_files
     && cd .. \
     && rm -r matlab-runtime
 
-### get our Render Toolbox config file from the local context
-USER rtb
-ADD RenderToolboxConfig.m RenderToolboxConfig.m
-
 ### get our Matlab executable from the local context
+USER rtb
 ADD LinuxRecipeExecutor.zip LinuxRecipeExecutor.zip
 RUN unzip LinuxRecipeExecutor.zip -d recipe-executor \
     && rm LinuxRecipeExecutor.zip
 
 ### "docker run" invokes our Matlab executable and sends any args to it
-ENTRYPOINT ["/home/rtb/recipe-executor/RecipeExecutor/for_redistribution_files_only/run_RecipeExecutor.sh", "/usr/local/MATLAB/MATLAB_Runtime/v85", "/home/rtb/RenderToolboxConfig.m"]
+ENTRYPOINT ["/home/rtb/recipe-executor/RecipeExecutor/for_redistribution_files_only/run_RecipeExecutor.sh", "/usr/local/MATLAB/MATLAB_Runtime/v85"]
 
