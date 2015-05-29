@@ -68,14 +68,6 @@ RUN scons \
     && mkdir -p /home/rtb/mitsuba-multi \
     && cp -r build/release /home/rtb/mitsuba-multi
 
-### get our public Matlab toolboxes
-WORKDIR /home/rtb
-RUN git clone https://github.com/Psychtoolbox-3/Psychtoolbox-3.git
-RUN git clone https://github.com/DavidBrainard/RenderToolbox3.git
-
-## get our private Matlab toolbox from the local machine
-ADD RenderToolboxDevelop /home/rtb/RenderToolboxDevelop
-
 ### get runtime used by Matlab compiled executables
 USER root
 RUN wget http://www.mathworks.com/supportfiles/downloads/R2015a/deployment_files/R2015a/installers/glnxa64/MCR_R2015a_glnxa64_installer.zip \
