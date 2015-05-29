@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="4167924424" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="6718533" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>RecipeExecutor</param.appname>
     <param.icon />
     <param.icons />
@@ -9,7 +9,7 @@
     <param.company />
     <param.summary>Render Recipes from a standalone Matlab executable.</param.summary>
     <param.description>For example: 
-./run_RecipeExecutor.sh/Applications/MATLAB/MATLAB_Compiler_Runtime/v84 args...</param.description>
+./run_RecipeExecutor.sh /Applications/MATLAB/MATLAB_Compiler_Runtime/v85 args...</param.description>
     <param.screenshot />
     <param.guid />
     <param.net.saved.interface />
@@ -183,6 +183,7 @@
       <file>/home/ben/matlab/RenderToolbox3/SceneDOM/WriteSceneDOM.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/ChangeToFolder.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/ChangeToWorkingFolder.m</file>
+      <file>/home/ben/matlab/RenderToolbox3/Utilities/DemoteEnvPathEntries.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/FindFiles.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/GetRenderToolbox3VersionInfo.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/GetUserFolder.m</file>
