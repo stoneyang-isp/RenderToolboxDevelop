@@ -1,15 +1,26 @@
 %% Set up render toolbox config. for the docker envoronment.
 %
-% This script is will set up Matlab config. to match the environment in our
+% This script is will set up Matlab config to match the environment in our
 % mistuba-docker Docker container.
 %
 % @ingroup VirtualScenes
 
+disp('')
+disp('Configuring RenderToolbox3 for Docker.')
+disp('')
+
 %% Set our toolbox paths.
-addpath(genpath('~/Psychtoolbox-3'));
-addpath(genpath('~/RenderToolbox3'));
-addpath(genpath('~/RenderToolboxDevelop'));
+addpath(genpath('/home/rtb/Psychtoolbox-3'));
+addpath(genpath('/home/rtb/RenderToolbox3'));
+addpath(genpath('/home/rtb/RenderToolboxDevelop'));
 CleanMatlabPath();
+
+%% Set the userpath.
+userFolder = '/home/rtb/MATLAB';
+if ~exist(userFolder, 'dir')
+    mkdir(userFolder);
+end
+userpath(userFolder);
 
 %% RenderToolbox3.
 InitializeRenderToolbox(true);
@@ -26,8 +37,8 @@ adjustmentsFile = fullfile(RenderToolboxRoot(), ...
 
 radiometricScaleFactor = 0.0795827427;
 
-myMistubaExecutable = '~/mitsuba-multi/mitsuba/mitsuba';
-myMistubaImporter = '~/mitsuba-multi/converter/mtsimport';
+myMistubaExecutable = '/home/rtb/mitsuba-multi/mitsuba/mitsuba';
+myMistubaImporter = '/home/rtb/mitsuba-multi/converter/mtsimport';
 myMistubaApp = '';
 
 setpref('Mitsuba', 'adjustments', adjustmentsFile);
@@ -63,7 +74,7 @@ setpref(prefName, 'dklSensitivities', 'T_CIE_Y2');
 setpref(prefName, 'montageScaleFactor', 1);
 setpref(prefName, 'montageScaleMethod', 'lanczos3');
 
-setpref(prefName, 'rgbMitsubaApp', '~/mitsuba-rgb/mitsuba/mitsuba';);
+setpref(prefName, 'rgbMitsubaApp', '/home/rtb/mitsuba-rgb/mitsuba/mitsuba');
 
 %% Typical Mappings used to configure Mitsuba
 integratorId = 'integrator';

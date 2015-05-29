@@ -92,7 +92,6 @@ pushCommand
 %% Set up environment.
 if exist(configScript, 'file')
     disp(['Running config script: ' configScript])
-    
     % add configScript to path and eval() because run() didn't work
     [configPath, configName] = fileparts(configScript);
     addpath(configPath);
