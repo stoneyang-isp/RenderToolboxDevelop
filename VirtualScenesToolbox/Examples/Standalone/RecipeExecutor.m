@@ -1,5 +1,4 @@
 %% Render Recipes as a standalone Matlab executable.
-%   @param configScript script to configure Matlab preferences
 %   @param fetchCommand unix() command to fetch recipes into @a
 %   recipeFolder
 %   @param inputFolder folder that contains recipes to execute
@@ -14,17 +13,15 @@
 %
 % @details
 % We can run this on a local workstation.  In that case, we can probably
-% omit @a configScript, @a fetchCommand, and @a pushCommand.  We would just
+% omit @a fetchCommand, and @a pushCommand.  We would just
 % look for recipes contained in @a inputFolder, execute each one, and save
 % the output in @A outputFolder.
 %
 % @details
 % What we really want is to run this from a standalone Matlab executable on
 % a compute cluster, like Amazon EC2.  In this case, we need @a
-% configScript to set up our cluster environment, like where renderers are
-% installed.  We also need @a fetchCommand and @a pushCommand to
-% exchange files.  For example, we might fetch recipes from Amazon
-% S3, execute them, then publish them back to S3.
+% fetchCommand and @a pushCommand to exchange files.  For example, we might
+% fetch recipes from Amazon S3, execute them, then publish them back to S3.
 %
 % @details
 % Attempts to capture command window and error messages with the diary()
@@ -33,12 +30,12 @@
 %
 % @details
 % Usage as a regular function in Matlab:
-%   function RecipeExecutor(configScript, fetchCommand, inputFolder, outputFolder, pushCommand)
+%   function RecipeExecutor(fetchCommand, inputFolder, outputFolder, pushCommand)
 %
 % Sample usage as a standalone on the command line:
-%   ./run_RecipeExecutor.sh /Applications/MATLAB/MATLAB_Compiler_Runtime/v84 configScript fetchCommand inputFolder outputFolder pushCommand
+%   ./run_RecipeExecutor.sh /Applications/MATLAB/MATLAB_Compiler_Runtime/v84 fetchCommand inputFolder outputFolder pushCommand
 %
-function RecipeExecutor(configScript, fetchCommand, inputFolder, outputFolder, pushCommand)
+function RecipeExecutor(fetchCommand, inputFolder, outputFolder, pushCommand)
 
 %% Include these functions for Matlab Compiler.
 % batch renderer
@@ -55,23 +52,19 @@ function RecipeExecutor(configScript, fetchCommand, inputFolder, outputFolder, p
 %#function RTB_BeforeCondition_InsertObjectRemodeler
 
 %% Args.
-if nargin < 1 || isempty(configScript)
-    configScript = '';
-end
-
-if nargin < 2 || isempty(fetchCommand)
+if nargin < 1 || isempty(fetchCommand)
     fetchCommand = '';
 end
 
-if nargin < 3 || isempty(inputFolder)
+if nargin < 2 || isempty(inputFolder)
     inputFolder = pwd();
 end
 
-if nargin < 4 || isempty(outputFolder)
+if nargin < 3 || isempty(outputFolder)
     outputFolder = fullfile(inputFolder, 'output');
 end
 
-if nargin < 5 || isempty(pushCommand)
+if nargin < 4 || isempty(pushCommand)
     pushCommand = '';
 end
 
@@ -83,20 +76,13 @@ diaryFile = fullfile(outputFolder, 'recipe-executor-log.txt');
 diary(diaryFile);
 
 disp(['RecipeExecutor starting at ' datestr(now)])
-configScript
 fetchCommand
 inputFolder
 outputFolder
 pushCommand
 
-%% Set up environment.
-if exist(configScript, 'file')
-    disp(['Running config script: ' configScript])
-    % add configScript to path and eval() because run() didn't work
-    [configPath, configName] = fileparts(configScript);
-    addpath(configPath);
-    eval(configName);
-end
+%% Configure the environment (hardcoded for now).
+RecipeExecutorConfig;
 
 %% Fetch files as needed.
 if ~isempty(fetchCommand)
