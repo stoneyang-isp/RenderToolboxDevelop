@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="459829162" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="278936451" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>RecipeExecutor</param.appname>
     <param.icon />
     <param.icons />
@@ -93,7 +93,6 @@
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychOneliners/IsOctave.m</file>
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychOneliners/IsWin.m</file>
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychOneliners/PsychtoolboxRoot.m</file>
-      <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychOneliners/RemoveMatchingPaths.m</file>
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychOneliners/streq.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Admin/MinimalMitsubaImport/DemoteEnvPathEntries.m</file>
       <file>/home/ben/matlab/RenderToolbox3/BatchRenderer/BatchRender.m</file>
@@ -184,7 +183,6 @@
       <file>/home/ben/matlab/RenderToolbox3/SceneDOM/WriteSceneDOM.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/ChangeToFolder.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/ChangeToWorkingFolder.m</file>
-      <file>/home/ben/matlab/RenderToolbox3/Utilities/CleanMatlabPath.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/DemoteEnvPathEntries.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/FindFiles.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/GetRenderToolbox3VersionInfo.m</file>

@@ -9,12 +9,6 @@ disp('')
 disp('Configuring RenderToolbox3 for Docker.')
 disp('')
 
-%% Set our toolbox paths.
-addpath(genpath('/home/rtb/Psychtoolbox-3'));
-addpath(genpath('/home/rtb/RenderToolbox3'));
-addpath(genpath('/home/rtb/RenderToolboxDevelop'));
-CleanMatlabPath();
-
 %% Set the userpath.
 userFolder = '/home/rtb/MATLAB';
 if ~exist(userFolder, 'dir')
