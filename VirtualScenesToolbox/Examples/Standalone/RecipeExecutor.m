@@ -91,6 +91,7 @@ pushCommand
 
 %% Set up environment.
 if exist(configScript, 'file')
+    disp(['Running config script: ' configScript])
     run(configScript);
 end
 

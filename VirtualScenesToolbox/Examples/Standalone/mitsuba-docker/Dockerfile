@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 MAINTAINER Ben Heasly <benjamin.heasly@gmail.com>
 
-### get dependencies
+### system dependencies
 RUN apt-get update && apt-get install -y\
     build-essential \
     git \
@@ -23,48 +23,39 @@ RUN apt-get update && apt-get install -y\
     libxxf86vm-dev \
     mercurial \
     mercurial-common \
+    python-pip \
     qt4-dev-tools \
     scons \
     unzip \
+    wget \
     x11proto-xf86vidmode-dev \
     zlib1g-dev
 
+### Amazon command line tool
+RUN pip install awscli
+
 ### extra Mitsuba dependencies
 RUN wget http://www.mitsuba-renderer.org/releases/current/trusty/collada-dom-dev_2.4.0-1_amd64.deb \
-    && http://www.mitsuba-renderer.org/releases/current/trusty/collada-dom_2.4.0-1_amd64.deb \
+    && wget http://www.mitsuba-renderer.org/releases/current/trusty/collada-dom_2.4.0-1_amd64.deb \
     && dpkg --install collada-dom_*.deb
 
-### be a regular user
-RUN groupadd -r rtb && useradd -r -g rtb rtb
+### run as a regular user
+RUN groupadd -r rtb \
+    && useradd -r -m -g rtb rtb
 USER rtb
+WORKDIR /home/rtb
 
-### add our Render Toolbox config file
-ADD RenderToolboxConfig.m /home/rtb
-
-### add runtime used by Matlab compiled executables
-ADD MCR_R2015a_glnxa64_installer.zip
-RUN unzip MCR_R2015a_glnxa64_installer.zip -d matlab-runtime
-
-### add our Matlab compiled executable
-ADD LinuxRecipeExecutor.zip
-RUN unzip LinuxRecipeExecutor.zip -d recipe-executor
-
-### get our Matlab toolboxes
-git clone git@github.com:Psychtoolbox-3/Psychtoolbox-3.git
-git clone git@github.com:DavidBrainard/RenderToolbox3.git
-git clone git@github.com:DavidBrainard/RenderToolboxDevelop.git
-
-### get mitsuba source
-RUN mkdir -p /home/rtb/mitsuba-src \
-    && cd /home/rtb/mitsuba-src \
-    && hg clone https://www.mitsuba-renderer.org/hg/mitsuba
-WORKDIR /home/rtb/mitsuba-src/mitsuba
+### get Mitsuba source
+RUN mkdir /home/rtb/mitsuba-src
+WORKDIR /home/rtb/mitsuba-src
+RUN hg clone https://www.mitsuba-renderer.org/hg/mitsuba
 
 ### build and install RBG Mitsuba
-RUN cp build/config-linux-gcc.py > config.py \
+WORKDIR /home/rtb/mitsuba-src/mitsuba
+RUN cp build/config-linux-gcc.py config.py \
     && scons \
     && mkdir -p /home/rtb/mitsuba-rgb \
-    && cp build/release /home/rtb/mitsuba-rgb
+    && cp -r build/release /home/rtb/mitsuba-rgb
 
 ### edit mitsuba source and config for 31 spectrum bands in 395-705nm
 RUN sed 's/SAMPLES=[0-9]*/SAMPLES=31/' build/config-linux-gcc.py > config.py
@@ -75,10 +66,36 @@ RUN sed -e 's/SPECTRUM_MIN_WAVELENGTH[ ^I]*[0-9]*$/SPECTRUM_MIN_WAVELENGTH   395
 ### build and install multispectral Mitsuba
 RUN scons \
     && mkdir -p /home/rtb/mitsuba-multi \
-    && cp build/release /home/rtb/mitsuba-multi
+    && cp -r build/release /home/rtb/mitsuba-multi
 
-### run out Matlab compiled executable and point it at the runtime
-### TODO: reorder arguments to make it easy to pass in RenderToolboxConfig.m
-### TODO: how to pass the actual recipe to the container at run time?
-ENTRYPOINT ["/home/rtb/recipe-executor/for_redistribution_files_only/run_RecipeExecutor.sh" \
-    "home/rtb/matlab-runtime" ]
+### get our public Matlab toolboxes
+WORKDIR /home/rtb
+RUN git clone https://github.com/Psychtoolbox-3/Psychtoolbox-3.git
+RUN git clone https://github.com/DavidBrainard/RenderToolbox3.git
+
+## get our private Matlab toolbox from the local machine
+ADD RenderToolboxDevelop /home/rtb/RenderToolboxDevelop
+
+### get runtime used by Matlab compiled executables
+USER root
+RUN wget http://www.mathworks.com/supportfiles/downloads/R2015a/deployment_files/R2015a/installers/glnxa64/MCR_R2015a_glnxa64_installer.zip \
+    && unzip MCR_R2015a_glnxa64_installer.zip -d matlab-runtime \
+    && rm MCR_R2015a_glnxa64_installer.zip \
+    && cd matlab-runtime \
+    && mkdir -p /usr/local/MATLAB/MATLAB_Runtime/v85 \
+    && ./install -mode silent -agreeToLicense yes \
+    && cd .. \
+    && rm -r matlab-runtime
+
+### get our Render Toolbox config file from the local context
+USER rtb
+ADD RenderToolboxConfig.m RenderToolboxConfig.m
+
+### get our Matlab executable from the local context
+ADD LinuxRecipeExecutor.zip LinuxRecipeExecutor.zip
+RUN unzip LinuxRecipeExecutor.zip -d recipe-executor \
+    && rm LinuxRecipeExecutor.zip
+
+### "docker run" invokes our Matlab executable and sends any args to it
+ENTRYPOINT ["/home/rtb/recipe-executor/RecipeExecutor/for_redistribution_files_only/run_RecipeExecutor.sh", "/usr/local/MATLAB/MATLAB_Runtime/v85", "/home/rtb/RenderToolboxConfig.m"]
+

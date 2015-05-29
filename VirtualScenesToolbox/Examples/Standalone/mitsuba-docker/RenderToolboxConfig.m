@@ -5,11 +5,22 @@
 %
 % @ingroup VirtualScenes
 
+disp()
+disp('Configuring RenderToolbox3 for Docker.')
+disp()
+
 %% Set our toolbox paths.
 addpath(genpath('~/Psychtoolbox-3'));
 addpath(genpath('~/RenderToolbox3'));
 addpath(genpath('~/RenderToolboxDevelop'));
 CleanMatlabPath();
+
+%% Set the userpath
+userFolder = '~/MATLAB';
+if ~exist(userFolder, 'dir')
+    mkdir(userFolder);
+end
+userpath('~/MATLAB');
 
 %% RenderToolbox3.
 InitializeRenderToolbox(true);
