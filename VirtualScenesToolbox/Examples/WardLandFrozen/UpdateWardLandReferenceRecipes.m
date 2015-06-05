@@ -23,30 +23,32 @@ hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
 montageScaleFactor = getpref('VirtualScenes', 'montageScaleFactor');
 montageScaleMethod = getpref('VirtualScenes', 'montageScaleMethod');
 
+% execute only basic rendering
+simpleExecutive = { ...
+    @MakeRecipeSceneFiles, ...
+    @MakeRecipeRenderings, ...
+    @MakeRecipeMontage};
+
 %% Plant and barrel.
 archive = fullfile(recipesFolder, 'PlantAndBarrel.zip');
 plantAndBarrel = UnpackRecipe(archive, hints);
-plantAndBarrel.input.executive{9} = @MakeRecipeFactoids;
-plantAndBarrel.input.executive{10} = @(recipe)MakeRecipeFactoidMontage(recipe, montageScaleFactor, montageScaleMethod);
+plantAndBarrel.input.executive = simpleExecutive;
 PackUpRecipe(plantAndBarrel, archive);
 
 %% Warehouse with near and areas of interest.
 archive = fullfile(recipesFolder, 'NearFarWarehouse.zip');
 nearFarWarehouse = UnpackRecipe(archive, hints);
-nearFarWarehouse.input.executive{9} = @MakeRecipeFactoids;
-nearFarWarehouse.input.executive{10} = @(recipe)MakeRecipeFactoidMontage(recipe, montageScaleFactor, montageScaleMethod);
+nearFarWarehouse.input.executive = simpleExecutive;
 PackUpRecipe(nearFarWarehouse, archive);
 
 %% Flat checkerboard with no inserted objects.
 archive = fullfile(recipesFolder, 'Mondrian.zip');
 mondrian = UnpackRecipe(archive, hints);
-mondrian.input.executive{9} = @MakeRecipeFactoids;
-mondrian.input.executive{10} = @(recipe)MakeRecipeFactoidMontage(recipe, montageScaleFactor, montageScaleMethod);
+mondrian.input.input.executive = simpleExecutive;
 PackUpRecipe(mondrian, archive);
 
 %% Checkerboard with many inserted blobbie objects.
 archive = fullfile(recipesFolder, 'Blobbies.zip');
 blobbies = UnpackRecipe(archive, hints);
-blobbies.input.executive{9} = @MakeRecipeFactoids;
-blobbies.input.executive{10} = @(recipe)MakeRecipeFactoidMontage(recipe, montageScaleFactor, montageScaleMethod);
+blobbies.input.executive = simpleExecutive;
 PackUpRecipe(blobbies, archive);
