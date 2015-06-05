@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="2531835724" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3481583827" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>RecipeExecutor</param.appname>
     <param.icon />
     <param.icons />
@@ -128,6 +128,7 @@
       <file>/home/ben/matlab/RenderToolbox3/RemodelerPlugins/RTB_BeforeAll_SampleRemodeler.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RemodelerPlugins/RTB_BeforeCondition_SampleRemodeler.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RenderData</file>
+      <file>/home/ben/matlab/RenderToolbox3/RendererPlugins</file>
       <file>/home/ben/matlab/RenderToolbox3/RendererPlugins/GetRendererAPIFunction.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RendererPlugins/Mitsuba/ApplyMitsubaObjects.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RendererPlugins/Mitsuba/GenericObjectsToMitsuba.m</file>
