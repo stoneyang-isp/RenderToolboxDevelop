@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="278936451" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="2531835724" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>RecipeExecutor</param.appname>
     <param.icon />
     <param.icons />
@@ -82,6 +82,8 @@
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychColorimetric/SToWls.m</file>
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychColorimetric/SplineCmf.m</file>
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychColorimetric/SplineRaw.m</file>
+      <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychColorimetric/SplineSpd.m</file>
+      <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychColorimetric/SplineSrf.m</file>
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychColorimetric/WlsToS.m</file>
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychColorimetric/XYZToSRGBPrimary.m</file>
       <file>/home/ben/matlab/Psychtoolbox-3/Psychtoolbox/PsychOneliners/GetGITInfo.m</file>
@@ -120,10 +122,12 @@
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/MakeRecipeSceneFiles.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/PackUpRecipe.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/UnpackRecipe.m</file>
+      <file>/home/ben/matlab/RenderToolbox3/RemodelerPlugins</file>
       <file>/home/ben/matlab/RenderToolbox3/RemodelerPlugins/GetRemodelerAPIFunction.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RemodelerPlugins/RTB_AfterCondition_SampleRemodeler.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RemodelerPlugins/RTB_BeforeAll_SampleRemodeler.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RemodelerPlugins/RTB_BeforeCondition_SampleRemodeler.m</file>
+      <file>/home/ben/matlab/RenderToolbox3/RenderData</file>
       <file>/home/ben/matlab/RenderToolbox3/RendererPlugins/GetRendererAPIFunction.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RendererPlugins/Mitsuba/ApplyMitsubaObjects.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RendererPlugins/Mitsuba/GenericObjectsToMitsuba.m</file>
@@ -190,6 +194,7 @@
       <file>/home/ben/matlab/RenderToolbox3/Utilities/GetWorkingAbsolutePath.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/GetWorkingFolder.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/GetWorkingRelativePath.m</file>
+      <file>/home/ben/matlab/RenderToolbox3/Utilities/ImportPsychColorimetricMatFile.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/InitializeRenderToolbox.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/IsPathPrefix.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/IsStructFieldPresent.m</file>
@@ -208,11 +213,14 @@
       <file>/home/ben/matlab/RenderToolbox3/Utilities/SetRenderToolboxLibraryPath.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/ShowXYZAndSRGB.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/SpdPowerPerNmToPowerPerWlBand.m</file>
+      <file>/home/ben/matlab/RenderToolbox3/Utilities/SpdPowerPerWlBandToPowerPerNm.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/StringToVector.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/VectorToString.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/WriteASCII7BitOnly.m</file>
       <file>/home/ben/matlab/RenderToolbox3/Utilities/XYZToSRGB.m</file>
       <file>${PROJECT_ROOT}/RecipeExecutorConfig.m</file>
+      <file>/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/MiscellaneousData</file>
+      <file>/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/ModelRepository</file>
       <file>/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/FindNodeMaterialAndEffect.m</file>
       <file>/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/RTB_BeforeCondition_InsertObjectRemodeler.m</file>
       <file>/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Remodelers/InsertObjectRemodeler/RepositionNode.m</file>
