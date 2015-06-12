@@ -31,8 +31,8 @@ adjustmentsFile = fullfile(RenderToolboxRoot(), ...
 
 radiometricScaleFactor = 0.0795827427;
 
-myMistubaExecutable = '/home/rtb/mitsuba-multi/release/mitsuba/mitsuba';
-myMistubaImporter = '/home/rtb/mitsuba-multi/release/converter/mtsimport';
+myMistubaExecutable = '/home/rtb/mitsuba-multi/mitsuba';
+myMistubaImporter = '/home/rtb/mitsuba-multi/mtsimport';
 myMistubaApp = '';
 
 setpref('Mitsuba', 'adjustments', adjustmentsFile);
@@ -42,13 +42,7 @@ setpref('Mitsuba', 'executable', myMistubaExecutable);
 setpref('Mitsuba', 'importer', myMistubaImporter);
 
 %% Dynamic Library path.
-libPaths = { ...
-    '/home/rtb/mitsuba-multi/release/libbidir:', ...
-    '/home/rtb/mitsuba-multi/release/libcore:', ...
-    '/home/rtb/mitsuba-multi/release/libhw:', ...
-    '/home/rtb/mitsuba-multi/release/libpython:', ...
-    '/home/rtb/mitsuba-multi/release/librender'};
-setpref('RenderToolbox3', 'libPath', cat(2, libPaths{:}));
+setpref('RenderToolbox3', 'libPath', '/home/rtb/mitsuba-multi');
 
 %% VirtualScenesToolbox.
 
@@ -76,7 +70,7 @@ setpref(prefName, 'dklSensitivities', 'T_CIE_Y2');
 setpref(prefName, 'montageScaleFactor', 1);
 setpref(prefName, 'montageScaleMethod', 'lanczos3');
 
-setpref(prefName, 'rgbMitsubaApp', '/home/rtb/mitsuba-rgb/release/mitsuba/mitsuba');
+setpref(prefName, 'rgbMitsubaApp', '/home/rtb/mitsuba-rgb/mitsuba');
 
 %% Typical Mappings used to configure Mitsuba
 integratorId = 'integrator';

@@ -27,17 +27,8 @@ renderingFolder = fullfile(getpref('VirtualScenes', 'recipesFolder'), projectNam
 % edit some batch renderer options
 hints.renderer = 'Mitsuba';
 hints.workingFolder = getpref('VirtualScenes', 'workingFolder');
-hints.imageWidth = 640;
-hints.imageHeight = 480;
-
-% leave out the mask renderings
-hints.whichConditions = 1:3;
-
-%% Choose basic execution.
-executive = { ...
-    @MakeRecipeSceneFiles, ...
-    @MakeRecipeRenderings, ...
-    };
+hints.imageWidth = 640 / 4;
+hints.imageHeight = 480 / 4;
 
 %% Locate and render each packed-up recipe.
 
@@ -52,8 +43,6 @@ for ii = 1:nScenes
     recipe.input.hints.workingFolder = hints.workingFolder;
     recipe.input.hints.imageWidth = hints.imageWidth;
     recipe.input.hints.imageHeight = hints.imageHeight;
-    recipe.input.hints.whichConditions = hints.whichConditions;
-    recipe.input.executive = executive;
     
     % render and proceed after errors
     try
