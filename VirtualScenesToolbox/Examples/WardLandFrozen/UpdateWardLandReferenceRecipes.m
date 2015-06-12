@@ -44,7 +44,7 @@ PackUpRecipe(nearFarWarehouse, archive);
 %% Flat checkerboard with no inserted objects.
 archive = fullfile(recipesFolder, 'Mondrian.zip');
 mondrian = UnpackRecipe(archive, hints);
-mondrian.input.input.executive = simpleExecutive;
+mondrian.input.executive = simpleExecutive;
 PackUpRecipe(mondrian, archive);
 
 %% Checkerboard with many inserted blobbie objects.
