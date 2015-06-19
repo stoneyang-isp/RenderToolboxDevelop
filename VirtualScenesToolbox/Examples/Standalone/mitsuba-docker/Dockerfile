@@ -3,7 +3,8 @@ FROM ubuntu:14.04
 MAINTAINER Ben Heasly <benjamin.heasly@gmail.com>
 
 ### system dependencies
-RUN apt-get update && apt-get install -y\
+RUN apt-get update \
+    && apt-get install -y\
     build-essential \
     git \
     libboost-all-dev \
@@ -28,8 +29,15 @@ RUN apt-get update && apt-get install -y\
     scons \
     unzip \
     wget \
+    x11-xserver-utils \
     x11proto-xf86vidmode-dev \
-    zlib1g-dev
+    x11vnc \
+    xpra \
+    xserver-xorg-video-dummy \
+    zlib1g-dev \
+    && apt-get clean \
+    && apt-get autoclean \
+    && apt-get autoremove
 
 ### Amazon command line tool
 RUN pip install awscli
@@ -37,7 +45,12 @@ RUN pip install awscli
 ### extra Mitsuba dependencies
 RUN wget http://www.mitsuba-renderer.org/releases/current/trusty/collada-dom-dev_2.4.0-1_amd64.deb \
     && wget http://www.mitsuba-renderer.org/releases/current/trusty/collada-dom_2.4.0-1_amd64.deb \
-    && dpkg --install collada-dom_*.deb
+    && dpkg --install collada-dom*.deb
+
+### set up headless X server
+ADD xorg.conf /etc/X11/xorg.conf
+RUN echo 'xpra start :0' > /etc/bash.bashrc
+ENV DISPLAY :0
 
 ### run as a regular user
 RUN groupadd -r rtb \
@@ -48,14 +61,14 @@ WORKDIR /home/rtb
 ### get Mitsuba source
 RUN mkdir /home/rtb/mitsuba-src
 WORKDIR /home/rtb/mitsuba-src
-RUN hg clone https://www.mitsuba-renderer.org/hg/mitsuba
+RUN hg clone --insecure https://www.mitsuba-renderer.org/hg/mitsuba
 
 ### build and install RBG Mitsuba
 WORKDIR /home/rtb/mitsuba-src/mitsuba
 RUN cp build/config-linux-gcc.py config.py \
     && scons \
     && mkdir -p /home/rtb/mitsuba-rgb \
-    && cp -r build/release /home/rtb/mitsuba-rgb
+    && cp -r dist/* /home/rtb/mitsuba-rgb
 
 ### edit mitsuba source and config for 31 spectrum bands in 395-705nm
 RUN sed 's/SAMPLES=[0-9]*/SAMPLES=31/' build/config-linux-gcc.py > config.py
@@ -66,9 +79,10 @@ RUN sed -e 's/SPECTRUM_MIN_WAVELENGTH[ ^I]*[0-9]*$/SPECTRUM_MIN_WAVELENGTH   395
 ### build and install multispectral Mitsuba
 RUN scons \
     && mkdir -p /home/rtb/mitsuba-multi \
-    && cp -r build/release /home/rtb/mitsuba-multi
+    && cp -r dist/* /home/rtb/mitsuba-multi
 
 ### get runtime used by Matlab compiled executables
+WORKDIR /home/rtb/
 USER root
 RUN wget http://www.mathworks.com/supportfiles/downloads/R2015a/deployment_files/R2015a/installers/glnxa64/MCR_R2015a_glnxa64_installer.zip \
     && unzip MCR_R2015a_glnxa64_installer.zip -d matlab-runtime \
@@ -80,11 +94,12 @@ RUN wget http://www.mathworks.com/supportfiles/downloads/R2015a/deployment_files
     && rm -r matlab-runtime
 
 ### get our Matlab executable from the local context
+WORKDIR /home/rtb/
 USER rtb
 ADD LinuxRecipeExecutor.zip LinuxRecipeExecutor.zip
 RUN unzip LinuxRecipeExecutor.zip -d recipe-executor \
     && rm LinuxRecipeExecutor.zip
 
-### "docker run" invokes our Matlab executable and sends any args to it
-ENTRYPOINT ["/home/rtb/recipe-executor/RecipeExecutor/for_redistribution_files_only/run_RecipeExecutor.sh", "/usr/local/MATLAB/MATLAB_Runtime/v85"]
+### get our script to launch our Matlab executable from local context
+ADD run-recipe-executor run-recipe-executor
 
