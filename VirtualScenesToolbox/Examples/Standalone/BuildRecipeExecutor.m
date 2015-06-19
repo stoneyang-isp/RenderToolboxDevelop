@@ -34,6 +34,7 @@
 %
 % @details
 % Usage:
+%   BuildRecipeExecutor(mainFunction, buildFolder, zipFile, include)
 %
 function BuildRecipeExecutor(mainFunction, buildFolder, zipFile, include)
 
