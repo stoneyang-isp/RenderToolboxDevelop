@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="2743449625" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="2408518587" file="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor.prj" location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone" name="RecipeExecutor" preferred-package-location="/home/ben/matlab/RenderToolboxDevelop/VirtualScenesToolbox/Examples/Standalone/RecipeExecutor/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>RecipeExecutor</param.appname>
     <param.icon />
     <param.icons />
@@ -99,6 +99,7 @@
       <file>/home/ben/matlab/RenderToolbox3/Admin/MinimalMitsubaImport/DemoteEnvPathEntries.m</file>
       <file>/home/ben/matlab/RenderToolbox3/BatchRenderer/BatchRender.m</file>
       <file>/home/ben/matlab/RenderToolbox3/BatchRenderer/GetDefaultHints.m</file>
+      <file>/home/ben/matlab/RenderToolbox3/BatchRenderer/MakeMontage.m</file>
       <file>/home/ben/matlab/RenderToolbox3/BatchRenderer/MakeSceneFiles.m</file>
       <file>/home/ben/matlab/RenderToolbox3/BatchRenderer/Mappings/ApplySceneDOMPaths.m</file>
       <file>/home/ben/matlab/RenderToolbox3/BatchRenderer/Mappings/EditObjectProperty.m</file>
@@ -118,6 +119,7 @@
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/CurrentRecipe.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/ExecuteRecipe.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/GetFirstRecipeError.m</file>
+      <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/MakeRecipeMontage.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/MakeRecipeRenderings.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/MakeRecipeSceneFiles.m</file>
       <file>/home/ben/matlab/RenderToolbox3/RecipeAPI/PackUpRecipe.m</file>
