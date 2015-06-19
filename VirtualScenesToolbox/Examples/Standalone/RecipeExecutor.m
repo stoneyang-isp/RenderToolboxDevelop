@@ -39,7 +39,7 @@ function RecipeExecutor(fetchCommand, inputFolder, outputFolder, pushCommand)
 
 %% Include these functions for Matlab Compiler.
 % batch renderer
-%#function MakeRecipeRenderings, MakeRecipeSceneFiles
+%#function MakeRecipeRenderings, MakeRecipeSceneFiles, MakeRecipeMontage
 
 % renderer plugins
 %#function RTB_VersionInfo_PBRT, RTB_Render_PBRT, RTB_ImportCollada_PBRT, RTB_DataToRadiance_PBRT, RTB_ApplyMappings_PBRT
@@ -95,10 +95,10 @@ archiveFiles = FindFiles(inputFolder, '\.zip$');
 nRecipes = numel(archiveFiles);
 disp(sprintf('Found %d recipes in input folder %s', nRecipes, inputFolder))
 for ii = 1:nRecipes
+    disp(sprintf('Recipe %d of %d', ii, nRecipes))
+    
     % render and proceed after errors
     try
-        disp(sprintf('Recipe %d of %d', ii, nRecipes))
-        
         % get the recipe
         disp(['Unpacking recipe: ' archiveFiles{ii}])
         recipe = UnpackRecipe(archiveFiles{ii});
@@ -107,6 +107,13 @@ for ii = 1:nRecipes
         disp(['Executing recipe: ' recipe.input.hints.recipeName])
         recipe = ExecuteRecipe(recipe, [], true);
         
+    catch err
+        disp(sprintf('Error executing recipe %d of %d', ii, nRecipes))
+        disp(err.getReport())
+    end
+    
+    % pack up the results even if there were errors
+    try
         % pack up the results
         [archivePath, archiveBase, archiveExt] = fileparts(archiveFiles{ii});
         renderedArchiveFile = fullfile(outputFolder, [archiveBase archiveExt]);
@@ -115,9 +122,8 @@ for ii = 1:nRecipes
         PackUpRecipe(recipe, renderedArchiveFile, excludeFolders);
         
     catch err
-        disp(sprintf('Error executing recipe %d of %d', ii, nRecipes))
+        disp(sprintf('Error packing up recipe %d of %d', ii, nRecipes))
         disp(err.getReport())
-        continue;
     end
 end
 
